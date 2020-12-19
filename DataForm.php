@@ -17,6 +17,8 @@ class DataForm
     public bool $isFile;
     public array $dataFiles;
 
+    private bool $allFilesOk;
+
     /**
      * Constructor of class.
      * @param array $data - default value = array(). 
@@ -29,6 +31,8 @@ class DataForm
         $this->data = $data;
         $this->isFile = $isFile;
         $this->dataFiles = $dataFilesNames;
+
+        $this->allFilesOk = false;
     }
 
     /**
@@ -101,30 +105,6 @@ class DataForm
     }
 
     /**
-     * Check if variable is file type, then check if file is ok and check extention of file.
-     * @param file $file
-     * @param string $extention default value = 'pdf' 
-     * @return bool
-     */
-    public function checkFile($file, $extention = 'pdf')
-    {
-        if (empty($file)) {
-            throw new Exception('No files to check!');
-            return false;
-        }
-
-        // if (get_resource_type($file) != 'file') {
-        //     return false;
-        // }
-
-        if ($this->validation->validateFile($file, $extention) == false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Check all remembered files. This function uses function checkFile to check single file.
      * @param string $extention - default value = 'pdf'
      * @return bool
@@ -137,9 +117,62 @@ class DataForm
         // }
 
         foreach ($this->dataFiles as $key => $value) {
-            if ($this->checkFile($value, $extention) == false) {
+            if ($this->validation->checkFile($value, $extention) == false) {
                 return false;
             }
+        }
+
+        $this->allFilesOk = true;
+        return true;
+    }
+
+    public function uploadAllFiles($path = 'documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
+    {
+        if ($this->isFile && $this->allFilesOk) {
+            foreach ($this->dataFiles as $key => $file) {
+                $this->uploadFile($file, $path, $overwriteExistsFile, $createIfDirNotExists);
+            }
+        } else {
+            throw new Exception('Not all files are validating!');
+            return false;
+        }
+
+        return true;
+    }
+
+    public function uploadFile($file, string $dirPath = 'documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
+    {
+        // check if file with the same name already exists
+        if ($this->validation->checkExistsFile($dirPath . '/' . $file['name'])) {
+            if (!$overwriteExistsFile) {
+                throw new Exception('Not saved file with the name ' . $file['name'] . '. File with the same name is already exists!');
+                return false;
+            }
+        }
+
+        // check if directory from given path does exists
+        if (!$this->validation->checkExistsDir($dirPath)) {
+            // directory does not exists and do not create new directory
+            if (!$createIfDirNotExists) {
+                throw new Exception('The specified directory does not exists!');
+                return false;
+            }
+
+            // directory does not exists and create new directory
+            if (!mkdir($dirPath, 0777, true)) {
+                throw new Exception('Creation error directory.');
+                return false;
+            }
+        }
+
+        if (is_uploaded_file($file['tmp_name'])) {
+            if (!move_uploaded_file($file['tmp_name'], $dirPath . '/' . $file['name'])) {
+                throw new Exception('Failed to copy the file on server.');
+                return false;
+            }
+        } else {
+            throw new Exception('Request error! File has not been saved.');
+            return false;
         }
 
         return true;

@@ -59,7 +59,31 @@ class Validation
         return str_replace($strToFind, $strToReplace, $strText);
     }
 
-    public function validateFile($file, $exceptExtention = "pdf")
+    /**
+     * Check if variable is file type, then check if file is ok and check extention of file.
+     * @param file $file
+     * @param string $extention default value = 'pdf' 
+     * @return bool
+     */
+    public function checkFile($file, $extention = 'pdf')
+    {
+        if (empty($file)) {
+            throw new Exception('No files to check!');
+            return false;
+        }
+
+        // if (get_resource_type($file) != 'file') {
+        //     return false;
+        // }
+
+        if ($this->validateFile($file, $extention) == false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function validateFile($file, $exceptExtention = "pdf")
     {
         // check if given extention exists
         if (in_array($exceptExtention, $this->mime) === false) {
@@ -145,6 +169,24 @@ class Validation
             if (in_array($char, $license) === false) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    public function checkExistsDir(string $filename)
+    {
+        if (!is_dir($filename)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function checkExistsFile(string $filename)
+    {
+        if (!is_file($filename)) {
+            return false;
         }
 
         return true;
