@@ -27,7 +27,7 @@
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
           <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
               <div class="sidebar-brand-text mx-3">M&M's<sup>Karczma</sup></div>
           </a>
 
@@ -36,7 +36,7 @@
 
           <!-- Nav Item - Dashboard -->
           <li class="nav-item active">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="home.html">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
                   <span>HOME</span></a>
           </li>
@@ -59,7 +59,7 @@
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="UploadInvoice.php">Upload File</a>
+                      <a class="collapse-item" href="AddInvoice.php">Add Invoice</a>
                       <a class="collapse-item" href="ShowInvoices.php">Show Invoices</a>
                       <a class="collapse-item" href="ShowInvoicesList.php">Show Invoices As List</a>
                       <a class="collapse-item" href="SearchInvoices.php">Search For Invoices</a>
@@ -75,7 +75,6 @@
               <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="UploadEq.php">Upload File</a>
                       <a class="collapse-item" href="ShowEq.php">Show Equipments</a>
                       <a class="collapse-item" href="AddEq.php">Add Equipment</a>
                       <a class="collapse-item" href="SearchEq.php">Search For Equipment</a>
@@ -91,7 +90,6 @@
               <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="UploadLicense.php">Upload File</a>
                       <a class="collapse-item" href="ShowLicenses.php">Show Licences</a>
                       <a class="collapse-item" href="AddLicenses.php">Add Licence</a>
                   </div>
@@ -106,7 +104,6 @@
               <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="UploadDoc.php">Upload File</a>
                       <a class="collapse-item" href="ShowDoc.php">Show Documents</a>
                       <a class="collapse-item" href="AddDoc.php">Add Documents</a>
                   </div>
