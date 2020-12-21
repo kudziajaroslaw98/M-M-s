@@ -29,9 +29,6 @@
 
           <!-- Main Content -->
           <div id="content">
-
-
-
               <!-- Begin Page Content -->
               <div class="container-fluid">
 
@@ -90,10 +87,8 @@
                       </div> <!-- tutaj beda zaczytywani uzytkownicy, a search bedzie automatycznie wyszukiwal -->
                     </div>
                   </div>
-
-
               <!-- /.container-fluid -->
-
+            </div>
           </div>
           <!-- End of Main Content -->
 
