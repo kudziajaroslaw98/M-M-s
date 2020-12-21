@@ -1,7 +1,5 @@
 <?php
 
-require_once './Validation.php';
-
 /**
  * This class keep data which was submited to server from form.
  * 
@@ -44,18 +42,18 @@ class DataForm
     {
         // not exists dataset
         if (empty($this->data)) {
-            throw new Exception('Not taken anything data!');
+            throw new InvalidInputExcetion('Not taken anything data!');
             return false;
         }
 
         // check each data in dataset
         foreach ($this->data as $key => $value) {
             if (!isset($value)) {
-                throw new Exception('Not isset all values!');
+                throw new InvalidInputExcetion('Not isset all values!');
             }
 
             if (empty($value)) {
-                throw new Exception('All fields must be fill!');
+                throw new InvalidInputExcetion('All fields must be fill!');
                 return false;
             }
 
@@ -67,7 +65,7 @@ class DataForm
         if ($this->isFile) {
             // check if it is sent anything file names
             if (empty($this->dataFiles)) {
-                throw new Exception('Not sent anything file names!');
+                throw new InvalidInputExcetion('Not sent anything file names!');
                 return false;
             }
 
@@ -84,7 +82,7 @@ class DataForm
             for ($i = 0; $i < count($this->dataFiles); $i++) {
                 $key = $keys_globalFiles[$i];
                 if ($this->dataFiles[$i] != $key) {
-                    throw new Exception('Not sent anything files!');
+                    throw new InvalidInputExcetion('Not sent anything files!');
                     return false;
                 }
                 $temp[$key] = $_FILES[$key];
@@ -126,21 +124,21 @@ class DataForm
         return true;
     }
 
-    public function uploadAllFiles($path = 'documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
+    public function uploadAllFiles($path = './../data/documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
     {
         if ($this->isFile && $this->allFilesOk) {
             foreach ($this->dataFiles as $key => $file) {
                 $this->uploadFile($file, $path, $overwriteExistsFile, $createIfDirNotExists);
             }
         } else {
-            throw new Exception('Not all files are validating!');
+            throw new InvalidInputExcetion('Not all files are validating!');
             return false;
         }
 
         return true;
     }
 
-    public function uploadFile($file, string $dirPath = 'documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
+    public function uploadFile($file, string $dirPath = './../data/documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
     {
         // check if file with the same name already exists
         if ($this->validation->checkExistsFile($dirPath . '/' . $file['name'])) {
@@ -154,7 +152,7 @@ class DataForm
         if (!$this->validation->checkExistsDir($dirPath)) {
             // directory does not exists and do not create new directory
             if (!$createIfDirNotExists) {
-                throw new Exception('The specified directory does not exists!');
+                throw new InvalidInputExcetion('The specified directory does not exists!');
                 return false;
             }
 

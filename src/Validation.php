@@ -68,7 +68,7 @@ class Validation
     public function checkFile($file, $extention = 'pdf')
     {
         if (empty($file)) {
-            throw new Exception('No files to check!');
+            throw new InvalidInputExcetion('No files to check!');
             return false;
         }
 
@@ -87,7 +87,7 @@ class Validation
     {
         // check if given extention exists
         if (in_array($exceptExtention, $this->mime) === false) {
-            throw new Exception("Not allowed file extention!");
+            throw new InvalidInputExcetion("Not allowed file extention!");
         }
 
         // remember given extention with prefix
@@ -169,6 +169,59 @@ class Validation
             if (in_array($char, $license) === false) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    private function findSeparator($data)
+    {
+        $separator = '';
+        $splitData = str_split($data);
+        foreach ($splitData as $key => $value) {
+            if (!is_numeric($value)) {
+                $separator = $value;
+                return $separator;
+            }
+        }
+    }
+
+    public function validateDate(string $date, string $format = 'Y-m-d')
+    {
+        // find format separator
+        $formatSeparator = $this->findSeparator($format);
+        $format = explode($formatSeparator, $format);
+        if (count($format) != 3) {
+            throw new InvalidInputExcetion('Given format date is invalid!');
+            return false;
+        }
+
+        // find date separator
+        $dateSeparator = $this->findSeparator($date);
+        $date = explode($dateSeparator, $date);
+        if (count($date) != 3) {
+            throw new InvalidInputExcetion('Given date is invalid!');
+            return false;
+        }
+
+        // find year, month, day in given date
+        $goodDate = array();
+        for ($i = 0; $i < count($date); $i++) {
+            if (strtoupper($format[$i]) == 'Y') {
+                $goodDate[0] = $date[$i];
+            } else if (strtoupper($format[$i] == 'M')) {
+                $goodDate[1] = $date[$i];
+            } else if (strtoupper($format[$i] == 'D')) {
+                $goodDate[2] = $date[$i];
+            } else {
+                throw new InvalidInputExcetion('Given format date is invalid!');
+                return false;
+            }
+        }
+
+        // check date (example: invalid is 31-02-2020)
+        if (!checkdate($goodDate[1], $goodDate[2], $goodDate[0])) {
+            return false;
         }
 
         return true;

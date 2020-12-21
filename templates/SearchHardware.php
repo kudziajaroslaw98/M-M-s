@@ -1,9 +1,9 @@
-<!-- Show Licenses Page -->
+<!-- Search Hardware Page -->
 
 <html lang="en">
 
 <head>
-  <title>M&M's Karczma - Show Licenses</title>
+  <title>M&M's Karczma - Search Hardware</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="./../dev_dependency/css/bootstrap.min.css" />
@@ -32,34 +32,44 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 class="h3 mb-0 text-gray-800">Your Licenses</h1>
+            <h1 class="h3 mb-0 text-gray-800">Search Hardware</h1>
           </div>
 
           <!-- Content Row -->
+          <div class="row row col-lg-12 d-flex justify-content-center">
 
-
-          <div class='row col-lg-12 d-flex justify-content-center'>
-            <div class="card col-sm-12">
-
+            <div class='card col-12'>
+              <div class='card-header'>
+                <div class="row">
+                  <div class='col-6'>
+                    <label for="search_user">Hardware Number: </label>
+                    <input type="search" placeholder="Hardware Number" id="search_Hardware_number" class='form-control search_user' value="12312">
+                  </div>
+                  <div class='col-6'>
+                    <label for="search_user">Hardware Serial Number: </label>
+                    <input type="search" placeholder="Equipment Serial Number" id="search_Hardware_serial" class='form-control search_user' value="125215212">
+                  </div>
+                </div>
+              </div>
               <div class='card-body'>
 
-                <div class="InvoicesFound card">
+                <div class="actual_user_info card">
 
-                  <h5 class="card-header">Found Licenses</h5>
+                  <h5 class="card-header">Found Hardware</h5>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
                             <th scope="col">#</th>
-                            <th scope="col">License Number</th>
+                            <th scope="col">Hardware Number</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Expiration Date</th>
+                            <th scope="col">Serial Number</th>
                             <th scope="col">Purchase Date</th>
-                            <th scope="col">Serial Key</th>
-                            <th scope="col">Invoice Id</th>
+                            <th scope="col">Invoice Number</th>
                             <th scope="col">Warranty Date</th>
-                            <th scope="col">License User</th>
+                            <th scope="col">Net Value</th>
+                            <th scope="col">Hardware User</th>
                             <th scope="col">Note</th>
                           </tr>
                         </thead>
@@ -67,14 +77,14 @@
                           <tr>
                             <th scope="row">1</th>
                             <td>12312</td>
-                            <td>Windows 10</td>
-                            <td>1.10.2025</td>
+                            <td>Laptop MSI</td>
+                            <td>125215212</td>
                             <td>19.12.2020</td>
-                            <td>64712-15212-24124-12421</td>
-                            <td>49129</td>
+                            <td>64712</td>
                             <td>19.12.2025</td>
+                            <td>24718 zł</td>
                             <td>Jaroslaw Kudzia</td>
-                            <td>Aktywny</td>
+                            <td>Sprawny</td>
                           </tr>
                         </tbody>
                       </table>
@@ -84,12 +94,12 @@
                 </div>
               </div> <!-- tutaj beda zaczytywani uzytkownicy, a search bedzie automatycznie wyszukiwal -->
             </div>
+
           </div>
           <!-- /.container-fluid -->
         </div>
+        <!-- End of Main Content -->
       </div>
-      <!-- End of Main Content -->
-
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

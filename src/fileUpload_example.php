@@ -19,7 +19,7 @@
 <?php
 
 try {
-    require_once './DataForm.php';
+    require_once __DIR__ . './../autoload.php';
 
     $data = new DataForm($_POST, true, array('myfile'));
     $data->checkExistsData();
@@ -30,7 +30,7 @@ try {
 
     echo 'File is OK.<br>';
 
-    if (!$data->uploadAllFiles('documents', true, true)) {
+    if (!$data->uploadAllFiles('./../data/documents', true, true)) {
         echo 'Upload file error.';
     }
 
