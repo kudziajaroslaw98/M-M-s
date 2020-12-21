@@ -29,9 +29,6 @@
 
           <!-- Main Content -->
           <div id="content">
-
-
-
               <!-- Begin Page Content -->
               <div class="container-fluid">
 
@@ -87,10 +84,9 @@
 
               </div>
               <!-- /.container-fluid -->
-
           </div>
           <!-- End of Main Content -->
-
+        </div>
           <!-- Footer -->
           <footer class="sticky-footer bg-white">
               <div class="container my-auto">
@@ -101,7 +97,6 @@
               </div>
           </footer>
           <!-- End of Footer -->
-
       </div>
       <!-- End of Content Wrapper -->
     </div>

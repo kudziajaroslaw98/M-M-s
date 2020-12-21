@@ -28,25 +28,16 @@
       <div id="content-wrapper" class="d-flex flex-column">
 
           <!-- Main Content -->
-
-
-
-
+          <div id="content">
               <!-- Begin Page Content -->
               <div class="container-fluid">
-
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                       <h1 class="h3 mb-0 text-gray-800">Your Documents</h1>
                   </div>
-
                   <!-- Content Row -->
-
-
                     <div class='col-lg-12 card'>
-
                       <div class='card-body'>
-
                         <div class="InvoicesFound card">
 
                           <h5 class="card-header">Found Documents</h5>
@@ -140,14 +131,11 @@
                         </div>
                       </div> <!-- tutaj beda zaczytywani uzytkownicy, a search bedzie automatycznie wyszukiwal -->
                     </div>
-
-
+                  </div>
               <!-- /.container-fluid -->
-
-
           <!-- End of Main Content -->
-
           <!-- Footer -->
+          </div>
           <footer class="sticky-footer bg-white">
               <div class="container my-auto">
                   <div class="copyright text-center my-auto">
@@ -157,7 +145,6 @@
               </div>
           </footer>
           <!-- End of Footer -->
-
       </div>
       <!-- End of Content Wrapper -->
     </div>
