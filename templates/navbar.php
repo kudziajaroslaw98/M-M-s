@@ -88,7 +88,7 @@
         <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Options:</h6>
-                <a class="collapse-item" href="Notification.html">Examples</a>
+                <a class="collapse-item" href="Notification.php">Examples</a>
             </div>
         </div>
     </li>

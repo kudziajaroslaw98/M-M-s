@@ -4,17 +4,7 @@
 
 <head>
   <title>M&M's Karczma - Add Hardware</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="./../dev_dependency/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="./../styles/style.min.css" />
-  <link rel="stylesheet" href="./../styles/styles.css" />
-  <link href="./../fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <script src="./../scripts/jquery-3.5.1.min.js"></script>
-  <script src="./../dev_dependency/js/popper.min.js"></script>
-  <script src="./../dev_dependency/js/bootstrap.min.js"></script>
-  <link href="./../styles/sb-admin-2.min.css" rel="stylesheet">
+  <?php require_once __DIR__ . './head.php'; ?>
 </head>
 
 <body id="page-top">
@@ -51,47 +41,32 @@
                     <div class='row col-12'>
                       <div class='col-6'>
                         <div class="form-group">
-                          <label for="HardwareNumber">Hardware Number</label>
-                          <input type="number" class="form-control" id="HardwareNumber" placeholder="Hardware Number">
-                        </div>
-                      </div>
-                      <div class='col-6'>
-                        <div class="form-group">
                           <label for="SerialNumber">Serial Number</label>
                           <input type="number" class="form-control" id="SerialNumber" placeholder="Serial Number">
                         </div>
                       </div>
-                    </div>
-                    <div class="row col-12">
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="InvoiceNumber">Invoice Number</label>
                           <input type="number" class="form-control" id="InvoiceNumber" placeholder="Invoice Number">
                         </div>
                       </div>
+                    </div>
+                    <div class="row col-12">
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="NetValue">Net Value</label>
                           <input type="number" class="form-control" id="NetValue" placeholder="Net Value">
                         </div>
                       </div>
-
-
-                    </div>
-                    <div class="row col-12">
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="WarrantyDate">Warranty Date</label>
                           <input type="date" class="form-control" id="WarrantyDate" placeholder="Warranty Date">
                         </div>
                       </div>
-                      <div class='col-6'>
-                        <div class="form-group">
-                          <label for="PurchaseDate">Purchase Date</label>
-                          <input type="date" class="form-control" id="PurchaseDate" placeholder="Purchase Date">
-                        </div>
-                      </div>
                     </div>
+
                     <div class="row col-12">
                       <div class='col-6'>
                         <div class="form-group">
@@ -123,8 +98,6 @@
                   </div>
                 </form>
 
-
-
               </div>
 
             </div>
@@ -135,14 +108,7 @@
         <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; M&M's Karczma</span></br></br>
-            <span>Authors: Kudzia, Czarnota, Olejarczyk, Marcinkowski</span>
-          </div>
-        </div>
-      </footer>
+      <?php require_once("foother.php") ?>
       <!-- End of Content Wrapper -->
     </div>
   </div>

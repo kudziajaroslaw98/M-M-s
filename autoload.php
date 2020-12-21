@@ -3,12 +3,8 @@
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
 require_once __DIR__ . './src/Validation.php';
 require_once __DIR__ . './src/DataForm.php';
+require_once __DIR__ . './dbconfig.php';
 
-$config = array(
-    'dsn' => 'mysql:dbname=baza; host=127.0.0.1',
-    'username' => 'root',
-    'password' => ''
-);
 
 // try {
 //     $pdo = new PDO($config['dsn'], $config['username'], $config['password']);
