@@ -1,9 +1,9 @@
-<!-- Search Equipment Page -->
+<!-- Search Hardware Page -->
 
 <html lang="en">
 
 <head>
-  <title>M&M's Karczma - Search Equipment</title>
+  <title>M&M's Karczma - Search Hardware</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="dev_dependency/css/bootstrap.min.css" />
@@ -70,14 +70,14 @@
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
                   aria-expanded="true" aria-controls="collapseFour">
                   <i class="fas fa-fw fa-cog"></i>
-                  <span>Equipment</span>
+                  <span>Hardware</span>
               </a>
               <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="ShowEq.php">Show Equipments</a>
-                      <a class="collapse-item" href="AddEq.php">Add Equipment</a>
-                      <a class="collapse-item" href="SearchEq.php">Search For Equipment</a>
+                      <a class="collapse-item" href="ShowHardware.php">Show Hardware</a>
+                      <a class="collapse-item" href="AddHardware.php">Add Hardware</a>
+                      <a class="collapse-item" href="SearchHardware.php">Search For Hardware</a>
                   </div>
               </div>
           </li>
@@ -132,7 +132,7 @@
 
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-                      <h1 class="h3 mb-0 text-gray-800">Search Equipment</h1>
+                      <h1 class="h3 mb-0 text-gray-800">Search Hardware</h1>
                   </div>
 
                   <!-- Content Row -->
@@ -142,12 +142,12 @@
                       <div class='card-header'>
                         <div class="row">
                         <div class='col-6'>
-                          <label for="search_user">Equipment Number: </label>
-                          <input type="search" placeholder="Equipment Number" id="search_eq_number" class='form-control search_user' value="12312">
+                          <label for="search_user">Hardware Number: </label>
+                          <input type="search" placeholder="Hardware Number" id="search_Hardware_number" class='form-control search_user' value="12312">
                         </div>
                         <div class='col-6'>
-                          <label for="search_user">Equipment Serial Number: </label>
-                          <input type="search" placeholder="Equipment Serial Number" id="search_eq_serial" class='form-control search_user' value="125215212">
+                          <label for="search_user">Hardware Serial Number: </label>
+                          <input type="search" placeholder="Equipment Serial Number" id="search_Hardware_serial" class='form-control search_user' value="125215212">
                         </div>
                       </div>
                       </div>
@@ -155,21 +155,21 @@
 
                         <div class="actual_user_info card">
 
-                          <h5 class="card-header">Found Equipment</h5>
+                          <h5 class="card-header">Found Hardware</h5>
                           <div class="card-body">
                             <div class="table-responsive">
                             <table class="table">
                               <thead>
                                 <tr>
                                   <th scope="col">#</th>
-                                  <th scope="col">Equipment Number</th>
+                                  <th scope="col">Hardware Number</th>
                                   <th scope="col">Name</th>
                                   <th scope="col">Serial Number</th>
                                   <th scope="col">Purchase Date</th>
                                   <th scope="col">Invoice Number</th>
                                   <th scope="col">Warranty Date</th>
                                   <th scope="col">Net Value</th>
-                                  <th scope="col">Equipment User</th>
+                                  <th scope="col">Hardware User</th>
                                   <th scope="col">Note</th>
                                 </tr>
                               </thead>

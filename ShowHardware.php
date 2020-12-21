@@ -1,9 +1,9 @@
-<!-- Add Equipment Page -->
+<!-- Show Hardware Page -->
 
 <html lang="en">
 
 <head>
-  <title>M&M's Karczma - Add Equipment</title>
+  <title>M&M's Karczma - Show Hardware</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="dev_dependency/css/bootstrap.min.css" />
@@ -70,14 +70,14 @@
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
                   aria-expanded="true" aria-controls="collapseFour">
                   <i class="fas fa-fw fa-cog"></i>
-                  <span>Equipment</span>
+                  <span>Hardware</span>
               </a>
               <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="ShowEq.php">Show Equipments</a>
-                      <a class="collapse-item" href="AddEq.php">Add Equipment</a>
-                      <a class="collapse-item" href="SearchEq.php">Search For Equipment</a>
+                      <a class="collapse-item" href="ShowHardware.php">Show Hardware</a>
+                      <a class="collapse-item" href="AddHardware.php">Add Hardware</a>
+                      <a class="collapse-item" href="SearchHardware.php">Search For Hardware</a>
                   </div>
               </div>
           </li>
@@ -132,104 +132,57 @@
 
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-                      <h1 class="h3 mb-0 text-gray-800">Add Equipment</h1>
+                      <h1 class="h3 mb-0 text-gray-800">Your Hardware</h1>
                   </div>
 
                   <!-- Content Row -->
                   <div class="row col-lg-12 d-flex justify-content-center">
+
                     <div class='card col-sm-12'>
+
                       <div class='card-body'>
-                        <form class='col-12'>
-                          <div class='row col-12'>
-                          <div class='col-6'>
-                            <div class="form-group">
-                              <label for="Name">Name</label>
-                              <input type="text" class="form-control" id="Name" placeholder="Name">
-                            </div>
-                            </div>
 
-                        <div class='row col-12'>
-                          <div class='col-6'>
-                          <div class="form-group">
-                            <label for="EquipmentNumber">Equipment Number</label>
-                            <input type="number" class="form-control" id="EquipmentNumber" placeholder="Equipment Number">
+                        <div class="InvoicesFound card">
+
+                          <h5 class="card-header">Found Hardware</h5>
+                          <div class="card-body">
+                                      <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Hardware Number</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Serial Number</th>
+                                  <th scope="col">Purchase Date</th>
+                                  <th scope="col">Invoice Number</th>
+                                  <th scope="col">Warranty Date</th>
+                                  <th scope="col">Net Value</th>
+                                  <th scope="col">Hardware User</th>
+                                  <th scope="col">Note</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>12312</td>
+                                  <td>Laptop MSI</td>
+                                  <td>125215212</td>
+                                  <td>19.12.2020</td>
+                                  <td>64712</td>
+                                  <td>19.12.2025</td>
+                                  <td>24718 zł</td>
+                                  <td>Jaroslaw Kudzia</td>
+                                  <td>Sprawny</td>
+                                </tr>
+                              </tbody>
+                            </table>
                           </div>
-                        </div>
-                          <div class='col-6'>
-                            <div class="form-group">
-                              <label for="SerialNumber">Serial Number</label>
-                              <input type="number" class="form-control" id="SerialNumber" placeholder="Serial Number">
-                            </div>
-                            </div>
-                        </div>
-                          <div class="row col-12">
-                            <div class='col-6'>
-                              <div class="form-group">
-                                <label for="InvoiceNumber">Invoice Number</label>
-                                <input type="number" class="form-control" id="InvoiceNumber" placeholder="Invoice Number">
-                              </div>
-                              </div>
-                              <div class='col-6'>
-                                <div class="form-group">
-                                  <label for="NetValue">Net Value</label>
-                                  <input type="number" class="form-control" id="NetValue" placeholder="Net Value">
-                                </div>
-                                </div>
-
-
-                          </div>
-                          <div class="row col-12">
-                              <div class='col-6'>
-                                <div class="form-group">
-                                  <label for="WarrantyDate">Warranty Date</label>
-                                  <input type="date" class="form-control" id="WarrantyDate" placeholder="Warranty Date">
-                                </div>
-                                </div>
-                                <div class='col-6'>
-                                  <div class="form-group">
-                                    <label for="PurchaseDate">Purchase Date</label>
-                                    <input type="date" class="form-control" id="PurchaseDate" placeholder="Purchase Date">
-                                  </div>
-                                  </div>
-                          </div>
-                          <div class="row col-12">
-                            <div class='col-6'>
-                              <div class="form-group">
-                                <label for="EquipmentUser">Equipment User</label>
-                                <input type="text" class="form-control" id="EquipmentUser" placeholder="Equipment User">
-                              </div>
-                              </div>
-                              <div class='col-6'>
-                                <div class="form-group">
-                                  <label for="Note">Note</label>
-                                  <input type="text" class="form-control" id="Note" placeholder="Note">
-                                </div>
-                                </div>
-                          </div>
-                        </div>
-
-                        <div class="row col-12">
-                        <div class="form-group">
-                          <label for="UploadEq">Pick file to Upload</label>
-                          <input type="file" class="form-control-file" id="UploadEq">
-                        </div>
-                      </div>
-                      <div class="row col-12">
-                        <div class='col-4 offset-md-4'>
-                          <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-user btn-block form-control-input" id="AddEqSubmit">
-                          </div>
-                          </div>
-                      </div>
-                        </form>
-
-
-
                           </div>
 
                         </div>
                       </div> <!-- tutaj beda zaczytywani uzytkownicy, a search bedzie automatycznie wyszukiwal -->
-
+                    </div>
 
               </div>
               <!-- /.container-fluid -->

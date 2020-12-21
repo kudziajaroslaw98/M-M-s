@@ -70,14 +70,14 @@
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
                   aria-expanded="true" aria-controls="collapseFour">
                   <i class="fas fa-fw fa-cog"></i>
-                  <span>Equipment</span>
+                  <span>Hardware</span>
               </a>
               <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Options:</h6>
-                      <a class="collapse-item" href="ShowEq.php">Show Equipments</a>
-                      <a class="collapse-item" href="AddEq.php">Add Equipment</a>
-                      <a class="collapse-item" href="SearchEq.php">Search For Equipment</a>
+                      <a class="collapse-item" href="ShowHardware.php">Show Hardware</a>
+                      <a class="collapse-item" href="AddHardware.php">Add Hardware</a>
+                      <a class="collapse-item" href="SearchHardware.php">Search For Hardware</a>
                   </div>
               </div>
           </li>
