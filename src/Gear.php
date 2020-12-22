@@ -9,7 +9,7 @@ class Gear
 
     public function __construct()
     {
-        $this->stmtSelect = "SELECT p.transactionDate, p.currency, u.firstName, u.lastName, g.gearID, g.name, g.serialNumber, g.warrantyDate, g.netValue, g.userID, g.notes FROM gear g JOIN users u ON g.userID=u.userID JOIN purchaseinvoices p ON g.purchaseInvoiceID=p.purchaseInvoiceID";
+        $this->stmtSelect = "SELECT p.transactionDate, p.currency, u.firstName, u.lastName, g.gearID, g.name, g.serialNumber, g.warrantyDate, g.netValue, g.userID, g.notes, p.purchaseInvoiceID FROM gear g JOIN users u ON g.userID=u.userID JOIN purchaseinvoices p ON g.purchaseInvoiceID=p.purchaseInvoiceID";
 
         try {
             global $config;
@@ -104,6 +104,7 @@ class Gear
                 <td>" . $row['gearID'] . "</td>
                 <td>" . $row['name'] . "</td>
                 <td>" . $row['serialNumber'] . "</td>
+                <td>" . $row['purchaseInvoiceID'] . "</td>
                 <td>" . $row['transactionDate'] . "</td>
                 <td>" . (is_null($row['warrantyDate']) ? "Lifeless" : $row['warrantyDate']) . "</td>
                 <td>" . $row['netValue'] . " " . $row['currency'] . "</td>
