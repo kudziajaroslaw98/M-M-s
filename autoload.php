@@ -1,8 +1,14 @@
 <?php
 
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
+
 require_once __DIR__ . './src/Validation.php';
 require_once __DIR__ . './src/DataForm.php';
+
+require_once __DIR__ . './src/Gear.php';
+require_once __DIR__ . './src/User.php';
+require_once __DIR__ . './src/PurchaseInvoice.php';
+
 require_once __DIR__ . './dbconfig.php';
 
 

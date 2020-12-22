@@ -22,7 +22,7 @@ try {
     require_once __DIR__ . './../autoload.php';
 
     $data = new DataForm($_POST, true, array('myfile'));
-    $data->checkExistsData();
+    $data->checkIfExistsData();
     $data->sanitizeData();
     if ($data->checkAllFiles('pdf') == false) {
         throw new Exception('Only files in PDF format!');
