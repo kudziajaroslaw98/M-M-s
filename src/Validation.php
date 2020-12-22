@@ -174,14 +174,21 @@ class Validation
         return true;
     }
 
-    private function findSeparator($data)
+    private function findSeparator($data, bool $isNumeric = true)
     {
         $separator = '';
         $splitData = str_split($data);
         foreach ($splitData as $key => $value) {
-            if (!is_numeric($value)) {
-                $separator = $value;
-                return $separator;
+            if ($isNumeric) {
+                if (!is_numeric($value)) {
+                    $separator = $value;
+                    return $separator;
+                }
+            } else {
+                if (!ctype_alpha($value)) {
+                    $separator = $value;
+                    return $separator;
+                }
             }
         }
     }
@@ -189,7 +196,7 @@ class Validation
     public function validateDate(string $date, string $format = 'Y-m-d')
     {
         // find format separator
-        $formatSeparator = $this->findSeparator($format);
+        $formatSeparator = $this->findSeparator($format, false);
         $format = explode($formatSeparator, $format);
         if (count($format) != 3) {
             throw new InvalidInputExcetion('Given format date is invalid!');
@@ -197,7 +204,7 @@ class Validation
         }
 
         // find date separator
-        $dateSeparator = $this->findSeparator($date);
+        $dateSeparator = $this->findSeparator($date, true);
         $date = explode($dateSeparator, $date);
         if (count($date) != 3) {
             throw new InvalidInputExcetion('Given date is invalid!');
@@ -209,9 +216,9 @@ class Validation
         for ($i = 0; $i < count($date); $i++) {
             if (strtoupper($format[$i]) == 'Y') {
                 $goodDate[0] = $date[$i];
-            } else if (strtoupper($format[$i] == 'M')) {
+            } else if (strtoupper($format[$i]) == 'M') {
                 $goodDate[1] = $date[$i];
-            } else if (strtoupper($format[$i] == 'D')) {
+            } else if (strtoupper($format[$i]) == 'D') {
                 $goodDate[2] = $date[$i];
             } else {
                 throw new InvalidInputExcetion('Given format date is invalid!');
