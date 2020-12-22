@@ -5,9 +5,12 @@ require_once __DIR__ . './../autoload.php';
 class Gear
 {
     private $connect = null;
+    private string $stmtSelect;
 
     public function __construct()
     {
+        $this->stmtSelect = "SELECT p.transactionDate, p.currency, u.firstName, u.lastName, g.gearID, g.name, g.serialNumber, g.warrantyDate, g.netValue, g.userID, g.notes FROM gear g JOIN users u ON g.userID=u.userID JOIN purchaseinvoices p ON g.purchaseInvoiceID=p.purchaseInvoiceID";
+
         try {
             global $config;
             $this->connect = new PDO($config['dsn'], $config['username'], $config['password']);
@@ -42,12 +45,29 @@ class Gear
     public function searchSerialNumber($serialNumber)
     {
         try {
-            $stmt2 = $this->connect->prepare("SELECT * FROM gear WHERE serialNumber = :SerialNumber");
+            $stmt2 = $this->connect->prepare("$this->stmtSelect WHERE g.serialNumber LIKE :SerialNumber");
 
             $exec2 = $stmt2->execute(array(
-                'serialNumber' => $serialNumber
+                'SerialNumber' => "$serialNumber%"
             ));
-            return $stmt2->fetchAll();
+
+            $i = 1;
+            while ($row = $stmt2->fetch()) {
+                echo "
+                    <tr>
+                        <th scope='row'>$i</th>
+                        <td>" . $row['gearID'] . "</td>
+                        <td>" . $row['name'] . "</td>
+                        <td>" . $row['serialNumber'] . "</td>
+                        <td>" . $row['transactionDate'] . "</td>
+                        <td>" . (is_null($row['warrantyDate']) ? "Lifeless" : $row['warrantyDate']) . "</td>
+                        <td>" . $row['netValue'] . " " . $row['currency'] . "</td>
+                        <td>" . $row['firstName'] . " " . $row['lastName'] . "</td>
+                        <td>" . (is_null($row['notes']) ? "" : $row['notes']) . "</td>
+                    </tr>
+                ";
+                $i++;
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -56,12 +76,29 @@ class Gear
     public function searchGearNumber($gearNumber)
     {
         try {
-            $stmt2 = $this->connect->prepare("SELECT * FROM gear WHERE gearID = :gearNumber");
+            $stmt2 = $this->connect->prepare("$this->stmtSelect WHERE g.gearID LIKE :GearID");
 
             $exec2 = $stmt2->execute(array(
-                'gearNumber' => $gearNumber
+                'GearID' => "$gearNumber%"
             ));
-            return $stmt2->fetchAll();
+
+            $i = 1;
+            while ($row = $stmt2->fetch()) {
+                echo "
+                    <tr>
+                        <th scope='row'>$i</th>
+                        <td>" . $row['gearID'] . "</td>
+                        <td>" . $row['name'] . "</td>
+                        <td>" . $row['serialNumber'] . "</td>
+                        <td>" . $row['transactionDate'] . "</td>
+                        <td>" . (is_null($row['warrantyDate']) ? "Lifeless" : $row['warrantyDate']) . "</td>
+                        <td>" . $row['netValue'] . " " . $row['currency'] . "</td>
+                        <td>" . $row['firstName'] . " " . $row['lastName'] . "</td>
+                        <td>" . (is_null($row['notes']) ? "" : $row['notes']) . "</td>
+                    </tr>
+                ";
+                $i++;
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -70,7 +107,7 @@ class Gear
     public function showAllGear()
     {
         try {
-            $stmt2 = $this->connect->prepare("SELECT p.transactionDate, p.currency, u.firstName, u.lastName, g.gearID, g.name, g.serialNumber, g.warrantyDate, g.netValue, g.userID, g.notes FROM gear g JOIN users u ON g.userID=u.userID JOIN purchaseinvoices p ON g.purchaseInvoiceID=p.purchaseInvoiceID");
+            $stmt2 = $this->connect->prepare($this->stmtSelect);
             $exec2 = $stmt2->execute();
 
             $i = 1;
