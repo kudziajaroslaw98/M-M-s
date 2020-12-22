@@ -53,19 +53,7 @@ class Gear
 
             $i = 1;
             while ($row = $stmt2->fetch()) {
-                echo "
-                    <tr>
-                        <th scope='row'>$i</th>
-                        <td>" . $row['gearID'] . "</td>
-                        <td>" . $row['name'] . "</td>
-                        <td>" . $row['serialNumber'] . "</td>
-                        <td>" . $row['transactionDate'] . "</td>
-                        <td>" . (is_null($row['warrantyDate']) ? "Lifeless" : $row['warrantyDate']) . "</td>
-                        <td>" . $row['netValue'] . " " . $row['currency'] . "</td>
-                        <td>" . $row['firstName'] . " " . $row['lastName'] . "</td>
-                        <td>" . (is_null($row['notes']) ? "" : $row['notes']) . "</td>
-                    </tr>
-                ";
+                $this->echoGear($row, $i);
                 $i++;
             }
         } catch (Exception $e) {
@@ -84,19 +72,7 @@ class Gear
 
             $i = 1;
             while ($row = $stmt2->fetch()) {
-                echo "
-                    <tr>
-                        <th scope='row'>$i</th>
-                        <td>" . $row['gearID'] . "</td>
-                        <td>" . $row['name'] . "</td>
-                        <td>" . $row['serialNumber'] . "</td>
-                        <td>" . $row['transactionDate'] . "</td>
-                        <td>" . (is_null($row['warrantyDate']) ? "Lifeless" : $row['warrantyDate']) . "</td>
-                        <td>" . $row['netValue'] . " " . $row['currency'] . "</td>
-                        <td>" . $row['firstName'] . " " . $row['lastName'] . "</td>
-                        <td>" . (is_null($row['notes']) ? "" : $row['notes']) . "</td>
-                    </tr>
-                ";
+                $this->echoGear($row, $i);
                 $i++;
             }
         } catch (Exception $e) {
