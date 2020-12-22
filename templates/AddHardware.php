@@ -110,8 +110,14 @@ $invoice = new PurchaseInvoice();
                   <?php
                   try {
                     if (!empty($_POST)) {
-                      $dataForm = new DataForm($_POST);
-                      $dataForm->checkIfExistsData();
+                      $dataForm = new DataForm($_POST, array('WarrantyDate', 'Note'));
+                      if (!$dataForm->checkIfExistsData()) {
+                        throw new InvalidInputExcetion('Given data are invalid!');
+                      }
+                      // if (!$dataForm->validation->validateDate($dataForm->data['WarrantyDate'])) {
+                      //   throw new InvalidInputExcetion('Data is invalid!');
+                      // }
+
                       $dataForm->sanitizeData();
 
                       $gear->addGear($dataForm->data);

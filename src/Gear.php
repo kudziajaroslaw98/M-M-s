@@ -24,6 +24,12 @@ class Gear
     public function addGear($values)
     {
         try {
+            foreach ($values as $key => &$value) {
+                if ($value == "skipValuesMyPhp") {
+                    $value = null;
+                }
+            }
+
             $stmt1 = $this->connect->prepare("INSERT INTO gear (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumber`, `notes`, `netValue`, `warrantyDate`) VALUES (NULL, :InvoiceNumber, :HardwareUser, :HardwareName, :SerialNumber, :Note, :NetValue, :WarrantyDate)");
 
             $exec1 = $stmt1->execute(array(

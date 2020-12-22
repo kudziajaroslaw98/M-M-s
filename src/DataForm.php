@@ -12,6 +12,7 @@ class DataForm
 {
     public Validation $validation;
     public array $data;
+    public array $dataIgnores;
     public bool $isFile;
     public array $dataFiles;
 
@@ -23,10 +24,11 @@ class DataForm
      * @param bool $isFalse - default value = false.
      * @param array $dataFilesNames - default value = array()
      */
-    public function __construct(array $data = array(), bool $isFile = false, array $dataFilesNames = array())
+    public function __construct(array $data = array(), array $dataIgnores = array(), bool $isFile = false, array $dataFilesNames = array())
     {
         $this->validation = new Validation();
         $this->data = $data;
+        $this->dataIgnores = $dataIgnores;
         $this->isFile = $isFile;
         $this->dataFiles = $dataFilesNames;
 
@@ -40,6 +42,17 @@ class DataForm
      */
     public function checkIfExistsData()
     {
+        // skip chosen fields
+        $data = array();
+        foreach ($this->data as $key1 => $value1) {
+            if (!in_array($key1, $this->dataIgnores)) {
+                $data[$key1] = $value1;
+            } else {
+                $data[$key1] = "skipValuesMyPhp";
+            }
+        }
+        $this->data = $data;
+
         // not exists dataset
         if (empty($this->data)) {
             throw new InvalidInputExcetion('Not taken anything data!');
