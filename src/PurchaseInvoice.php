@@ -26,7 +26,7 @@ class PurchaseInvoice
             ));
 
             while ($row = $stmt2->fetch()) {
-                echo "<option value='" . $row['purchaseInvoiceID'] . "'>" . $row['contractorData'] . ", " . $row['amountBrutto'] . "" . $row['currency'] . ", " . $row['transactionDate'] . "</option>";
+                echo "<option value='" . $row['purchaseInvoiceID'] . "'>" . $row['purchaseInvoiceID'] . ") " . $row['contractorData'] . ", " . $row['amountBrutto'] . "" . $row['currency'] . ", " . $row['transactionDate'] . "</option>";
             }
         } catch (Exception $e) {
             echo $e->getMessage();

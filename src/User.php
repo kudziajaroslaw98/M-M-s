@@ -24,7 +24,7 @@ class User
             $exec2 = $stmt2->execute();
 
             while ($row = $stmt2->fetch()) {
-                echo "<option value='" . $row['userID'] . "'>" . $row['firstName'] . " " . $row['lastName'] . "</option>";
+                echo "<option value='" . $row['userID'] . "'>" . $row['userID'] . ") "  . $row['firstName'] . " " . $row['lastName'] . "</option>";
             }
         } catch (Exception $e) {
             echo $e->getMessage();
