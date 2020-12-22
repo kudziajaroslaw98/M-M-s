@@ -38,7 +38,7 @@ class DataForm
      * If all values from dataset form exists then automatic remember given all files.
      * @return true
      */
-    public function checkExistsData()
+    public function checkIfExistsData()
     {
         // not exists dataset
         if (empty($this->data)) {

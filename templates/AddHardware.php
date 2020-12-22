@@ -1,5 +1,13 @@
 <!-- Add Hardware Page -->
 
+<?php
+require_once __DIR__ . './../autoload.php';
+
+$gear = new Gear();
+$user = new User();
+$invoice = new PurchaseInvoice();
+?>
+
 <html lang="en">
 
 <head>
@@ -29,12 +37,12 @@
           <div class="row col-lg-12 d-flex justify-content-center">
             <div class='card col-sm-12'>
               <div class='card-body'>
-                <form class='col-12'>
+                <form class='col-12' method='POST'>
                   <div class='row col-12'>
                     <div class='col-6'>
                       <div class="form-group">
                         <label for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Name">
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Name">
                       </div>
                     </div>
 
@@ -42,13 +50,16 @@
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="SerialNumber">Serial Number</label>
-                          <input type="number" class="form-control" id="SerialNumber" placeholder="Serial Number">
+                          <input type="number" class="form-control" id="SerialNumber" name="SerialNumber" placeholder="Serial Number">
                         </div>
                       </div>
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="InvoiceNumber">Invoice Number</label>
-                          <input type="number" class="form-control" id="InvoiceNumber" placeholder="Invoice Number">
+                          <!-- <input type="number" class="form-control" id="InvoiceNumber" name="InvoiceNumber" placeholder="Invoice Number"> -->
+                          <select class="form-control" id="InvoiceNumber" name="InvoiceNumber">
+                            <?php $invoice->drawAllInvoices() ?>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -56,13 +67,13 @@
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="NetValue">Net Value</label>
-                          <input type="number" class="form-control" id="NetValue" placeholder="Net Value">
+                          <input type="number" class="form-control" id="NetValue" name="NetValue" placeholder="Net Value">
                         </div>
                       </div>
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="WarrantyDate">Warranty Date</label>
-                          <input type="date" class="form-control" id="WarrantyDate" placeholder="Warranty Date">
+                          <input type="date" class="form-control" id="WarrantyDate" name="WarrantyDate" placeholder="Warranty Date">
                         </div>
                       </div>
                     </div>
@@ -71,24 +82,21 @@
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="HardwareUser">Hardware User</label>
-                          <input type="text" class="form-control" id="HardwareUser" placeholder="Hardware User">
+                          <!-- <input type="text" class="form-control" id="HardwareUser" name="HardwareUser" placeholder="Hardware User"> -->
+                          <select class="form-control" id="HardwareUser" name="HardwareUser">
+                            <?php $user->drawAllUsers(); ?>
+                          </select>
                         </div>
                       </div>
                       <div class='col-6'>
                         <div class="form-group">
                           <label for="Note">Note</label>
-                          <input type="text" class="form-control" id="Note" placeholder="Note">
+                          <input type="text" class="form-control" id="Note" name="Note" placeholder="Note">
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="row col-12">
-                    <div class="form-group">
-                      <label for="UploadHardware">Pick file to Upload</label>
-                      <input type="file" class="form-control-file" id="UploadHardware">
-                    </div>
-                  </div>
                   <div class="row col-12">
                     <div class='col-4 offset-md-4'>
                       <div class="form-group">
@@ -97,6 +105,22 @@
                     </div>
                   </div>
                 </form>
+
+                <div class='info'>
+                  <?php
+                  try {
+                    if (!empty($_POST)) {
+                      $dataForm = new DataForm($_POST);
+                      $dataForm->checkIfExistsData();
+                      $dataForm->sanitizeData();
+
+                      $gear->addGear($dataForm->data);
+                    }
+                  } catch (Exception $e) {
+                    echo $e->getMessage();
+                  }
+                  ?>
+                </div>
 
               </div>
 
