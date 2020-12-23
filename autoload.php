@@ -5,6 +5,10 @@ require_once __DIR__ . './exceptions/autoloadExceptions.php';
 require_once __DIR__ . './src/Validation.php';
 require_once __DIR__ . './src/DataForm.php';
 
+require_once __DIR__ . './templates/Layout.php';
+require_once __DIR__ . './templates/HardwareViewAdd.php';
+require_once __DIR__ . './src/HardwareController.php';
+
 require_once __DIR__ . './src/Gear.php';
 require_once __DIR__ . './src/User.php';
 require_once __DIR__ . './src/PurchaseInvoice.php';

@@ -1,41 +1,28 @@
-<!-- Home Page -->
+<?php
 
-<html lang="en">
+require_once __DIR__ . './../autoload.php';
 
-<head>
-    <title>M&M's Karczma - Home</title>
-    <?php require_once __DIR__ . './head.php'; ?>
-</head>
+session_start();
 
-<body id="page-top">
+$action = isset($_GET['action']) ? $_GET['action'] : null;
 
-    <div id="wrapper">
-
-        <?php require_once("navbar.php") ?>
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-                        <h1 class="h3 mb-0 text-gray-800">Home Header</h1>
-                    </div>
-                    <!-- Content Row -->
-                    <div class="row">
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <?php require_once("foother.php") ?>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-    </div>
-
-</html>
+switch ($action) {
+    case 'hardware-add':
+        HardwareController::show();
+        break;
+        // case 'invoice-show':
+        //     InvoiceController::show();
+        //     break;
+        // case 'login-set':
+        //     LoginController::set();
+        //     break;
+        // case 'login':
+        //     LoginController::index();
+        //     break;
+        // case 'logout':
+        //     LoginController::logout();
+        //     break;
+    default:
+        header('Location: home.php?action=hardware-add');
+        break;
+}
