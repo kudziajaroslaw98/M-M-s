@@ -90,10 +90,10 @@ class Layout
                                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <form method="post" action="home.php?action=invoice-add"><a class="collapse-item">Add Invoice</a></form>
-                                                        <a class="collapse-item" href="ShowInvoices.php">Show Invoices</a>
-                                                        <a class="collapse-item" href="ShowInvoicesList.php">Show Invoices As List</a>
-                                                        <a class="collapse-item" href="SearchInvoices.php">Search For Invoices</a>
+                                                        <a class="collapse-item" href="home.php?action=invoice-add">Add Invoice</a>
+                                                        <a class="collapse-item" href="home.php?action=invoice-show">Show Invoices</a>
+                                                        <a class="collapse-item" href="home.php?action=invoice-show-list">Show Invoices As List</a>
+                                                        <a class="collapse-item" href="home.php?action=invoice-search">Search For Invoices</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -105,9 +105,9 @@ class Layout
                                                 <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="ShowHardware.php">Show Hardware</a>
-                                                        <a class="collapse-item" href="AddHardware.php">Add Hardware</a>
-                                                        <a class="collapse-item" href="SearchHardware.php">Search For Hardware</a>
+                                                        <a class="collapse-item" href="home.php?action=hardware-show">Show Hardware</a>
+                                                        <a class="collapse-item" href="home.php?action=hardware-add">Add Hardware</a>
+                                                        <a class="collapse-item" href="home.php?action=hardware-search">Search For Hardware</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -119,8 +119,8 @@ class Layout
                                                 <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="ShowLicenses.php">Show Licences</a>
-                                                        <a class="collapse-item" href="AddLicenses.php">Add Licence</a>
+                                                        <a class="collapse-item" href="home.php?action=license-show">Show Licences</a>
+                                                        <a class="collapse-item" href="home.php?action=license-search">Add Licence</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -132,8 +132,8 @@ class Layout
                                                 <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="ShowDoc.php">Show Documents</a>
-                                                        <a class="collapse-item" href="AddDoc.php">Add Documents</a>
+                                                        <a class="collapse-item" href="home.php?action=doc-show">Show Documents</a>
+                                                        <a class="collapse-item" href="home.php?action=doc-add">Add Documents</a>
                                                     </div>
                                                 </div>
                                             </li>
