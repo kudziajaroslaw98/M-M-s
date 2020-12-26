@@ -38,7 +38,13 @@ require_once __DIR__ . './src/handlers/InvoiceHandler.php';
 require_once __DIR__ . './src/handlers/LicenseHandler.php';
 require_once __DIR__ . './src/handlers/DocHandler.php';
 
-require_once __DIR__ . './src/Gear.php';
+// Classes
+require_once __DIR__ . './src/classes/Gear.php';
+
+// Repositories
+require_once __DIR__ . './src/repositories/GearRepository.php';
+
+require_once __DIR__ . './src/Gear_old.php';
 require_once __DIR__ . './src/User.php';
 require_once __DIR__ . './src/PurchaseInvoice.php';
 
