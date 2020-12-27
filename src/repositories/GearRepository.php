@@ -19,6 +19,30 @@ class GearRepository
         }
     }
 
+    private function changeRowToClass($row)
+    {
+        if (is_null($row['notes'])) {
+            $row['notes'] = "";
+        }
+        if (is_null($row['warrantyDate'])) {
+            $row['warrantyDate'] = 'Lifeless';
+        }
+
+        return $row;
+    }
+
+    private function changeClassToRow(Gear $gear)
+    {
+        if ($gear->getNotes() == "") {
+            $gear->setNotes(null);
+        }
+        if ($gear->getWarrantyDate() == 'Lifeless') {
+            $gear->setWarrantyDate(null);
+        }
+
+        return $gear;
+    }
+
     public function select()
     {
         try {
@@ -30,7 +54,10 @@ class GearRepository
             $gears = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $gear = new Gear();
-                $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate('warrantyDate');
+
+                // $row = $this->changeRowToClass($row);
+
+                $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
                 array_push($gears, $gear);
             }
 
@@ -42,13 +69,64 @@ class GearRepository
 
     public function insert(Gear $gear)
     {
+        $gear = $this->changeClassToRow($gear);
+
+        $sql = "INSERT INTO gear VALUES(:gearID, :purchaseInvoiceID, :userID, :name, :serialNumber, :notes, :netValue, :warrantyDate)";
+        $stmt = $this->connect->prepare($sql);
+
+        $result = $stmt->execute(array(
+            'gearID' => $gear->getId(),
+            'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
+            'userID' => $gear->getUserID(),
+            'name' => $gear->getName(),
+            'serialNumber' => $gear->getSerialNumber(),
+            'notes' => $gear->getNotes(),
+            'netValue' => $gear->getNetValue(),
+            'warrantyDate' => $gear->getWarrantyDate()
+        ));
+
+        return $result;
     }
 
-    public function updateById(Gear $gear)
+    public function updateById(Gear $gear, int $id)
     {
+        $gear = $this->changeClassToRow($gear);
+
+        $sql = "UPDATE gear SET gearID=:gearID, purchaseInvoiceID=:purchaseInvoiceID, userID=:userID, name=:name, serialNumber=:serialNumber, notes=:notes, netValue=:netValue, warrantyDate=:warrantyDate WHERE gearID=:id";
+        $stmt = $this->connect->prepare($sql);
+
+        $result = $stmt->execute(array(
+            'gearID' => $gear->getId(),
+            'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
+            'userID' => $gear->getUserID(),
+            'name' => $gear->getName(),
+            'serialNumber' => $gear->getSerialNumber(),
+            'notes' => $gear->getNotes(),
+            'netValue' => $gear->getNetValue(),
+            'warrantyDate' => $gear->getWarrantyDate(),
+            'id' => $id
+        ));
+
+        return $result;
     }
 
-    public function findById(Gear $gear)
+    public function findByGearNumber(int $gearNumber)
     {
+        $sql = "SELECT * FROM gear WHERE WHERE gearID LIKE :GearID";
+        $stmt = $this->connect->prepare($sql);
+
+        $result = $stmt->execute(array(
+            'GearID' => $gearNumber
+        ));
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+
+        $gear = new Gear();
+        $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+
+        return $gear;
     }
 }

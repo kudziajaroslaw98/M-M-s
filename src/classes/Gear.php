@@ -7,9 +7,9 @@ class Gear
     private int $userID;
     private string $name;
     private string $serialNumber;
-    private string $notes;
+    private $notes;
     private float $netValue;
-    private DateTime $warrantyDate;
+    private $warrantyDate;
 
     /**
      * Get the value of id

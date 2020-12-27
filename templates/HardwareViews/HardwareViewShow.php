@@ -40,8 +40,7 @@ class HardwareViewShow
                                 <td>Jaroslaw Kudzia</td>
                                 <td>Sprawny</td>
                             </tr>
-                            <?php // $gear->showAllGear() 
-                            ?>
+                            <?= self::renderGearsRows() ?>
                         </tbody>
                     </table>
                 </div>
@@ -52,5 +51,30 @@ class HardwareViewShow
 <?php
         $html = ob_get_clean();
         return $html;
+    }
+
+    private static function renderGearsRows()
+    {
+        $gearRepository = new GearRepository();
+        $gears = $gearRepository->select();
+
+        $i = 1;
+        foreach ($gears as $key => $gear) {
+            echo "
+            <tr>
+                <th scope='row'>$i</th>
+                <td>" . $gear->getID() . "</td>
+                <td>" . $gear->getName() . "</td>
+                <td>" . $gear->getSerialNumber() . "</td>
+                <td>" . $gear->getPurchaseInvoiceID() . "</td>
+                <td>19.12.2020</td>
+                <td>" . $gear->getWarrantyDate() . "</td>
+                <td>" . $gear->getNetValue() . "</td>
+                <td>" . $gear->getUserID() . "</td>
+                <td>" . $gear->getNotes() . "</td>
+            </tr>
+            ";
+            $i++;
+        }
     }
 }

@@ -2,8 +2,8 @@
 
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
 
-require_once __DIR__ . './src/Validation.php';
-require_once __DIR__ . './src/DataForm.php';
+require_once __DIR__ . './src/classes/Validation.php';
+require_once __DIR__ . './src/classes/DataForm.php';
 
 require_once __DIR__ . './templates/Layout.php';
 
@@ -44,9 +44,9 @@ require_once __DIR__ . './src/classes/Gear.php';
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';
 
-require_once __DIR__ . './src/Gear_old.php';
-require_once __DIR__ . './src/User.php';
-require_once __DIR__ . './src/PurchaseInvoice.php';
+// require_once __DIR__ . './src/classes/Gear_old.php';
+// require_once __DIR__ . './src/classes/User.php';
+// require_once __DIR__ . './src/classes/PurchaseInvoice.php';
 
 require_once __DIR__ . './dbconfig.php';
 

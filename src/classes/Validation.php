@@ -2,59 +2,47 @@
 
 class Validation
 {
-    public $mime_filter = array(
-        'image/gif', 'image/jpeg', 'image/png',
-        'application/pdf',
-        'audio/mpeg', 'audio/mpeg3', 'audio/x-mpeg', 'audio/x-mpeg-3'
-    );
-    private $mime = array();  // array without extension prefix
+    private static string $defaultDate = 'Lifeless';
 
-    public function __construct()
-    {
-        foreach ($this->mime_filter as $filter) {
-            array_push($this->mime, substr($filter, strpos($filter, '/') + 1));
-        }
-    }
-
-    public function sanitizeEmail($email)
+    public static function sanitizeEmail($email)
     {
         return filter_var($email, FILTER_SANITIZE_EMAIL);
     }
 
-    public function sanitizeText($text)
+    public static function sanitizeText($text)
     {
         return filter_var($text, FILTER_SANITIZE_STRING);
     }
 
-    public function sanitizeURL($url)
+    public static function sanitizeURL($url)
     {
         return filter_var($url, FILTER_SANITIZE_URL);
     }
 
-    public function sanitizeInt($number)
+    public static function sanitizeInt($number)
     {
         return filter_var($number, FILTER_SANITIZE_NUMBER_INT);
     }
 
-    public function sanitizeFloat($number)
+    public static function sanitizeFloat($number)
     {
         return filter_var($number, FILTER_SANITIZE_NUMBER_FLOAT);
     }
 
-    public function sanitizeStringArray(&$array)
+    public static function sanitizeStringArray(&$array)
     {
         foreach ($array as $key => &$value) {
-            $value = $this->sanitizeText($value);
+            $value = self::sanitizeText($value);
         }
 
         return $array;
     }
 
-    public function replaceStr($strToFind, $strToReplace, $strText)
+    public static function replaceStr($strToFind, $strToReplace, $strText)
     {
-        $strToFind = $this->sanitizeText($strToFind);
-        $strToReplace = $this->sanitizeText($strToReplace);
-        $strText = $this->sanitizeText($strText);
+        $strToFind = self::sanitizeText($strToFind);
+        $strToReplace = self::sanitizeText($strToReplace);
+        $strText = self::sanitizeText($strText);
 
         return str_replace($strToFind, $strToReplace, $strText);
     }
@@ -65,7 +53,7 @@ class Validation
      * @param string $extention default value = 'pdf' 
      * @return bool
      */
-    public function checkFile($file, $extention = 'pdf')
+    public static function checkFile($file, $extention = 'pdf')
     {
         if (empty($file)) {
             throw new InvalidInputExcetion('No files to check!');
@@ -76,22 +64,33 @@ class Validation
         //     return false;
         // }
 
-        if ($this->validateFile($file, $extention) == false) {
+        if (self::validateFile($file, $extention) == false) {
             return false;
         }
 
         return true;
     }
 
-    private function validateFile($file, $exceptExtention = "pdf")
+    private static function validateFile($file, $exceptExtention = "pdf")
     {
+        $mime_filter = array(
+            'image/gif', 'image/jpeg', 'image/png',
+            'application/pdf',
+            'audio/mpeg', 'audio/mpeg3', 'audio/x-mpeg', 'audio/x-mpeg-3'
+        );
+        $mime = array();  // array without extension prefix
+
+        foreach ($mime_filter as $filter) {
+            array_push($mime, substr($filter, strpos($filter, '/') + 1));
+        }
+
         // check if given extention exists
-        if (in_array($exceptExtention, $this->mime) === false) {
+        if (in_array($exceptExtention, $mime) === false) {
             throw new InvalidInputExcetion("Not allowed file extention!");
         }
 
         // remember given extention with prefix
-        $typeOfFile = $this->mime_filter[array_search($exceptExtention, $this->mime)];
+        $typeOfFile = $mime_filter[array_search($exceptExtention, $mime)];
 
         // file error handling
         if ($file['error'] > 0) {
@@ -158,7 +157,7 @@ class Validation
         return true;
     }
 
-    public function validateLicense($license, $characters = "/-")
+    public static function validateLicense($license, $characters = "/-")
     {
         if (strpos($license, " ") === false) {
             return false;
@@ -174,67 +173,43 @@ class Validation
         return true;
     }
 
-    private function findSeparator($data, bool $isNumeric = true)
+    public static function validateDateAndConvert($date)
     {
-        $separator = '';
-        $splitData = str_split($data);
-        foreach ($splitData as $key => $value) {
-            if ($isNumeric) {
-                if (!is_numeric($value)) {
-                    $separator = $value;
-                    return $separator;
-                }
-            } else {
-                if (!ctype_alpha($value)) {
-                    $separator = $value;
-                    return $separator;
-                }
-            }
+        // date can be null
+        if (is_null($date)) {
+            return $date;
         }
+
+        // if date is default date
+        if ($date == self::$defaultDate) {
+            return $date;
+        }
+
+        // change taken string date to date object
+        $localDate = strtotime($date);
+        if (!$localDate) {
+            throw new InvalidArgumentException('Given date has invalid format!');
+            return false;
+        }
+
+        // convert date object to date array
+        $rigthDate = getDate($localDate);
+        if (!$rigthDate) {
+            throw new InvalidArgumentException('Error procesing given string date to date class!');
+            return false;
+        }
+
+        // check if date is valid
+        if (!checkdate($rigthDate['mon'], $rigthDate['mday'], $rigthDate['year'])) {
+            throw new InvalidArgumentException('Given data is not valid date!');
+            return false;
+        }
+
+        // return date in below format
+        return $rigthDate['year'] . "-" . $rigthDate['mon'] . "-" . $rigthDate['mday'];
     }
 
-    public function validateDate(string $date, string $format = 'Y-m-d')
-    {
-        // find format separator
-        $formatSeparator = $this->findSeparator($format, false);
-        $format = explode($formatSeparator, $format);
-        if (count($format) != 3) {
-            throw new InvalidInputExcetion('Given format date is invalid!');
-            return false;
-        }
-
-        // find date separator
-        $dateSeparator = $this->findSeparator($date, true);
-        $date = explode($dateSeparator, $date);
-        if (count($date) != 3) {
-            throw new InvalidInputExcetion('Given date is invalid!');
-            return false;
-        }
-
-        // find year, month, day in given date
-        $goodDate = array();
-        for ($i = 0; $i < count($date); $i++) {
-            if (strtoupper($format[$i]) == 'Y') {
-                $goodDate[0] = $date[$i];
-            } else if (strtoupper($format[$i]) == 'M') {
-                $goodDate[1] = $date[$i];
-            } else if (strtoupper($format[$i]) == 'D') {
-                $goodDate[2] = $date[$i];
-            } else {
-                throw new InvalidInputExcetion('Given format date is invalid!');
-                return false;
-            }
-        }
-
-        // check date (example: invalid is 31-02-2020)
-        if (!checkdate($goodDate[1], $goodDate[2], $goodDate[0])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function checkExistsDir(string $filename)
+    public static function checkExistsDir(string $filename)
     {
         if (!is_dir($filename)) {
             return false;
@@ -243,7 +218,7 @@ class Validation
         return true;
     }
 
-    public function checkExistsFile(string $filename)
+    public static function checkExistsFile(string $filename)
     {
         if (!is_file($filename)) {
             return false;
