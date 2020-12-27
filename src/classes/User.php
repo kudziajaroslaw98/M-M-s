@@ -1,33 +1,110 @@
 <?php
 
-require_once __DIR__ . './../autoload.php';
-
 class User
 {
-    public function __construct()
+    private int $userID;
+    private string $firstName;
+    private string $lastName;
+    private string $jobTitle;
+    private int $phoneNumber;
+
+    /**
+     * Get the value of userID
+     */
+    public function getUserID()
     {
-        try {
-            global $config;
-            $this->connect = new PDO($config['dsn'], $config['username'], $config['password']);
-            $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        return $this->userID;
     }
 
-    public function drawAllUsers()
+    /**
+     * Set the value of userID
+     *
+     * @return  self
+     */
+    public function setUserID(int $userID)
     {
-        try {
-            $stmt2 = $this->connect->prepare("SELECT userID, firstName, lastName FROM users");
+        $this->userID = $userID;
 
-            $exec2 = $stmt2->execute();
+        return $this;
+    }
 
-            while ($row = $stmt2->fetch()) {
-                echo "<option value='" . $row['userID'] . "'>" . $row['userID'] . ") "  . $row['firstName'] . " " . $row['lastName'] . "</option>";
-            }
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+    /**
+     * Get the value of firstName
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set the value of firstName
+     *
+     * @return  self
+     */
+    public function setFirstName(string $firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastName
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set the value of lastName
+     *
+     * @return  self
+     */
+    public function setLastName(string $lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of jobTitle
+     */
+    public function getJobTitle()
+    {
+        return $this->jobTitle;
+    }
+
+    /**
+     * Set the value of jobTitle
+     *
+     * @return  self
+     */
+    public function setJobTitle(string $jobTitle)
+    {
+        $this->jobTitle = $jobTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of phoneNumber
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set the value of phoneNumber
+     *
+     * @return  self
+     */
+    public function setPhoneNumber(int $phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 }

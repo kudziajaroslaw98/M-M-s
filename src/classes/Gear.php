@@ -24,9 +24,9 @@ class Gear
      *
      * @return  self
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = $id;
+        $this->id = Validation::sanitizeInt($id);
 
         return $this;
     }
@@ -44,9 +44,9 @@ class Gear
      *
      * @return  self
      */
-    public function setPurchaseInvoiceID($purchaseInvoiceID)
+    public function setPurchaseInvoiceID(int $purchaseInvoiceID)
     {
-        $this->purchaseInvoiceID = $purchaseInvoiceID;
+        $this->purchaseInvoiceID = Validation::sanitizeInt($purchaseInvoiceID);
 
         return $this;
     }
@@ -64,9 +64,9 @@ class Gear
      *
      * @return  self
      */
-    public function setUserID($userID)
+    public function setUserID(int $userID)
     {
-        $this->userID = $userID;
+        $this->userID = Validation::sanitizeInt($userID);
 
         return $this;
     }
@@ -84,9 +84,9 @@ class Gear
      *
      * @return  self
      */
-    public function setName($name)
+    public function setName(string $name)
     {
-        $this->name = $name;
+        $this->name = Validation::sanitizeText($name);
 
         return $this;
     }
@@ -104,9 +104,9 @@ class Gear
      *
      * @return  self
      */
-    public function setSerialNumber($serialNumber)
+    public function setSerialNumber(string $serialNumber)
     {
-        $this->serialNumber = $serialNumber;
+        $this->serialNumber = Validation::sanitizeText($serialNumber);
 
         return $this;
     }
@@ -126,7 +126,7 @@ class Gear
      */
     public function setNotes($notes)
     {
-        $this->notes = $notes;
+        $this->notes = Validation::sanitizeText($notes);
 
         return $this;
     }
@@ -144,9 +144,9 @@ class Gear
      *
      * @return  self
      */
-    public function setNetValue($netValue)
+    public function setNetValue(float $netValue)
     {
-        $this->netValue = $netValue;
+        $this->netValue = Validation::sanitizeFloat($netValue);
 
         return $this;
     }

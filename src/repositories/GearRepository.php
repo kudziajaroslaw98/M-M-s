@@ -69,64 +69,100 @@ class GearRepository
 
     public function insert(Gear $gear)
     {
-        $gear = $this->changeClassToRow($gear);
+        try {
+            $gear = $this->changeClassToRow($gear);
 
-        $sql = "INSERT INTO gear VALUES(:gearID, :purchaseInvoiceID, :userID, :name, :serialNumber, :notes, :netValue, :warrantyDate)";
-        $stmt = $this->connect->prepare($sql);
+            $sql = "INSERT INTO gear VALUES(:gearID, :purchaseInvoiceID, :userID, :name, :serialNumber, :notes, :netValue, :warrantyDate)";
+            $stmt = $this->connect->prepare($sql);
 
-        $result = $stmt->execute(array(
-            'gearID' => $gear->getId(),
-            'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
-            'userID' => $gear->getUserID(),
-            'name' => $gear->getName(),
-            'serialNumber' => $gear->getSerialNumber(),
-            'notes' => $gear->getNotes(),
-            'netValue' => $gear->getNetValue(),
-            'warrantyDate' => $gear->getWarrantyDate()
-        ));
+            $result = $stmt->execute(array(
+                'gearID' => $gear->getId(),
+                'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
+                'userID' => $gear->getUserID(),
+                'name' => $gear->getName(),
+                'serialNumber' => $gear->getSerialNumber(),
+                'notes' => $gear->getNotes(),
+                'netValue' => $gear->getNetValue(),
+                'warrantyDate' => $gear->getWarrantyDate()
+            ));
 
-        return $result;
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
-    public function updateById(Gear $gear, int $id)
+    public function updateByGearNumber(Gear $gear, int $id)
     {
-        $gear = $this->changeClassToRow($gear);
+        try {
+            $gear = $this->changeClassToRow($gear);
 
-        $sql = "UPDATE gear SET gearID=:gearID, purchaseInvoiceID=:purchaseInvoiceID, userID=:userID, name=:name, serialNumber=:serialNumber, notes=:notes, netValue=:netValue, warrantyDate=:warrantyDate WHERE gearID=:id";
-        $stmt = $this->connect->prepare($sql);
+            $sql = "UPDATE gear SET gearID=:gearID, purchaseInvoiceID=:purchaseInvoiceID, userID=:userID, name=:name, serialNumber=:serialNumber, notes=:notes, netValue=:netValue, warrantyDate=:warrantyDate WHERE gearID=:id";
+            $stmt = $this->connect->prepare($sql);
 
-        $result = $stmt->execute(array(
-            'gearID' => $gear->getId(),
-            'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
-            'userID' => $gear->getUserID(),
-            'name' => $gear->getName(),
-            'serialNumber' => $gear->getSerialNumber(),
-            'notes' => $gear->getNotes(),
-            'netValue' => $gear->getNetValue(),
-            'warrantyDate' => $gear->getWarrantyDate(),
-            'id' => $id
-        ));
+            $result = $stmt->execute(array(
+                'gearID' => $gear->getId(),
+                'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
+                'userID' => $gear->getUserID(),
+                'name' => $gear->getName(),
+                'serialNumber' => $gear->getSerialNumber(),
+                'notes' => $gear->getNotes(),
+                'netValue' => $gear->getNetValue(),
+                'warrantyDate' => $gear->getWarrantyDate(),
+                'id' => Validation::sanitizeInt($id)
+            ));
 
-        return $result;
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function findByGearNumber(int $gearNumber)
     {
-        $sql = "SELECT * FROM gear WHERE WHERE gearID LIKE :GearID";
-        $stmt = $this->connect->prepare($sql);
+        try {
+            $sql = "SELECT * FROM gear WHERE gearID LIKE :GearID";
+            $stmt = $this->connect->prepare($sql);
 
-        $result = $stmt->execute(array(
-            'GearID' => $gearNumber
-        ));
+            $result = $stmt->execute(array(
+                'GearID' => Validation::sanitizeInt($gearNumber)
+            ));
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$row) {
-            return null;
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return null;
+            }
+
+            $gear = new Gear();
+            $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+
+            return $gear;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
+    }
 
-        $gear = new Gear();
-        $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+    public function findBySerialNumber(int $serialNumber)
+    {
+        try {
+            $sql = "SELECT * FROM gear WHERE serialNumber LIKE :SerialNumber";
+            $stmt = $this->connect->prepare($sql);
 
-        return $gear;
+            $result = $stmt->execute(array(
+                'SerialNumber' => Validation::sanitizeInt($serialNumber)
+            ));
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return null;
+            }
+
+            $gear = new Gear();
+            $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+
+            return $gear;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }
