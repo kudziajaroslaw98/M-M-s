@@ -5,7 +5,7 @@ class User
     private int $userID;
     private string $firstName;
     private string $lastName;
-    private string $jobTitle;
+    private string $jobtitle;
     private int $phoneNumber;
 
     /**
@@ -81,9 +81,9 @@ class User
      *
      * @return  self
      */
-    public function setJobTitle(string $jobTitle)
+    public function setJobtitle(string $jobtitle)
     {
-        $this->jobTitle = $jobTitle;
+        $this->jobtitle = $jobtitle;
 
         return $this;
     }

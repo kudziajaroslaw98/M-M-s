@@ -12,7 +12,7 @@ class HardwareViewSearch
                 <div class='col-6'>
                     <form method="post">
                         <div class='row'>
-                            <label for="search_user">Hardware Number: </label>
+                            <label for="search_Hardware_number">Hardware Number: </label>
                             <input type="search" placeholder="Hardware Number" id="search_Hardware_number" name="search_Hardware_number" class='form-control search_user' value="12312">
                         </div>
                         <div class='row justify-content-center'>
@@ -25,7 +25,7 @@ class HardwareViewSearch
                 <div class='col-6'>
                     <form method="post">
                         <div class='row'>
-                            <label for="search_user">Hardware Serial Number: </label>
+                            <label for="search_Hardware_serial">Hardware Serial Number: </label>
                             <input type="search" placeholder="Equipment Serial Number" id="search_Hardware_serial" name="search_Hardware_serial" class='form-control search_user' value="125215212">
                         </div>
                         <div class='row justify-content-center'>
@@ -76,20 +76,7 @@ class HardwareViewSearch
                                 <td>Jaroslaw Kudzia</td>
                                 <td>Sprawny</td>
                             </tr>
-                            <?php
-                            //   if (!empty($_POST)) {
-                            //     $dataForm->data = $_POST;
-                            //     $dataForm->checkIfExistsData();
-                            //     $dataForm->sanitizeData();
-
-                            //     $dataKeys = array_keys($dataForm->data);
-                            //     if (in_array("HardwareNumber", $dataKeys)) {
-                            //       $gear->searchGearNumber($dataForm->data['search_Hardware_number']);
-                            //     } else {
-                            //       $gear->searchSerialNumber($dataForm->data['search_Hardware_serial']);
-                            //     }
-                            //   }
-                            ?>
+                            <?= HardwareController::renderSearched() ?>
                         </tbody>
                     </table>
                 </div>

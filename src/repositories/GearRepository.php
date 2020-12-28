@@ -125,18 +125,20 @@ class GearRepository
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'GearID' => Validation::sanitizeInt($gearNumber)
+                'GearID' => Validation::sanitizeInt($gearNumber) . '%'
             ));
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$row) {
-                return null;
+            $gears = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $gear = new Gear();
+
+                // $row = $this->changeRowToClass($row);
+
+                $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+                array_push($gears, $gear);
             }
 
-            $gear = new Gear();
-            $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
-
-            return $gear;
+            return $gears;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -149,18 +151,20 @@ class GearRepository
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'SerialNumber' => Validation::sanitizeInt($serialNumber)
+                'SerialNumber' => Validation::sanitizeInt($serialNumber) . '%'
             ));
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$row) {
-                return null;
+            $gears = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $gear = new Gear();
+
+                // $row = $this->changeRowToClass($row);
+
+                $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+                array_push($gears, $gear);
             }
 
-            $gear = new Gear();
-            $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
-
-            return $gear;
+            return $gears;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

@@ -19,7 +19,7 @@ class UserRepository
     public function select()
     {
         try {
-            $sql = "SELECT * FROM user";
+            $sql = "SELECT * FROM users";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute();
@@ -41,7 +41,7 @@ class UserRepository
     public function findById(int $id)
     {
         try {
-            $sql = "SELECT * FROM user WHERE userID=:id";
+            $sql = "SELECT * FROM users WHERE userID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -54,7 +54,7 @@ class UserRepository
             }
 
             $user = new User();
-            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobTitle($row['jobTitle'])->setPhoneNumber($row['phoneNumber']);
+            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobTitle($row['jobtitile'])->setPhoneNumber($row['phoneNumber']);
 
             return $user;
         } catch (PDOException $e) {

@@ -41,7 +41,7 @@ class PurchaseInvoiceRepository
     public function findById(int $id)
     {
         try {
-            $sql = "SELECT * FROM user WHERE purchaseInvoiceID=:id";
+            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -56,7 +56,6 @@ class PurchaseInvoiceRepository
             $purchaseInvoice = new PurchaseInvoice();
 
             $purchaseInvoice->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
-            array_push($purchaseInvoices, $purchaseInvoice);
 
             return $purchaseInvoice;
         } catch (PDOException $e) {
