@@ -120,7 +120,7 @@ class Layout
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
                                                         <a class="collapse-item" href="home.php?action=license-show">Show Licences</a>
-                                                        <a class="collapse-item" href="home.php?action=license-search">Add Licence</a>
+                                                        <a class="collapse-item" href="home.php?action=license-add">Add Licence</a>
                                                     </div>
                                                 </div>
                                             </li>

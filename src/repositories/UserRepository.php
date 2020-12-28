@@ -28,7 +28,7 @@ class UserRepository
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $user = new User();
 
-                $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobTitle($row['jobTitle'])->setPhoneNumber($row['phoneNumber']);
+                $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobtitle($row['jobtitle'])->setPhoneNumber($row['phoneNumber']);
                 array_push($users, $user);
             }
 
@@ -54,7 +54,7 @@ class UserRepository
             }
 
             $user = new User();
-            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobTitle($row['jobtitile'])->setPhoneNumber($row['phoneNumber']);
+            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobtitle($row['jobtitile'])->setPhoneNumber($row['phoneNumber']);
 
             return $user;
         } catch (PDOException $e) {

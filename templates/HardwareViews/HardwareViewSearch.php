@@ -76,7 +76,7 @@ class HardwareViewSearch
                                 <td>Jaroslaw Kudzia</td>
                                 <td>Sprawny</td>
                             </tr>
-                            <?= HardwareController::renderSearched() ?>
+                            <?= self::renderSearched() ?>
                         </tbody>
                     </table>
                 </div>
@@ -87,5 +87,37 @@ class HardwareViewSearch
 <?php
         $html = ob_get_clean();
         return $html;
+    }
+
+    private static function renderSearched()
+    {
+        try {
+            if (!empty($_POST)) {
+                $dataForm = new DataForm();
+                $dataForm->data = $_POST;
+                $dataForm->checkIfExistsData();
+                $dataForm->sanitizeData();
+
+                $dataKeys = array_keys($dataForm->data);
+                $gearRepository = new GearRepository();
+                $userRepository = new UserRepository();
+                $purchaseInvoiceRepository = new PurchaseInvoiceRepository();
+
+                $gears = array();
+                if (in_array("HardwareNumber", $dataKeys)) {
+                    $gears = $gearRepository->findByGearNumber($dataForm->data['search_Hardware_number']);
+                } else {
+                    $gears = $gearRepository->findBySerialNumber($dataForm->data['search_Hardware_serial']);
+                }
+
+                $i = 1;
+                foreach ($gears as $key => $gear) {
+                    self::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
+                    $i++;
+                }
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }

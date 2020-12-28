@@ -6,10 +6,10 @@ class LicenseHandler
     {
         switch ($action) {
             case 'license-add':
-                LicenseController::renderViewShow();
+                LicenseController::renderViewAdd();
                 break;
             case 'license-show':
-                LicenseController::renderViewAdd();
+                LicenseController::renderViewShow();
                 break;
             default:
                 header('Location: home.php?action=invoice-add');
