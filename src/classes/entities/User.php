@@ -69,15 +69,15 @@ class User
     }
 
     /**
-     * Get the value of jobTitle
+     * Get the value of jobtitle
      */
-    public function getJobTitle()
+    public function getJobtitle()
     {
-        return $this->jobTitle;
+        return $this->jobtitle;
     }
 
     /**
-     * Set the value of jobTitle
+     * Set the value of jobtitle
      *
      * @return  self
      */

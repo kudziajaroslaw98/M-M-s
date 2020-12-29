@@ -114,6 +114,26 @@ class HardwareViewAdd
     private static function addHardware()
     {
         try {
+            if (!empty($_POST)) {
+                $dataForm = new DataForm($_POST, array('WarrantyDate', 'Note'));
+                $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
+                if (!$dataForm->checkIfExistsData()) {
+                    throw new InvalidInputExcetion('Given data are invalid!');
+                }
+                if (!Validation::validateDateAndConvert($dataForm->data['WarrantyDate'])) {
+                    throw new InvalidInputExcetion('Data is invalid!');
+                }
+
+                $gearRepository = new GearRepository();
+                $gear = new Gear();
+                $gear->setId(null)->setPurchaseInvoiceID($dataForm->data['InvoiceNumber'])->setUserID($dataForm->data['HardwareUser'])->setName($dataForm->data['Name'])->setSerialNumber($dataForm->data['SerialNumber'])->setNotes($dataForm->data['Note'])->setNetValue($dataForm->data['NetValue'])->setWarrantyDate($dataForm->data['WarrantyDate']);
+
+                if (!$gearRepository->insert($gear)) {
+                    throw new PDOException('Request processing error.');
+                }
+
+                echo 'Hardware has been added.';
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }

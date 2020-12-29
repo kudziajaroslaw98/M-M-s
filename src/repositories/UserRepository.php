@@ -54,7 +54,7 @@ class UserRepository
             }
 
             $user = new User();
-            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobtitle($row['jobtitile'])->setPhoneNumber($row['phoneNumber']);
+            $user->setUserID($row['userID'])->setFirstName($row['firstName'])->setLastName($row['lastName'])->setJobtitle($row['jobtitle'])->setPhoneNumber($row['phoneNumber']);
 
             return $user;
         } catch (PDOException $e) {
@@ -64,9 +64,42 @@ class UserRepository
 
     public function insert(User $user)
     {
+        try {
+            $sql = "INSERT INTO users VALUES (:userID, :firstName, :lastName, :jobtitle, :phoneNumber)";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'userID' => $user->getUserID(),
+                'firstName' => $user->getFirstName(),
+                'lastName' => $user->getLastName(),
+                'jobtitle' => $user->getJobtitle(),
+                'phoneNumber' => $user->getPhoneNumber()
+            ));
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function update(User $user, int $id)
     {
+        try {
+            $sql = "UPDATE users SET userID=:userID, firstName=:firstName, lastName=:lastName, jobtitle=:jobtitle, phoneNumber=:phoneNumber WHERE userID=:id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id),
+                'userID' => $user->getUserID(),
+                'firstName' => $user->getFirstName(),
+                'lastName' => $user->getLastName(),
+                'jobtitle' => $user->getJobtitle(),
+                'phoneNumber' => $user->getPhoneNumber()
+            ));
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }

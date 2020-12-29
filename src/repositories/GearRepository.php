@@ -86,6 +86,13 @@ class GearRepository
                 'warrantyDate' => $gear->getWarrantyDate()
             ));
 
+            if (is_null($gear->getNotes())) {
+                echo 'ok';
+            } else {
+                echo 'what';
+            }
+            var_dump($gear->getNotes());
+
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage();

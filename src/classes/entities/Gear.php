@@ -2,7 +2,7 @@
 
 class Gear
 {
-    private int $id;
+    private $id;
     private int $purchaseInvoiceID;
     private int $userID;
     private string $name;
@@ -24,9 +24,9 @@ class Gear
      *
      * @return  self
      */
-    public function setId(int $id)
+    public function setId($id)
     {
-        $this->id = Validation::sanitizeInt($id);
+        $this->id = $id;
 
         return $this;
     }
@@ -46,7 +46,7 @@ class Gear
      */
     public function setPurchaseInvoiceID(int $purchaseInvoiceID)
     {
-        $this->purchaseInvoiceID = Validation::sanitizeInt($purchaseInvoiceID);
+        $this->purchaseInvoiceID = $purchaseInvoiceID;
 
         return $this;
     }
@@ -66,7 +66,7 @@ class Gear
      */
     public function setUserID(int $userID)
     {
-        $this->userID = Validation::sanitizeInt($userID);
+        $this->userID = $userID;
 
         return $this;
     }
@@ -86,7 +86,7 @@ class Gear
      */
     public function setName(string $name)
     {
-        $this->name = Validation::sanitizeText($name);
+        $this->name = $name;
 
         return $this;
     }
@@ -106,7 +106,7 @@ class Gear
      */
     public function setSerialNumber(string $serialNumber)
     {
-        $this->serialNumber = Validation::sanitizeText($serialNumber);
+        $this->serialNumber = $serialNumber;
 
         return $this;
     }
@@ -126,7 +126,7 @@ class Gear
      */
     public function setNotes($notes)
     {
-        $this->notes = Validation::sanitizeText($notes);
+        $this->notes = $notes;
 
         return $this;
     }
@@ -146,7 +146,7 @@ class Gear
      */
     public function setNetValue(float $netValue)
     {
-        $this->netValue = Validation::sanitizeFloat($netValue);
+        $this->netValue = $netValue;
 
         return $this;
     }

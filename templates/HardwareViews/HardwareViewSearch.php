@@ -112,7 +112,7 @@ class HardwareViewSearch
 
                 $i = 1;
                 foreach ($gears as $key => $gear) {
-                    self::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
+                    HardwareController::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
                     $i++;
                 }
             }

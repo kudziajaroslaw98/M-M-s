@@ -42,17 +42,6 @@ class DataForm
      */
     public function checkIfExistsData()
     {
-        // skip chosen fields
-        $data = array();
-        foreach ($this->data as $key1 => $value1) {
-            if (!in_array($key1, $this->dataIgnores)) {
-                $data[$key1] = $value1;
-            } else {
-                $data[$key1] = "skipValuesMyPhp";
-            }
-        }
-        $this->data = $data;
-
         // not exists dataset
         if (empty($this->data)) {
             throw new InvalidInputExcetion('Not taken anything data!');
@@ -65,9 +54,15 @@ class DataForm
                 throw new InvalidInputExcetion('Not isset all values!');
             }
 
-            if (empty($value)) {
+            // skip chosen fields
+            if (empty($value) && !in_array($key, $this->dataIgnores)) {
                 throw new InvalidInputExcetion('All fields must be fill!');
                 return false;
+            }
+            if (empty($value) && in_array($key, $this->dataIgnores)) {
+                echo $key;
+                $this->data[$key] = null;
+                continue;
             }
 
             // remember data

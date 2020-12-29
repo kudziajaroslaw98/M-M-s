@@ -39,18 +39,14 @@ require_once __DIR__ . './src/handlers/LicenseHandler.php';
 require_once __DIR__ . './src/handlers/DocHandler.php';
 
 // Classes
-require_once __DIR__ . './src/classes/Gear.php';
-require_once __DIR__ . './src/classes/User.php';
-require_once __DIR__ . './src/classes/PurchaseInvoice.php';
+require_once __DIR__ . './src/classes/entities/Gear.php';
+require_once __DIR__ . './src/classes/entities/User.php';
+require_once __DIR__ . './src/classes/entities/PurchaseInvoice.php';
 
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';
 require_once __DIR__ . './src/repositories/PurchaseInvoiceRepository.php';
 require_once __DIR__ . './src/repositories/UserRepository.php';
-
-// require_once __DIR__ . './src/classes/Gear_old.php';
-// require_once __DIR__ . './src/classes/User.php';
-// require_once __DIR__ . './src/classes/PurchaseInvoice.php';
 
 require_once __DIR__ . './dbconfig.php';
 
