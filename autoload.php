@@ -6,6 +6,7 @@ require_once __DIR__ . './exceptions/autoloadExceptions.php';
 require_once __DIR__ . './src/classes/Validation.php';
 require_once __DIR__ . './src/classes/DataForm.php';
 
+require_once __DIR__ . './templates/Templates.php';
 require_once __DIR__ . './templates/Layout.php';
 
 // Hardware Views

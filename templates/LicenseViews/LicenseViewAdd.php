@@ -8,19 +8,13 @@ class LicenseViewAdd
 ?>
         <?= Layout::header($params); ?>
 
-        <form class='col-12'>
+        <form class='col-12' method="POST">
             <div class='row col-12'>
                 <div class='row col-12'>
                     <div class='col-6'>
                         <div class="form-group">
                             <label for="Name">Name</label>
-                            <input type="text" class="form-control" id="Name" placeholder="Name">
-                        </div>
-                    </div>
-                    <div class='col-6'>
-                        <div class="form-group">
-                            <label for="InvoiceId">Invoice Id</label>
-                            <input type="number" class="form-control" id="InvoiceId" placeholder="Invoice Id">
+                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Name">
                         </div>
                     </div>
                 </div>
@@ -29,13 +23,13 @@ class LicenseViewAdd
                     <div class='col-6'>
                         <div class="form-group">
                             <label for="SerialKey">Serial Key</label>
-                            <input type="text" class="form-control" id="SerialKey" placeholder="Serial Key">
+                            <input type="text" class="form-control" id="SerialKey" name="SerialKey" placeholder="Serial Key">
                         </div>
                     </div>
                     <div class='col-6'>
                         <div class="form-group">
                             <label for="ExpirationDate">Expiration Date</label>
-                            <input type="date" class="form-control" id="ExpirationDate" placeholder="Expiration Date">
+                            <input type="date" class="form-control" id="ExpirationDate" name="ExpirationDate" placeholder="Expiration Date">
                         </div>
                     </div>
 
@@ -44,14 +38,17 @@ class LicenseViewAdd
                 <div class="row col-12">
                     <div class='col-6'>
                         <div class="form-group">
-                            <label for="WarrantyDate">Warranty Date</label>
-                            <input type="date" class="form-control" id="WarrantyDate" placeholder="Warranty Date">
+                            <label for="TechSupportDate">Tech Support Date</label>
+                            <input type="date" class="form-control" id="TechSupportDate" name="TechSupportDate" placeholder="Tech Support Date">
                         </div>
                     </div>
                     <div class='col-6'>
                         <div class="form-group">
-                            <label for="PurchaseDate">Purchase Date</label>
-                            <input type="date" class="form-control" id="PurchaseDate" placeholder="Purchase Date">
+                            <label for="PurchaseInvoice">Purchase Invoice</label>
+                            <!-- <input type="number" class="form-control" id="PurchaseInvoice" placeholder="Invoice Id"> -->
+                            <select class="form-control" id="InvoiceNumber" name="InvoiceNumber">
+                                <?= Templates::renderPurchaseInvoices() ?>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -59,21 +56,18 @@ class LicenseViewAdd
                     <div class='col-6'>
                         <div class="form-group">
                             <label for="LicenseUser">License User</label>
-                            <input type="text" class="form-control" id="LicenseUser" placeholder="License User">
+                            <!-- <input type="text" class="form-control" id="LicenseUser" placeholder="License User"> -->
+                            <select class="form-control" id="LicenseUser" name="LicenseUser">
+                                <?= Templates::renderUsers() ?>
+                            </select>
                         </div>
                     </div>
                     <div class='col-6'>
                         <div class="form-group">
                             <label for="Note">Note</label>
-                            <input type="text" class="form-control" id="Note" placeholder="Note">
+                            <input type="text" class="form-control" id="Note" name="Note" placeholder="Note">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row col-12">
-                <div class="form-group">
-                    <label for="UploadLicense">Pick file to Upload</label>
-                    <input type="file" class="form-control-file" id="UploadLicense">
                 </div>
             </div>
             <div class="row col-12">
@@ -86,11 +80,48 @@ class LicenseViewAdd
         </form>
 
         <div class="info">
+            <?= self::addLicense() ?>
         </div>
 
         <?= Layout::footer() ?>
 <?php
         $html = ob_get_clean();
         return $html;
+    }
+
+    private static function addLicense()
+    {
+        try {
+            if (!empty($_POST)) {
+                $dataForm = new DataForm($_POST, array('InvoiceNumber', 'Note', 'TechSupportDate', 'ExpirationDate', 'SerialKey'));
+                $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
+                if (!$dataForm->checkIfExistsData()) {
+                    throw new InvalidInputExcetion('Given data are invalid!');
+                }
+
+                if (!Validation::validateLicense($dataForm->data['SerialKey'])) {
+                    throw new InvalidInputExcetion('Given serial key is invalid!');
+                }
+
+                $dateName = array('TechSupportDate', 'ExpirationDate');
+                foreach ($dateName as $key => $value) {
+                    if (!empty($dataForm->data[$value]) && !Validation::validateDateAndConvert($dataForm->data[$value])) {
+                        throw new InvalidInputExcetion('Data is invalid!');
+                    }
+                }
+
+                $softwareRepository = new SoftwareRepository();
+                $software = new Software();
+                $software->setSoftwareID(null)->setUserID($dataForm->data['LicenseUser'])->setPurchaseInvoiceID($dataForm->data['InvoiceNumber'])->setName($dataForm->data['Name'])->setLicenceKey($dataForm->data['SerialKey'])->setNotes($dataForm->data['Note'])->setExpirationDate($dataForm->data['ExpirationDate'])->setTechSupportDate($dataForm->data['TechSupportDate']);
+
+                if (!$softwareRepository->insert($software)) {
+                    throw new PDOException('Request processing error.');
+                }
+
+                echo 'License has been added.';
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }

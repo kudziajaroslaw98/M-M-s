@@ -157,15 +157,34 @@ class Validation
         return true;
     }
 
-    public static function validateLicense($license, $characters = "/-")
+    public static function validateLicense($license, $separatorCharacters = "/-")
     {
-        if (strpos($license, " ") === false) {
+        // license cannot have spaces 
+        if (strpos($license, " ") !== false) {
             return false;
         }
 
-        $charactersArray = str_split($characters);
+        // find separator
+        $separator = null;
+        $charactersArray = str_split($separatorCharacters);
         foreach ($charactersArray as $char) {
-            if (in_array($char, $license) === false) {
+            // license has char
+            if (strpos($license, $char) !== false) {
+                $separator = $char;
+                break;
+            }
+        }
+
+        // check if separator was finding
+        if (is_null($separator)) {
+            return false;
+        }
+
+        // check length all parts in license
+        $license = explode($separator, $license);
+        $lenPart = strlen($license[0]);
+        foreach ($license as $part) {
+            if (strlen($part) != $lenPart) {
                 return false;
             }
         }

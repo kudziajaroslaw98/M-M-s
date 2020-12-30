@@ -29,7 +29,7 @@ class HardwareViewAdd
                             <label for="InvoiceNumber">Invoice Number</label>
                             <!-- <input type="number" class="form-control" id="InvoiceNumber" name="InvoiceNumber" placeholder="Invoice Number"> -->
                             <select class="form-control" id="InvoiceNumber" name="InvoiceNumber">
-                                <?= self::renderPurchaseInvoices() ?>
+                                <?= Templates::renderPurchaseInvoices() ?>
                             </select>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ class HardwareViewAdd
                             <label for="HardwareUser">Hardware User</label>
                             <!-- <input type="text" class="form-control" id="HardwareUser" name="HardwareUser" placeholder="Hardware User"> -->
                             <select class="form-control" id="HardwareUser" name="HardwareUser">
-                                <?= self::renderUsers() ?>
+                                <?= Templates::renderUsers() ?>
                             </select>
                         </div>
                     </div>
@@ -85,30 +85,6 @@ class HardwareViewAdd
 <?php
         $html = ob_get_clean();
         return $html;
-    }
-
-    private static function renderUsers()
-    {
-        $userRepository = new UserRepository();
-        $users = $userRepository->select();
-
-        foreach ($users as $value => $user) {
-            echo "
-                <option value='" . $user->getUserID() . "'>" . $user->getFirstName() . " " . $user->getLastName() . "</option>
-            ";
-        }
-    }
-
-    private static function renderPurchaseInvoices()
-    {
-        $purchaseInvoiceRepository = new PurchaseInvoiceRepository();
-        $purchaseInvoices = $purchaseInvoiceRepository->select();
-
-        foreach ($purchaseInvoices as $key => $purchaseInvoice) {
-            echo "
-                <option value='" . $purchaseInvoice->getID() . "'>" . $purchaseInvoice->getID() . ") " . $purchaseInvoice->getContractorData() . " " . $purchaseInvoice->getTransactionDate() . ", " . $purchaseInvoice->getAmountBrutto() . " " . $purchaseInvoice->getCurrency() . "</option>
-            ";
-        }
     }
 
     private static function addHardware()
