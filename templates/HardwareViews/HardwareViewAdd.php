@@ -106,7 +106,7 @@ class HardwareViewAdd
 
         foreach ($purchaseInvoices as $key => $purchaseInvoice) {
             echo "
-                <option value='" . $purchaseInvoice->getPurchaseInvoiceID() . "'>" . $purchaseInvoice->getPurchaseInvoiceID() . ") " . $purchaseInvoice->getContractorData() . " " . $purchaseInvoice->getTransactionDate() . ", " . $purchaseInvoice->getAmountBrutto() . " " . $purchaseInvoice->getCurrency() . "</option>
+                <option value='" . $purchaseInvoice->getID() . "'>" . $purchaseInvoice->getID() . ") " . $purchaseInvoice->getContractorData() . " " . $purchaseInvoice->getTransactionDate() . ", " . $purchaseInvoice->getAmountBrutto() . " " . $purchaseInvoice->getCurrency() . "</option>
             ";
         }
     }
@@ -120,7 +120,7 @@ class HardwareViewAdd
                 if (!$dataForm->checkIfExistsData()) {
                     throw new InvalidInputExcetion('Given data are invalid!');
                 }
-                if (!Validation::validateDateAndConvert($dataForm->data['WarrantyDate'])) {
+                if (!empty($dataForm->data['WarrantyDate']) && !Validation::validateDateAndConvert($dataForm->data['WarrantyDate'])) {
                     throw new InvalidInputExcetion('Data is invalid!');
                 }
 

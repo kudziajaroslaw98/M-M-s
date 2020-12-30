@@ -2,6 +2,7 @@
 
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
 
+// Classes
 require_once __DIR__ . './src/classes/Validation.php';
 require_once __DIR__ . './src/classes/DataForm.php';
 
@@ -38,15 +39,20 @@ require_once __DIR__ . './src/handlers/InvoiceHandler.php';
 require_once __DIR__ . './src/handlers/LicenseHandler.php';
 require_once __DIR__ . './src/handlers/DocHandler.php';
 
-// Classes
+// Entities
 require_once __DIR__ . './src/classes/entities/Gear.php';
 require_once __DIR__ . './src/classes/entities/User.php';
+require_once __DIR__ . './src/classes/entities/Invoice.php';
 require_once __DIR__ . './src/classes/entities/PurchaseInvoice.php';
+require_once __DIR__ . './src/classes/entities/SaleInvoice.php';
+require_once __DIR__ . './src/classes/entities/Software.php';
 
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';
 require_once __DIR__ . './src/repositories/PurchaseInvoiceRepository.php';
+require_once __DIR__ . './src/repositories/SaleInvoiceRepository.php';
 require_once __DIR__ . './src/repositories/UserRepository.php';
+require_once __DIR__ . './src/repositories/SoftwareRepository.php';
 
 require_once __DIR__ . './dbconfig.php';
 

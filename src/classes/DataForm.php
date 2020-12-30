@@ -60,7 +60,6 @@ class DataForm
                 return false;
             }
             if (empty($value) && in_array($key, $this->dataIgnores)) {
-                echo $key;
                 $this->data[$key] = null;
                 continue;
             }

@@ -19,7 +19,7 @@ class HardwareViewShow
                                 <th scope="col">Hardware Number</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Serial Number</th>
-                                <th scope="col">Invoice Number</th>
+                                <th scope="col">Purchase Invoice Number</th>
                                 <th scope="col">Purchase Date</th>
                                 <th scope="col">Warranty Date</th>
                                 <th scope="col">Net Value</th>
@@ -62,7 +62,7 @@ class HardwareViewShow
         $gears = $gearRepository->select();
 
         $i = 1;
-        foreach ($gears as $key => $gear) {
+        foreach ($gears as $key => &$gear) {
             HardwareController::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
             $i++;
         }

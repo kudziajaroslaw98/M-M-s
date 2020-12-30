@@ -28,7 +28,7 @@ class PurchaseInvoiceRepository
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $purchaseInvoice = new PurchaseInvoice();
 
-                $purchaseInvoice->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+                $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($purchaseInvoices, $purchaseInvoice);
             }
 
@@ -55,7 +55,7 @@ class PurchaseInvoiceRepository
 
             $purchaseInvoice = new PurchaseInvoice();
 
-            $purchaseInvoice->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+            $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
 
             return $purchaseInvoice;
         } catch (PDOException $e) {
@@ -65,9 +65,54 @@ class PurchaseInvoiceRepository
 
     public function insert(PurchaseInvoice $purchaseInvoice)
     {
+        try {
+            $sql = "INSERT INTO purchaseInvoices VALUES (:purchaseInvoiceID, :uploadTime, :lastModificationTime, :contractorData, :amountNetto, :amountBrutto, :transactionDate, :notes, :filePath, :currency, :vat)";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'purchaseInvoiceID' => $purchaseInvoice->getID(),
+                'uploadTime' => $purchaseInvoice->getUploadTime(),
+                'lastModificationTime' => $purchaseInvoice->getLastModificationTime(),
+                'contractorData' => $purchaseInvoice->getContractorData(),
+                'amountNetto' => $purchaseInvoice->getAmountNetto(),
+                'amountBrutto' => $purchaseInvoice->getAmountBrutto(),
+                'transactionDate' => $purchaseInvoice->getTransactionDate(),
+                'notes' => $purchaseInvoice->getNotes(),
+                'filePath' => $purchaseInvoice->getFilePath(),
+                'currency' => $purchaseInvoice->getCurrency(),
+                'vat' => $purchaseInvoice->getVat()
+            ));
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function update(PurchaseInvoice $purchaseInvoice, int $id)
     {
+        try {
+            $sql = "UPDATE purchaseInvoices SET purchaseInvoiceID=:purchaseInvoiceID, uploadTime=:uploadTime, lastModificationTime=:lastModificationTime, contractorData=:contractorData, amountNetto=:amountNetto, amountBrutto=:amountBrutto, transactionDate=:transactionDate, notes=:notes, filePath=:filePath, currency=:currency, vat=:vat WHERE purchaseInvoiceID=:id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id),
+                'purchaseInvoiceID' => $purchaseInvoice->getID(),
+                'uploadTime' => $purchaseInvoice->getUploadTime(),
+                'lastModificationTime' => $purchaseInvoice->getLastModificationTime(),
+                'contractorData' => $purchaseInvoice->getContractorData(),
+                'amountNetto' => $purchaseInvoice->getAmountNetto(),
+                'amountBrutto' => $purchaseInvoice->getAmountBrutto(),
+                'transactionDate' => $purchaseInvoice->getTransactionDate(),
+                'notes' => $purchaseInvoice->getNotes(),
+                'filePath' => $purchaseInvoice->getFilePath(),
+                'currency' => $purchaseInvoice->getCurrency(),
+                'vat' => $purchaseInvoice->getVat()
+            ));
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }
