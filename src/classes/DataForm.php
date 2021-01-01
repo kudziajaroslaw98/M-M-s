@@ -55,7 +55,8 @@ class DataForm
             }
 
             // skip chosen fields
-            if (empty($value) && !in_array($key, $this->dataIgnores)) {
+            if (empty($value) && !in_array($key, $this->dataFiles) && !in_array($key, $this->dataIgnores)) {
+                // echo $key;
                 throw new InvalidInputExcetion('All fields must be fill!');
                 return false;
             }

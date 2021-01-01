@@ -3,8 +3,8 @@
 abstract class Invoice
 {
     private int $ID;
-    private string $uploadTime;
-    private string $lastModificationTime;
+    private $uploadTime;
+    private $lastModificationTime;
     private string $contractorData;
     private float $amountNetto;
     private float $amountBrutto;

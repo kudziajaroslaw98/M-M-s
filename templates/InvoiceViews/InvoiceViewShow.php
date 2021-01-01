@@ -8,7 +8,21 @@ class InvoiceViewShow
 ?>
         <?= Layout::header($params); ?>
 
+        <?= self::renderInvoices('renderInvoiceSalesRows', 'Sale Invoices') ?>
+        <?= self::renderInvoices('renderInvoicePurchasesRows', 'Purchase Invoices') ?>
+
+        <?= Layout::footer() ?>
+    <?php
+        $html = ob_get_clean();
+        return $html;
+    }
+
+    private static function renderInvoices($invoicesRenderFunction, string $title)
+    {
+        ob_start();
+    ?>
         <div class="table-responsive">
+            <h3><?= $title ?></h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -41,20 +55,18 @@ class InvoiceViewShow
                         <td>Notka</td>
                         <td>Plik</td>
                     </tr>
-                    <?= self::renderInvoiceRows() ?>
+                    <?= self::$invoicesRenderFunction() ?>
                 </tbody>
             </table>
         </div>
-
-        <?= Layout::footer() ?>
 <?php
         $html = ob_get_clean();
         return $html;
     }
 
-    private static function renderInvoiceRows()
+    private static function renderInvoiceRows($repository)
     {
-        $invoiceRepository = new SaleInvoiceRepository();
+        $invoiceRepository = $repository;
         $invoices = $invoiceRepository->select();
 
         $i = 1;
@@ -62,5 +74,15 @@ class InvoiceViewShow
             InvoiceController::renderRow($invoice, $i);
             $i++;
         }
+    }
+
+    private static function renderInvoiceSalesRows()
+    {
+        self::renderInvoiceRows(new SaleInvoiceRepository());
+    }
+
+    private static function renderInvoicePurchasesRows()
+    {
+        self::renderInvoiceRows(new PurchaseInvoiceRepository());
     }
 }
