@@ -9,7 +9,7 @@ abstract class Invoice
     private float $amountNetto;
     private float $amountBrutto;
     private string $transactionDate;
-    private string $notes;
+    private $notes;
     private string $filePath;
     private string $currency;
     private float $vat;

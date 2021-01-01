@@ -39,7 +39,6 @@ class HardwareController
         <td>" . $gear->getName() . "</td>
         <td>" . $gear->getSerialNumber() . "</td>
         <td>" . $gear->getPurchaseInvoiceID() . "</td>
-        <td>19.12.2020</td>
         <td>" . $gear->getWarrantyDate() . "</td>
         <td>" . $gear->getNetValue() . " "  . $purchaseInvoice->getCurrency() . "</td>
         <td>" . $user->getFirstName() . " " . $user->getLastName() . "</td>
