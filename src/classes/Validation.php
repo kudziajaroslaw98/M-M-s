@@ -73,6 +73,7 @@ class Validation
 
     private static function validateFile($file, $exceptExtention = "pdf")
     {
+        // allowed extentions
         $mime_filter = array(
             'image/gif', 'image/jpeg', 'image/png',
             'application/pdf',
@@ -80,6 +81,7 @@ class Validation
         );
         $mime = array();  // array without extension prefix
 
+        // served extention in argument $exceptExtention
         foreach ($mime_filter as $filter) {
             array_push($mime, substr($filter, strpos($filter, '/') + 1));
         }

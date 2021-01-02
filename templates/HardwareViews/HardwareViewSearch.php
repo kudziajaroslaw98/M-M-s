@@ -36,11 +36,6 @@ class HardwareViewSearch
                     </form>
                 </div>
             </div>
-            <div class="row col-12">
-                <div class='col-4 offset-md-4'>
-
-                </div>
-            </div>
         </div>
 
         <div class="actual_user_info card">
@@ -64,7 +59,7 @@ class HardwareViewSearch
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">1</th>
+                                <!-- <th scope="row">1</th>
                                 <td>12312</td>
                                 <td>Laptop MSI</td>
                                 <td>125215212</td>
@@ -72,7 +67,7 @@ class HardwareViewSearch
                                 <td>19.12.2025</td>
                                 <td>24718 zł</td>
                                 <td>Jaroslaw Kudzia</td>
-                                <td>Sprawny</td>
+                                <td>Sprawny</td> -->
                             </tr>
                             <?= self::renderSearched() ?>
                         </tbody>
@@ -91,23 +86,29 @@ class HardwareViewSearch
     {
         try {
             if (!empty($_POST)) {
+                // security
                 $dataForm = new DataForm();
                 $dataForm->data = $_POST;
-                $dataForm->checkIfExistsData();
-                $dataForm->sanitizeData();
+                $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
+                if (!$dataForm->checkIfExistsData()) {
+                    throw new InvalidInputExcetion('Given data are invalid!');
+                }
 
-                $dataKeys = array_keys($dataForm->data);
+                // repositories
+                $dataKeys = array_keys($dataForm->data);  // kind of searching number
                 $gearRepository = new GearRepository();
                 $userRepository = new UserRepository();
                 $purchaseInvoiceRepository = new PurchaseInvoiceRepository();
 
-                $gears = array();
+                // find by right condition
+                $gears = null;
                 if (in_array("HardwareNumber", $dataKeys)) {
                     $gears = $gearRepository->findByGearNumber($dataForm->data['search_Hardware_number']);
                 } else {
                     $gears = $gearRepository->findBySerialNumber($dataForm->data['search_Hardware_serial']);
                 }
 
+                // render results
                 $i = 1;
                 foreach ($gears as $key => &$gear) {
                     HardwareController::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);

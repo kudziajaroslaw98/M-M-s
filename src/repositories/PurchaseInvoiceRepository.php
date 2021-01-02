@@ -41,23 +41,22 @@ class PurchaseInvoiceRepository
     public function findById(int $id)
     {
         try {
-            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID=:id";
+            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'id' => Validation::sanitizeInt($id)
+                'id' => Validation::sanitizeInt($id) . '%'
             ));
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$row) {
-                return null;
+            $purchaseInvoices = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $purchaseInvoice = new PurchaseInvoice();
+
+                $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+                array_push($purchaseInvoices, $purchaseInvoice);
             }
 
-            $purchaseInvoice = new PurchaseInvoice();
-
-            $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
-
-            return $purchaseInvoice;
+            return $purchaseInvoices;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

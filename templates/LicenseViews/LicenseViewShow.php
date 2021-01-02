@@ -29,7 +29,7 @@ class LicenseViewShow
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">1</th>
+                                <!-- <th scope="row">1</th>
                                 <td>12312</td>
                                 <td>Windows 10</td>
                                 <td>1.10.2025</td>
@@ -37,7 +37,7 @@ class LicenseViewShow
                                 <td>49129</td>
                                 <td>19.12.2025</td>
                                 <td>Jaroslaw Kudzia</td>
-                                <td>Aktywny</td>
+                                <td>Aktywny</td> -->
                             </tr>
                             <?= self::renderLicensesRows() ?>
                         </tbody>
@@ -55,11 +55,14 @@ class LicenseViewShow
 
     private static function renderLicensesRows()
     {
+        // repositories
         $licenseRepository = new SoftwareRepository();
         $userRepository = new UserRepository();
 
+        // result entities
         $licenses = $licenseRepository->select();
 
+        // render results
         $i = 1;
         foreach ($licenses as $key => &$license) {
             LicenseController::renderRow($license, $i, $userRepository);

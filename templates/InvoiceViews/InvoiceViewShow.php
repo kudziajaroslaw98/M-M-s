@@ -41,7 +41,7 @@ class InvoiceViewShow
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <th scope="row">1</th>
                         <td>421512</td>
                         <td>29.12.2020</td>
@@ -54,7 +54,7 @@ class InvoiceViewShow
                         <td>PLN</td>
                         <td>Notka</td>
                         <td>Plik</td>
-                    </tr>
+                    </tr> -->
                     <?= self::$invoicesRenderFunction() ?>
                 </tbody>
             </table>

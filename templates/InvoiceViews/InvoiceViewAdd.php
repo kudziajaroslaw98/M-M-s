@@ -136,6 +136,11 @@ class InvoiceViewAdd
                 $dictonaryPath = './../data/invoices';
                 $kindOfInvoice = ucfirst($dataForm->data['InvoiceKind']);
 
+                // check if directory path is existing
+                if (!Validation::checkExistsDir($dictonaryPath)) {
+                    throw new InvalidArgumentException('Existing directory path does not exists!');
+                }
+
                 // kind of adding invoice
                 if ($dataForm->data['InvoiceKind'] == 'sale') {
                     $invoiceRepository = new SaleInvoiceRepository();
@@ -150,17 +155,23 @@ class InvoiceViewAdd
                 // helping local variable
                 $filenameWithPath = $dictonaryPath . '/' . $filename;
 
+                // set invoice object
                 $invoice->setID($dataForm->data['InvoiceNumber'])->setUploadTime(null)->setLastModificationTime(null)->setContractorData($dataForm->data['ContractorData'])->setAmountNetto($dataForm->data['NETTO'])->setAmountBrutto($dataForm->data['BRUTTO'])->setTransactionDate($dataForm->data['TransactionDate'])->setNotes($dataForm->data['Notes'])->setFilePath($filenameWithPath)->setCurrency($dataForm->data['Currancy'])->setVat($dataForm->data['VAT']);
 
+                // check existing chosen file
                 if (Validation::checkExistsFile($filenameWithPath)) {
                     throw new InvalidInputExcetion($kindOfInvoice . ' invoice with the same name is already exists!');
                 }
+
+                // check inserting to db
                 if (!$invoiceRepository->insert($invoice)) {
                     throw new PDOException('Request processing error.');
                 }
 
+                // upload file on server
                 $dataForm->uploadFile($dataForm->dataFiles['UploadInvoice'], $dictonaryPath);
 
+                // all OK
                 echo $kindOfInvoice . ' invoice has been added.';
             }
         } catch (Exception $e) {

@@ -3,14 +3,14 @@
 /**
  * This class keep data which was submited to server from form.
  * 
- * @var Validation $validation - instance object of class to validating data. Creating a new instance of this class in constructor.
  * @var array $data - keeps data which were sent from request table like $_GET or $_POST
+ * @var array $dataIgnores - keeps data nems which will be ignoring in validation data
  * @var bool $isFalse - determines if script it to except the file.
  * @var array $dataFiles - keeps names of file from form, which script is excepted. If @param bool $isFalse is false, then it has no use.
+ * @var bool $allFilesOk - determines if all files which were sent from request are valid
  */
 class DataForm
 {
-    public Validation $validation;
     public array $data;
     public array $dataIgnores;
     public bool $isFile;
@@ -26,7 +26,6 @@ class DataForm
      */
     public function __construct(array $data = array(), array $dataIgnores = array(), bool $isFile = false, array $dataFilesNames = array())
     {
-        $this->validation = new Validation();
         $this->data = $data;
         $this->dataIgnores = $dataIgnores;
         $this->isFile = $isFile;
@@ -107,7 +106,7 @@ class DataForm
      */
     public function sanitizeData()
     {
-        $this->validation->sanitizeStringArray($this->data);
+        Validation::sanitizeStringArray($this->data);
     }
 
     /**
@@ -123,7 +122,7 @@ class DataForm
         // }
 
         foreach ($this->dataFiles as $key => $value) {
-            if ($this->validation->checkFile($value, $extention) == false) {
+            if (Validation::checkFile($value, $extention) == false) {
                 return false;
             }
         }
@@ -149,7 +148,7 @@ class DataForm
     public function uploadFile($file, string $dirPath = './../data/documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
     {
         // check if file with the same name already exists
-        if ($this->validation->checkExistsFile($dirPath . '/' . $file['name'])) {
+        if (Validation::checkExistsFile($dirPath . '/' . $file['name'])) {
             if (!$overwriteExistsFile) {
                 throw new Exception('Not saved file with the name ' . $file['name'] . '. File with the same name is already exists!');
                 return false;
@@ -157,20 +156,21 @@ class DataForm
         }
 
         // check if directory from given path does exists
-        if (!$this->validation->checkExistsDir($dirPath)) {
+        if (!Validation::checkExistsDir($dirPath)) {
             // directory does not exists and do not create new directory
             if (!$createIfDirNotExists) {
-                throw new InvalidInputExcetion('The specified directory does not exists!');
+                throw new InvalidArgumentException('The specified directory does not exists!');
                 return false;
             }
 
             // directory does not exists and create new directory
-            if (!mkdir($dirPath, 0777, true)) {
+            if (!mkdir($dirPath, 0755, true)) {
                 throw new Exception('Creation error directory.');
                 return false;
             }
         }
 
+        // upload file
         if (is_uploaded_file($file['tmp_name'])) {
             if (!move_uploaded_file($file['tmp_name'], $dirPath . '/' . $file['name'])) {
                 throw new Exception('Failed to copy the file on server.');

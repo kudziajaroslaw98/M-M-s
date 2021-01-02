@@ -93,31 +93,37 @@ class LicenseViewAdd
     {
         try {
             if (!empty($_POST)) {
+                // security
                 $dataForm = new DataForm($_POST, array('InvoiceNumber', 'Note', 'TechSupportDate', 'ExpirationDate', 'SerialKey'));
                 $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
                 if (!$dataForm->checkIfExistsData()) {
                     throw new InvalidInputExcetion('Given data are invalid!');
                 }
 
+                // validation licence key
                 if (!Validation::validateLicense($dataForm->data['SerialKey'])) {
                     throw new InvalidInputExcetion('Given serial key is invalid!');
                 }
 
+                // check date fields
                 $dateName = array('TechSupportDate', 'ExpirationDate');
                 foreach ($dateName as $key => $value) {
                     if (!empty($dataForm->data[$value]) && !Validation::validateDateAndConvert($dataForm->data[$value])) {
-                        throw new InvalidInputExcetion('Data is invalid!');
+                        throw new InvalidInputExcetion('Date is invalid!');
                     }
                 }
 
+                // repository and entity
                 $softwareRepository = new SoftwareRepository();
                 $software = new Software();
                 $software->setSoftwareID(null)->setUserID($dataForm->data['LicenseUser'])->setPurchaseInvoiceID($dataForm->data['InvoiceNumber'])->setName($dataForm->data['Name'])->setLicenceKey($dataForm->data['SerialKey'])->setNotes($dataForm->data['Note'])->setExpirationDate($dataForm->data['ExpirationDate'])->setTechSupportDate($dataForm->data['TechSupportDate']);
 
+                // check inserting to db
                 if (!$softwareRepository->insert($software)) {
                     throw new PDOException('Request processing error.');
                 }
 
+                // all OK
                 echo 'License has been added.';
             }
         } catch (Exception $e) {
