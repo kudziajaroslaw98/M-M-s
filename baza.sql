@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Gru 2020, 15:46
+-- Czas generowania: 01 Sty 2021, 17:33
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -92,7 +92,8 @@ CREATE TABLE `purchaseinvoices` (
 --
 
 INSERT INTO `purchaseinvoices` (`purchaseInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
-(1, '2020-12-21 21:44:57', '2020-12-21 21:44:57', 'Gospodarstwo domowe', 450, 390, '2020-12-07', 'fajnie', './documents/invoices/purchase', 'PLN', 0.23);
+(1, '2020-12-21 21:44:57', '2020-12-21 21:44:57', 'Gospodarstwo domowe', 450, 390, '2020-12-07', 'fajnie', './../data/invoices/purchase/test.txt', 'PLN', 0.23),
+(4325, '2021-01-01 16:30:34', '2021-01-01 16:30:34', 'Krzysztof Ibisz', 2350, 3000, '2021-01-01', NULL, './../data/invoices/purchase/AI1-LAB10-SRS-Zespol_Karczma.pdf', 'PLN', 0.23);
 
 -- --------------------------------------------------------
 
@@ -147,6 +148,14 @@ CREATE TABLE `saleinvoices` (
   `vat` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `saleinvoices`
+--
+
+INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
+(1, '2021-01-01 00:13:24', '2021-01-01 00:13:24', 'Przemysław Różewski', 780, 890, '2021-01-27', NULL, './../data/invoices/sale/lab_11_instr_cyfrowe znaki wodne.pdf', 'PLN', 0.23),
+(324, '2021-01-01 16:32:49', '2021-01-01 16:32:49', 'Krzysztof Krawczyk', 35, 47, '2021-01-01', NULL, './../data/invoices/sale/Gantt.pdf', 'PLN', 0.23);
+
 -- --------------------------------------------------------
 
 --
@@ -180,7 +189,8 @@ CREATE TABLE `software` (
 --
 
 INSERT INTO `software` (`softwareID`, `userID`, `purchaseInvoiceID`, `name`, `licenceKey`, `notes`, `expirationDate`, `techSupportDate`) VALUES
-(1, 1, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL);
+(1, 1, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
+(2, 1, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
 
 -- --------------------------------------------------------
 
@@ -333,7 +343,7 @@ ALTER TABLE `gear`
 -- AUTO_INCREMENT dla tabeli `purchaseinvoices`
 --
 ALTER TABLE `purchaseinvoices`
-  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4326;
 
 --
 -- AUTO_INCREMENT dla tabeli `reports`
@@ -351,13 +361,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT dla tabeli `saleinvoices`
 --
 ALTER TABLE `saleinvoices`
-  MODIFY `saleInvoiceID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `saleInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT dla tabeli `software`
 --
 ALTER TABLE `software`
-  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`

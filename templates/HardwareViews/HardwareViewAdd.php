@@ -91,6 +91,7 @@ class HardwareViewAdd
     {
         try {
             if (!empty($_POST)) {
+                // security
                 $dataForm = new DataForm($_POST, array('WarrantyDate', 'Note'));
                 $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
                 if (!$dataForm->checkIfExistsData()) {
@@ -100,14 +101,17 @@ class HardwareViewAdd
                     throw new InvalidInputExcetion('Data is invalid!');
                 }
 
+                // repository and entity
                 $gearRepository = new GearRepository();
                 $gear = new Gear();
                 $gear->setId(null)->setPurchaseInvoiceID($dataForm->data['InvoiceNumber'])->setUserID($dataForm->data['HardwareUser'])->setName($dataForm->data['Name'])->setSerialNumber($dataForm->data['SerialNumber'])->setNotes($dataForm->data['Note'])->setNetValue($dataForm->data['NetValue'])->setWarrantyDate($dataForm->data['WarrantyDate']);
 
+                // check inserting entity to db
                 if (!$gearRepository->insert($gear)) {
                     throw new PDOException('Request processing error.');
                 }
 
+                // all OK
                 echo 'Hardware has been added.';
             }
         } catch (Exception $e) {

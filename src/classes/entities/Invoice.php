@@ -3,13 +3,13 @@
 abstract class Invoice
 {
     private int $ID;
-    private string $uploadTime;
-    private string $lastModificationTime;
+    private $uploadTime;
+    private $lastModificationTime;
     private string $contractorData;
     private float $amountNetto;
     private float $amountBrutto;
     private string $transactionDate;
-    private string $notes;
+    private $notes;
     private string $filePath;
     private string $currency;
     private float $vat;
