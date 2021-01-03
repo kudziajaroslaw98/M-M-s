@@ -29,6 +29,7 @@ class HardwareController
 
     public static function renderRow(Gear &$gear, int $lp, UserRepository &$userRepository, PurchaseInvoiceRepository &$purchaseInvoiceRepository)
     {
+
         $user = $userRepository->findById($gear->getUserID());
         $purchaseInvoice = $purchaseInvoiceRepository->findById($gear->getPurchaseInvoiceID());
 
@@ -40,7 +41,7 @@ class HardwareController
         <td>" . $gear->getSerialNumber() . "</td>
         <td>" . $gear->getPurchaseInvoiceID() . "</td>
         <td>" . $gear->getWarrantyDate() . "</td>
-        <td>" . $gear->getNetValue() . " "  . $purchaseInvoice->getCurrency() . "</td>
+        <td>" . $gear->getNetValue() . " "  . $purchaseInvoice[0]->getCurrency() . "</td>
         <td>" . $user->getFirstName() . " " . $user->getLastName() . "</td>
         <td>" . $gear->getNotes() . "</td>
     </tr>

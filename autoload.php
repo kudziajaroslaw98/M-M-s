@@ -30,6 +30,7 @@ require_once __DIR__ . './templates/DocViews/DocViewShow.php';
 
 //Notification View
 require_once __DIR__ . './templates/NotificationView/NotificationView.php';
+
 // Controllers
 require_once __DIR__ . './src/controllers/HardwareController.php';
 require_once __DIR__ . './src/controllers/InvoiceController.php';

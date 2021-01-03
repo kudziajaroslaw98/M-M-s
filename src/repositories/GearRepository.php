@@ -57,7 +57,7 @@ class GearRepository
 
                 // $row = $this->changeRowToClass($row);
 
-                $gear->setId($row['gearID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
+                $gear->setId($row['gearID'])->setpurchaseInvoiceID($row['purchaseInvoiceID'])->setUserID($row['userID'])->setName($row['name'])->setSerialNumber($row['serialNumber'])->setNotes($row['notes'])->setNetValue($row['netValue'])->setWarrantyDate(Validation::validateDateAndConvert($row['warrantyDate']));
                 array_push($gears, $gear);
             }
 
@@ -123,7 +123,6 @@ class GearRepository
         try {
             $sql = "SELECT * FROM gear WHERE gearID LIKE :GearID";
             $stmt = $this->connect->prepare($sql);
-
             $result = $stmt->execute(array(
                 'GearID' => Validation::sanitizeInt($gearNumber) . '%'
             ));
