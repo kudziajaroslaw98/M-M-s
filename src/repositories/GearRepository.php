@@ -3,12 +3,9 @@
 class GearRepository
 {
     private $connect = null;
-    private string $stmtSelect;
 
     public function __construct()
     {
-        $this->stmtSelect = "SELECT p.transactionDate, p.currency, u.firstName, u.lastName, g.gearID, g.name, g.serialNumber, g.warrantyDate, g.netValue, g.userID, g.notes, p.purchaseInvoiceID FROM gear g JOIN users u ON g.userID=u.userID JOIN purchaseinvoices p ON g.purchaseInvoiceID=p.purchaseInvoiceID";
-
         try {
             global $config;
             $this->connect = new PDO($config['dsn'], $config['username'], $config['password']);
