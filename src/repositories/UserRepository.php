@@ -82,15 +82,14 @@ class UserRepository
         }
     }
 
-    public function update(User $user, int $id)
+    public function update(User $user)
     {
         try {
-            $sql = "UPDATE users SET userID=:userID, firstName=:firstName, lastName=:lastName, jobtitle=:jobtitle, phoneNumber=:phoneNumber WHERE userID=:id";
+            $sql = "UPDATE users SET firstName=:firstName, lastName=:lastName, jobtitle=:jobtitle, phoneNumber=:phoneNumber WHERE userID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'id' => Validation::sanitizeInt($id),
-                'userID' => $user->getUserID(),
+                'id' => $user->getUserID(),
                 'firstName' => $user->getFirstName(),
                 'lastName' => $user->getLastName(),
                 'jobtitle' => $user->getJobtitle(),

@@ -41,7 +41,31 @@ class PurchaseInvoiceRepository
     public function findById(int $id)
     {
         try {
-            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
+            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID=:id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id)
+            ));
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return null;
+            }
+
+            $purchaseInvoice = new PurchaseInvoice();
+            $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+
+            return $purchaseInvoice;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function searchById(int $id)
+    {
+        try {
+            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -51,7 +75,6 @@ class PurchaseInvoiceRepository
             $purchaseInvoices = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $purchaseInvoice = new PurchaseInvoice();
-
                 $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($purchaseInvoices, $purchaseInvoice);
             }
@@ -65,7 +88,7 @@ class PurchaseInvoiceRepository
     public function insert(PurchaseInvoice $purchaseInvoice)
     {
         try {
-            $sql = "INSERT INTO purchaseInvoices VALUES (:purchaseInvoiceID, :uploadTime, :lastModificationTime, :contractorData, :amountNetto, :amountBrutto, :transactionDate, :notes, :filePath, :currency, :vat)";
+            $sql = "INSERT INTO purchaseinvoices VALUES (:purchaseInvoiceID, :uploadTime, :lastModificationTime, :contractorData, :amountNetto, :amountBrutto, :transactionDate, :notes, :filePath, :currency, :vat)";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -88,15 +111,14 @@ class PurchaseInvoiceRepository
         }
     }
 
-    public function update(PurchaseInvoice $purchaseInvoice, int $id)
+    public function update(PurchaseInvoice $purchaseInvoice)
     {
         try {
-            $sql = "UPDATE purchaseInvoices SET purchaseInvoiceID=:purchaseInvoiceID, uploadTime=:uploadTime, lastModificationTime=:lastModificationTime, contractorData=:contractorData, amountNetto=:amountNetto, amountBrutto=:amountBrutto, transactionDate=:transactionDate, notes=:notes, filePath=:filePath, currency=:currency, vat=:vat WHERE purchaseInvoiceID=:id";
+            $sql = "UPDATE purchaseinvoices SET uploadTime=:uploadTime, lastModificationTime=:lastModificationTime, contractorData=:contractorData, amountNetto=:amountNetto, amountBrutto=:amountBrutto, transactionDate=:transactionDate, notes=:notes, filePath=:filePath, currency=:currency, vat=:vat WHERE purchaseInvoiceID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'id' => Validation::sanitizeInt($id),
-                'purchaseInvoiceID' => $purchaseInvoice->getID(),
+                'id' => $purchaseInvoice->getID(),
                 'uploadTime' => $purchaseInvoice->getUploadTime(),
                 'lastModificationTime' => $purchaseInvoice->getLastModificationTime(),
                 'contractorData' => $purchaseInvoice->getContractorData(),

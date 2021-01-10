@@ -92,16 +92,16 @@ class GearRepository
         }
     }
 
-    public function updateByGearNumber(Gear $gear, int $id)
+    public function updateByGearNumber(Gear $gear)
     {
         try {
             $gear = $this->changeClassToRow($gear);
 
-            $sql = "UPDATE gear SET gearID=:gearID, purchaseInvoiceID=:purchaseInvoiceID, userID=:userID, name=:name, serialNumber=:serialNumber, notes=:notes, netValue=:netValue, warrantyDate=:warrantyDate WHERE gearID=:id";
+            $sql = "UPDATE gear SET purchaseInvoiceID=:purchaseInvoiceID, userID=:userID, name=:name, serialNumber=:serialNumber, notes=:notes, netValue=:netValue, warrantyDate=:warrantyDate WHERE gearID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'gearID' => $gear->getId(),
+                'id' => $gear->getId(),
                 'purchaseInvoiceID' => $gear->getPurchaseInvoiceID(),
                 'userID' => $gear->getUserID(),
                 'name' => $gear->getName(),
@@ -109,7 +109,6 @@ class GearRepository
                 'notes' => $gear->getNotes(),
                 'netValue' => $gear->getNetValue(),
                 'warrantyDate' => $gear->getWarrantyDate(),
-                'id' => Validation::sanitizeInt($id)
             ));
 
             return $result;

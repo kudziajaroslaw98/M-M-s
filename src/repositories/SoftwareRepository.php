@@ -62,6 +62,30 @@ class SoftwareRepository
         }
     }
 
+    public function searchById(int $id)
+    {
+        try {
+            $sql = "SELECT * FROM software WHERE softwareID LIKE :id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id) . '%'
+            ));
+
+            $softwares = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $software = new Software();
+
+                $software->setSoftwareID($row['softwareID'])->setUserID($row['userID'])->setPurchaseInvoiceID($row['purchaseInvoiceID'])->setName($row['name'])->setLicenceKey($row['licenceKey'])->setNotes($row['notes'])->setExpirationDate($row['expirationDate'])->setTechSupportDate($row['techSupportDate']);
+                array_push($softwares, $software);
+            }
+
+            return $softwares;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function insert(Software $software)
     {
         try {
@@ -85,14 +109,14 @@ class SoftwareRepository
         }
     }
 
-    public function update(software $software, int $id)
+    public function update(software $software)
     {
         try {
-            $sql = "UPDATE software SET softwareID=:softwareID, userID=:userID, purchaseInvoiceID=:purchaseInvoiceID, name=:name, licenceKey=:licenceKey, notes=:notes, expirationDate=:expirationDate, techSupportDate=:techSupportDate WHERE softwareID=:id";
+            $sql = "UPDATE software SET userID=:userID, purchaseInvoiceID=:purchaseInvoiceID, name=:name, licenceKey=:licenceKey, notes=:notes, expirationDate=:expirationDate, techSupportDate=:techSupportDate WHERE softwareID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'softwareID' => $software->getSoftwareID(),
+                'id' => $software->getSoftwareID(),
                 'userID' => $software->getUserID(),
                 'purchaseInvoiceID' => $software->getPurchaseInvoiceID(),
                 'name' => $software->getName(),
@@ -100,7 +124,6 @@ class SoftwareRepository
                 'notes' => $software->getNotes(),
                 'expirationDate' => $software->getExpirationDate(),
                 'techSupportDate' => $software->getTechSupportDate(),
-                'id' => Validation::sanitizeInt($id)
             ));
 
             return $result;

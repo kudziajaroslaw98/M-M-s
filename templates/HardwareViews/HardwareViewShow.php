@@ -64,8 +64,28 @@ class HardwareViewShow
         // render results
         $i = 1;
         foreach ($gears as $key => &$gear) {
-            HardwareController::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
+            self::renderRow($gear, $i, $userRepository, $purchaseInvoiceRepository);
             $i++;
         }
+    }
+
+    public static function renderRow(Gear &$gear, int $lp, UserRepository &$userRepository, PurchaseInvoiceRepository &$purchaseInvoiceRepository)
+    {
+        $user = $userRepository->findById($gear->getUserID());
+        $purchaseInvoice = $purchaseInvoiceRepository->findById($gear->getPurchaseInvoiceID());
+
+        echo "
+    <tr>
+        <th scope='row'>$lp</th>
+        <td>" . $gear->getID() . "</td>
+        <td>" . $gear->getName() . "</td>
+        <td>" . $gear->getSerialNumber() . "</td>
+        <td>" . $gear->getPurchaseInvoiceID() . "</td>
+        <td>" . $gear->getWarrantyDate() . "</td>
+        <td>" . $gear->getNetValue() . " "  . $purchaseInvoice->getCurrency() . "</td>
+        <td>" . $user->getFirstName() . " " . $user->getLastName() . "</td>
+        <td>" . $gear->getNotes() . "</td>
+    </tr>
+    ";
     }
 }

@@ -41,6 +41,30 @@ class SaleInvoiceRepository
     public function findById(int $id)
     {
         try {
+            $sql = "SELECT * FROM saleinvoices WHERE saleInvoiceID=:id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id)
+            ));
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return null;
+            }
+
+            $saleInvoice = new SaleInvoice();
+            $saleInvoice->setID($row['saleInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+
+            return $saleInvoice;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function searchById(int $id)
+    {
+        try {
             $sql = "SELECT * FROM saleinvoices WHERE saleInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
@@ -50,8 +74,7 @@ class SaleInvoiceRepository
 
             $saleInvoices = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $saleInvoice = new SaleInvoice();
-
+                $saleInvoice = new PurchaseInvoice();
                 $saleInvoice->setID($row['saleInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($saleInvoices, $saleInvoice);
             }
@@ -88,15 +111,14 @@ class SaleInvoiceRepository
         }
     }
 
-    public function update(SaleInvoice $saleInvoice, int $id)
+    public function update(SaleInvoice $saleInvoice)
     {
         try {
-            $sql = "UPDATE saleinvoices SET saleInvoiceID=:saleInvoiceID, uploadTime=:uploadTime, lastModificationTime=:lastModificationTime, contractorData=:contractorData, amountNetto=:amountNetto, amountBrutto=:amountBrutto, transactionDate=:transactionDate, notes=:notes, filePath=:filePath, currency=:currency, vat=:vat WHERE saleInvoiceID=:id";
+            $sql = "UPDATE saleinvoices SET uploadTime=:uploadTime, lastModificationTime=:lastModificationTime, contractorData=:contractorData, amountNetto=:amountNetto, amountBrutto=:amountBrutto, transactionDate=:transactionDate, notes=:notes, filePath=:filePath, currency=:currency, vat=:vat WHERE saleInvoiceID=:id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
-                'id' => Validation::sanitizeInt($id),
-                'saleInvoiceID' => $saleInvoice->getID(),
+                'id' => $saleInvoice->getID(),
                 'uploadTime' => $saleInvoice->getUploadTime(),
                 'lastModificationTime' => $saleInvoice->getLastModificationTime(),
                 'contractorData' => $saleInvoice->getContractorData(),

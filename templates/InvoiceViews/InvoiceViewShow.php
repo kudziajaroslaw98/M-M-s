@@ -71,7 +71,7 @@ class InvoiceViewShow
 
         $i = 1;
         foreach ($invoices as &$invoice) {
-            InvoiceController::renderRow($invoice, $i);
+            self::renderRow($invoice, $i);
             $i++;
         }
     }
@@ -84,5 +84,25 @@ class InvoiceViewShow
     private static function renderInvoicePurchasesRows()
     {
         self::renderInvoiceRows(new PurchaseInvoiceRepository());
+    }
+
+    public static function renderRow(Invoice &$invoice, int $lp)
+    {
+        echo "
+    <tr>
+        <th scope='row'>$lp</th>
+        <td>" . $invoice->getID() . "</td>
+        <td>" . $invoice->getUploadTime() . "</td>
+        <td>" . $invoice->getLastModificationTime() . "</td>
+        <td>" . $invoice->getContractorData() . "</td>
+        <td>" . $invoice->getTransactionDate() . "</td>
+        <td>" . $invoice->getAmountNetto() . "</td>
+        <td>" . $invoice->getVat() * 100 . "%</td>
+        <td>" . $invoice->getAmountBrutto() . "</td>
+        <td>" . $invoice->getCurrency() . "</td>
+        <td>" . $invoice->getNotes() . "</td>
+        <td><a href='" . $invoice->getFilePath() . "' download>Download</a></td>
+    </tr>
+    ";
     }
 }

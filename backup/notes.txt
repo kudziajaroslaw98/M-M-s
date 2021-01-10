@@ -1,4 +1,4 @@
-on UNIX/Linux system you must use cron and set mysqldump command from "mysqldumper.bat" as schedule
+on UNIX/Linux system "mysqldumper.bat" will not work. you must use cron and set mysqldump command from "mysqldumper.bat" as schedule
 on Windows system you must use Task Scheduler and set new task as run program with the time start task
 
 "db_backup.xml" file is export task from Task Scheduler in Windows system

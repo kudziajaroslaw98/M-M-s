@@ -74,12 +74,12 @@ class InvoiceViewSearch
 
                 // find invoices
                 $invoiceNumber = $dataForm->data[array_keys($dataForm->data)[0]];  // in dataForm searching number is first value
-                $invoices = $repository->findById($invoiceNumber);
+                $invoices = $repository->searchById($invoiceNumber);
 
                 // render results
                 $i = 1;
                 foreach ($invoices as $invoice) {
-                    InvoiceController::renderRow($invoice, $i);
+                    InvoiceViewShow::renderRow($invoice, $i);
                     $i++;
                 }
             }
