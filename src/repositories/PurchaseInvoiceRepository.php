@@ -12,7 +12,7 @@ class PurchaseInvoiceRepository
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -31,16 +31,19 @@ class PurchaseInvoiceRepository
                 $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($purchaseInvoices, $purchaseInvoice);
             }
-
+            self::pagination();
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
-    public function findById(int $id)
+    public function findById($id)
     {
         try {
+            if(! ctype_digit(strval($id))){
+                throw new InvalidInputExcetion('Given data are invalid!');
+            }
             $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
@@ -58,7 +61,7 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -84,7 +87,7 @@ class PurchaseInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -111,7 +114,19 @@ class PurchaseInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
+    }
+    public function pagination(){
+        $_SESSION['purchaseInvoicePage'] = (isset($_GET['purchasepage']) && is_numeric($_GET['purchasepage']) ) ? $_GET['purchasepage'] : 1;
+        $_SESSION['purchasePaginationStart'] = ( $_SESSION['purchaseInvoicePage'] - 1) * $_SESSION['records-limit'];
+        $sql = "SELECT count(purchaseInvoiceID) FROM purchaseinvoices";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $allRecords = $row[0];
+        $_SESSION['purchaseInvoiceTotalPages'] = ceil($allRecords / $_SESSION['records-limit']);
+        $_SESSION['purchasePrevPage'] = $_SESSION['purchaseInvoicePage'] - 1;
+        $_SESSION['purchaseNextPage'] = $_SESSION['purchaseInvoicePage'] + 1;
     }
 }

@@ -12,7 +12,7 @@ class SaleInvoiceRepository
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -31,15 +31,18 @@ class SaleInvoiceRepository
                 $saleInvoice->setID($row['saleInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($saleInvoices, $saleInvoice);
             }
-
+            self::pagination();
             return $saleInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
-    public function findById(int $id)
+    public function findById($id)
     {
+        if(! ctype_digit(strval($id))){
+            throw new InvalidInputExcetion('Given data are invalid!');
+        }
         try {
             $sql = "SELECT * FROM saleinvoices WHERE saleInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
@@ -58,7 +61,7 @@ class SaleInvoiceRepository
 
             return $saleInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -84,7 +87,7 @@ class SaleInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -111,7 +114,20 @@ class SaleInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
+    }
+
+    public function pagination(){
+        $_SESSION['saleInvoicePage'] = (isset($_GET['salepage']) && is_numeric($_GET['salepage']) ) ? $_GET['salepage'] : 1;
+        $_SESSION['salePaginationStart'] = ( $_SESSION['saleInvoicePage'] - 1) * $_SESSION['records-limit'];
+        $sql = "SELECT count(saleInvoiceID) FROM saleinvoices";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $allRecords = $row[0];
+        $_SESSION['saleInvoiceTotalPages'] = ceil($allRecords / $_SESSION['records-limit']);
+        $_SESSION['salePrevPage'] = $_SESSION['saleInvoicePage'] - 1;
+        $_SESSION['saleNextPage'] = $_SESSION['saleInvoicePage'] + 1;
     }
 }

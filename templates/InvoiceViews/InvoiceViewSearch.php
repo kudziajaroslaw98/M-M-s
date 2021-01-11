@@ -13,7 +13,7 @@ class InvoiceViewSearch
                     <form method="post">
                         <div class='row'>
                             <label for="search_PurchaseInvoice">Purchase Invoice Number: </label>
-                            <input type="search" placeholder="Invoice Number" id="search_PurchaseInvoice" name="search_PurchaseInvoice" class='form-control search_user' value="12312">
+                            <input type="search" placeholder="Invoice Number" id="search_PurchaseInvoice" name="search_PurchaseInvoice" class='form-control search_user' value="1">
                         </div>
                         <div class='row justify-content-center'>
                             <div class="form-group  col-8">
@@ -26,7 +26,7 @@ class InvoiceViewSearch
                     <form method="post">
                         <div class='row'>
                             <label for="search_SaleInvoice">Sale Invoice Number: </label>
-                            <input type="search" placeholder="Invoice Number" id="search_SaleInvoice" name="search_SaleInvoice" class='form-control search_user' value="125215212">
+                            <input type="search" placeholder="Invoice Number" id="search_SaleInvoice" name="search_SaleInvoice" class='form-control search_user' value="1">
                         </div>
                         <div class='row justify-content-center'>
                             <div class="form-group  col-8">
@@ -38,8 +38,9 @@ class InvoiceViewSearch
             </div>
         </div>
 
-        <?= self::renderInvoices('searchInvoice', 'Sale Invoices', 'search_SaleInvoice') ?>
         <?= self::renderInvoices('searchInvoice', 'Purchase Invoices', 'search_PurchaseInvoice') ?>
+        <?= self::renderInvoices('searchInvoice', 'Sale Invoices', 'search_SaleInvoice') ?>
+        
 
         <?= Layout::footer() ?>
     <?php
@@ -50,11 +51,10 @@ class InvoiceViewSearch
     private static function searchInvoice(string $option)
     {
         try {
+       
             if (!empty($_POST)) {
-                if (!in_array($option, array_keys($_POST))) {
-                    throw new InvalidArgumentException();
-                }
-
+                if (in_array($option, array_keys($_POST))) {
+                    
                 // security data
                 $dataForm = new DataForm($_POST);
                 $dataForm->sanitizeData();
@@ -79,12 +79,13 @@ class InvoiceViewSearch
                 // render results
                 $i = 1;
                 foreach ($invoices as $invoice) {
-                    InvoiceController::renderRow($invoice, $i);
+                    InvoiceController::renderRow($invoice,   $i);
                     $i++;
+                }
                 }
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -112,20 +113,6 @@ class InvoiceViewSearch
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
-                        <th scope="row">1</th>
-                        <td>421512</td>
-                        <td>29.12.2020</td>
-                        <td>29.12.2020</td>
-                        <td>Jaroslaw Kudzia, 24%, 99102</td>
-                        <td>29.12.2020</td>
-                        <td>681</td>
-                        <td>24%</td>
-                        <td>5215</td>
-                        <td>PLN</td>
-                        <td>Notka</td>
-                        <td>Plik</td>
-                    </tr> -->
                     <?= self::$invoicesRenderFunction($option) ?>
                 </tbody>
             </table>
