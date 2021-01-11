@@ -121,7 +121,6 @@ class DocController
             echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
-
     public static function searchDocs($array){
         try{
             global $config;
