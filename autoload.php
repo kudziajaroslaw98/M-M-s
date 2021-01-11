@@ -52,6 +52,7 @@ require_once __DIR__ . './src/classes/entities/Invoice.php';
 require_once __DIR__ . './src/classes/entities/PurchaseInvoice.php';
 require_once __DIR__ . './src/classes/entities/SaleInvoice.php';
 require_once __DIR__ . './src/classes/entities/Software.php';
+require_once __DIR__ . './src/classes/entities/Document.php';
 
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';

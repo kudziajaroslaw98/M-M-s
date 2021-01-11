@@ -9,7 +9,23 @@ class DocViewShow
         <?= Layout::header($params); ?>
 
         <div class="InvoicesFound card">
-
+        <div class='card-header'>
+            <div class="row">
+                <div class='col-6'>
+                    <form method="post">
+                        <div class='row'>
+                            <label for="search_Hardware_number">Document Name: </label>
+                            <input type="search" placeholder="Hardware Number" id="search_document_name" name="search_document_name" class='form-control search_user' value="document">
+                        </div>
+                        <div class='row justify-content-center'>
+                            <div class="form-group  col-8">
+                                <input type="submit" class="btn btn-primary btn-user btn-block form-control-input mt-2" id="DocumentName" name="DocumentName">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
             <h5 class="card-header">Found Documents</h5>
             <div class="card-body">
                 <!-- Earnings (Monthly) Card Example -->
