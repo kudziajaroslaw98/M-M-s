@@ -10,6 +10,8 @@ class InvoiceViewShow
 
         <?= self::renderInvoices('renderInvoiceSalesRows', 'Sale Invoices') ?>
         <?= self::renderInvoices('renderInvoicePurchasesRows', 'Purchase Invoices') ?>
+        <?= self::invoiceModalJS()?>
+        <?= self::renderInvoiceModal()?>
 
         <?= Layout::footer() ?>
     <?php
@@ -101,8 +103,55 @@ class InvoiceViewShow
         <td>" . $invoice->getAmountBrutto() . "</td>
         <td>" . $invoice->getCurrency() . "</td>
         <td>" . $invoice->getNotes() . "</td>
-        <td><a href='" . $invoice->getFilePath() . "' download>Download</a></td>
+        <td><button type=\"button\" onclick=\"getModalData('".
+        $invoice->getID()."','".
+        $invoice->getUploadTime()."','".
+        $invoice->getLastModificationTime()."','".
+        $invoice->getContractorData()."','".
+        $invoice->getTransactionDate()."','".
+        $invoice->getAmountNetto()."','".
+        $invoice->getCurrency()."','".
+        $invoice->getNotes()."','".
+        $invoice->getFilePath()."')\" 
+        class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#invoiceModal\">Show PDF</button></td>
     </tr>
     ";
+    }
+    public static function invoiceModalJS()
+    {
+        echo 
+        "<script>
+            function getModalData(id,upTime,lModTime,contData,trData,amNet,curr,notes,path) {
+                document.getElementById(\"pdfField\").remove();
+                let newPdfField= document.createElement(\"object\");
+                newPdfField.setAttribute(\"type\",\"application/pdf\");
+
+                newPdfField.setAttribute(\"id\",\"pdfField\");
+                newPdfField.setAttribute(\"data\",path);
+                newPdfField.setAttribute(\"style\",\"height: 85vh; width: 100%\");
+                document.getElementById(\"pdfContainer\").appendChild(newPdfField);
+                console.log(id);
+            };
+        </script>";
+    }
+    public static function renderInvoiceModal()
+    {
+        echo "<div class=\"modal \" id=\"invoiceModal\" tabindex=\"-1\" role=\"dialog\"  aria-hidden=\"true\">
+        <div class=\"modal-dialog\" role=\"document\">
+          <div class=\"modal-content\">
+            <div class=\"modal-header\">
+              
+              <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+                <span aria-hidden=\"true\">&times;</span>
+              </button>
+            </div>
+            <div class=\"modal-body\">
+                <div id=\"pdfContainer\">
+                    <object id=\"pdfField\" type=\"application/pdf\" data=\"\"  style=\"height: 85vh;\">No Support</object>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>";
     }
 }
