@@ -15,13 +15,36 @@ class DocController
 
     public static function renderViewShow($array = null)
     {
-        if(isset($_POST['documentSearch'])){
-            echo DocViewShow::render(array(
-                'title' => 'Show Documents',
-                'subtitle' => 'Your Documents'
-            ), self::searchDocs($_POST));
+        try{
+            if(isset($_POST['documentSearch'])){
+                if(isset($_POST['search_document_type_asc']) && isset($_POST['search_document_type_desc'])){
+                    throw new Exception("Check one option");
+                }
+                elseif(empty($_POST['search_document_type_asc']) && empty($_POST['search_document_type_desc'])){
+                    throw new Exception("Check one option");
+                }
+                elseif(isset($_POST['search_document_type_asc'])){
+                    echo DocViewShow::render(array(
+                        'title' => 'Show Documents',
+                        'subtitle' => 'Your Documents'
+                    ), self::searchDocs($_POST, 'ASC'));
+                }
+                else{
+                    echo DocViewShow::render(array(
+                        'title' => 'Show Documents',
+                        'subtitle' => 'Your Documents'
+                    ), self::searchDocs($_POST, 'DESC'));
+                }
+            }
+            else{
+                echo DocViewShow::render(array(
+                    'title' => 'Show Documents',
+                    'subtitle' => 'Your Documents'
+                ), self::showDocs());
+            }
         }
-        else{
+        catch(Exception $e){
+            echo $e->getMessage();
             echo DocViewShow::render(array(
                 'title' => 'Show Documents',
                 'subtitle' => 'Your Documents'
@@ -121,16 +144,20 @@ class DocController
             echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
-    public static function searchDocs($array){
+    public static function searchDocs($array, $type){
         try{
             global $config;
             $name = Validation::sanitizeText($array['search_document_name']);
             $connect = new PDO($config['dsn'], $config['username'], $config['password']);
             $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $sql = "SELECT * FROM documents WHERE filePath LIKE :filePath";
+            if($type == 'ASC'){
+                $sql = "SELECT * FROM documents WHERE filePath LIKE :filePath ORDER BY uploadTime ASC";
+            }
+            else{
+                $sql = "SELECT * FROM documents WHERE filePath LIKE :filePath ORDER BY uploadTime DESC";
+            }
             $stmt = $connect->prepare($sql);
-
             $result = $stmt->execute(array(
                 'filePath' => "./../data/documents/".$name . '%'
             ));

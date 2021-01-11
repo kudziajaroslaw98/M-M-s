@@ -14,8 +14,21 @@ class DocViewShow
                 <div class='col-6'>
                     <form method="post">
                         <div class='row'>
-                            <label for="search_Hardware_number">Document Name: </label>
-                            <input type="search" placeholder="Hardware Number" id="search_document_name" name="search_document_name" class='form-control search_user' value="documentName">
+                            <label for="search_document_name">Document Name: </label>
+                            <input type="search" placeholder="Document Name" id="search_document_name" name="search_document_name" class='form-control search_user' value="documentName">
+                        </div>
+                        <div class='row'>
+                            <p>Pliki od: </p>
+                        </div>
+                        <div class='row'>
+                            <div class='row col-2 d-flex justify-content-center'>
+                                <input type="checkbox" id="search_document_type2" name="search_document_type_desc" class='form-control search_user' value="Najnowszego">
+                                <label for="search_document_type_desc">Najnowszego</label>
+                            </div>
+                            <div class='row col-2  d-flex justify-content-center'>
+                                <input type="checkbox" id="search_document_type1" name="search_document_type_asc" class='form-control search_user' value="Najstarszego">
+                                <label for="search_document_type_asc">Najstarszego</label>
+                            </div>
                         </div>
                         <div class='row justify-content-center'>
                             <div class="form-group  col-8">
