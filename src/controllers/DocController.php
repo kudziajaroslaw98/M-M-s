@@ -13,12 +13,20 @@ class DocController
         }
     }
 
-    public static function renderViewShow()
+    public static function renderViewShow($array = null)
     {
-        echo DocViewShow::render(array(
-            'title' => 'Show Documents',
-            'subtitle' => 'Your Documents'
-        ));#docName docDescription
+        if(isset($_POST['documentSearch'])){
+            echo DocViewShow::render(array(
+                'title' => 'Show Documents',
+                'subtitle' => 'Your Documents'
+            ), self::searchDocs($_POST));
+        }
+        else{
+            echo DocViewShow::render(array(
+                'title' => 'Show Documents',
+                'subtitle' => 'Your Documents'
+            ), self::showDocs());
+        }
     }
 
     public static function insertDoc($array){
@@ -86,28 +94,62 @@ class DocController
             echo $e->getMessage();
         }
     }
+
+    public static function showDocs(){
+        try{
+            global $config;
+            $connect = new PDO($config['dsn'], $config['username'], $config['password']);
+            $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM documents";
+            $stmt = $connect->prepare($sql);
+            $result = $stmt->execute();
+
+            $documents = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $document = new Document();
+
+                $document->setDocumentID($row['documentID'])
+                        ->setUploadTime($row['uploadTime'])
+                        ->setLastModificationTime($row['lastModificationTime'])
+                        ->setNotes($row['notes'])
+                        ->setFilePath($row['filePath']);
+                array_push($documents, $document);
+            }
+            return $documents;
+        } catch (PDOException $e) {
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
+        }
+    }
+
+    public static function searchDocs($array){
+        try{
+            global $config;
+            $name = Validation::sanitizeText($array['search_document_name']);
+            $connect = new PDO($config['dsn'], $config['username'], $config['password']);
+            $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM documents WHERE filePath LIKE :filePath";
+            $stmt = $connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'filePath' => "./../data/documents/".$name . '%'
+            ));
+            $documents = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $document = new Document();
+                $document->setDocumentID($row['documentID'])
+                        ->setUploadTime($row['uploadTime'])
+                        ->setLastModificationTime($row['lastModificationTime'])
+                        ->setNotes($row['notes'])
+                        ->setFilePath($row['filePath']);
+                array_push($documents, $document);
+            }
+
+            return $documents;
+
+        }catch(Exception $e){
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
+        }
+    }
 }
-
-
-// try {
-//     $sql = "INSERT INTO purchaseInvoices VALUES (:purchaseInvoiceID, :uploadTime, :lastModificationTime, :contractorData, :amountNetto, :amountBrutto, :transactionDate, :notes, :filePath, :currency, :vat)";
-//     $stmt = $this->connect->prepare($sql);
-
-//     $result = $stmt->execute(array(
-//         'purchaseInvoiceID' => $purchaseInvoice->getID(),
-//         'uploadTime' => $purchaseInvoice->getUploadTime(),
-//         'lastModificationTime' => $purchaseInvoice->getLastModificationTime(),
-//         'contractorData' => $purchaseInvoice->getContractorData(),
-//         'amountNetto' => $purchaseInvoice->getAmountNetto(),
-//         'amountBrutto' => $purchaseInvoice->getAmountBrutto(),
-//         'transactionDate' => $purchaseInvoice->getTransactionDate(),
-//         'notes' => $purchaseInvoice->getNotes(),
-//         'filePath' => $purchaseInvoice->getFilePath(),
-//         'currency' => $purchaseInvoice->getCurrency(),
-//         'vat' => $purchaseInvoice->getVat()
-//     ));
-
-//     return $result;
-// } catch (PDOException $e) {
-//     echo NotificationHandler::handle("notification-danger", $e->getMessage());
-// }
