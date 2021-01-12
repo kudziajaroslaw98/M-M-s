@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 01 Sty 2021, 17:33
+-- Czas generowania: 12 Sty 2021, 14:23
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -30,10 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `documents` (
   `documentID` int(10) NOT NULL,
   `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lastModifactionTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `notes` varchar(255) DEFAULT NULL,
   `filePath` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `documents`
+--
+
+INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`) VALUES
+(1, '2021-01-11 02:47:50', '2021-01-11 02:47:50', 'x', './../data/documents/List_Motywacyjny.pdf'),
+(2, '2021-01-11 03:24:00', '2021-01-11 03:24:00', 'x', './../data/documents/z.pdf'),
+(3, '2021-01-01 03:24:00', '2021-01-11 03:24:00', NULL, './../data/documents/x.pdf'),
+(6, '2021-01-11 04:23:06', '2021-01-11 04:23:06', NULL, './../data/documents/xx'),
+(7, '2021-01-08 04:22:40', '2021-01-11 04:23:06', NULL, './../data/documents/xxx');
 
 -- --------------------------------------------------------
 
@@ -93,7 +104,11 @@ CREATE TABLE `purchaseinvoices` (
 
 INSERT INTO `purchaseinvoices` (`purchaseInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
 (1, '2020-12-21 21:44:57', '2020-12-21 21:44:57', 'Gospodarstwo domowe', 450, 390, '2020-12-07', 'fajnie', './../data/invoices/purchase/test.txt', 'PLN', 0.23),
-(4325, '2021-01-01 16:30:34', '2021-01-01 16:30:34', 'Krzysztof Ibisz', 2350, 3000, '2021-01-01', NULL, './../data/invoices/purchase/AI1-LAB10-SRS-Zespol_Karczma.pdf', 'PLN', 0.23);
+(11, '2021-03-10 04:46:39', '2021-01-11 04:46:39', 'a', 1, 1, '2021-01-05', NULL, '1111', '1', 1),
+(111, '2021-04-09 03:46:39', '2021-01-11 04:46:39', '1', 1, 1, '2021-01-16', NULL, '11111111', '1', 1),
+(4325, '2020-11-18 16:30:34', '2021-01-01 16:30:34', 'Krzysztof Ibisz', 2350, 3000, '2021-01-01', NULL, './../data/invoices/purchase/AI1-LAB10-SRS-Zespol_Karczma.pdf', 'PLN', 0.23),
+(4328, '2021-01-13 00:59:28', '2021-01-14 00:59:28', '1', 1, 1, '2021-01-06', '1', '1', '1', 1),
+(4329, '2021-01-14 00:59:28', '2021-01-27 00:59:28', '1', 1, 1, '2021-01-14', '1', '3', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -154,6 +169,8 @@ CREATE TABLE `saleinvoices` (
 
 INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
 (1, '2021-01-01 00:13:24', '2021-01-01 00:13:24', 'Przemysław Różewski', 780, 890, '2021-01-27', NULL, './../data/invoices/sale/lab_11_instr_cyfrowe znaki wodne.pdf', 'PLN', 0.23),
+(11, '2020-07-22 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '2021-01-06', '1', '11', '1', 1),
+(111, '2021-04-16 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '0000-00-00', '1', '1111', '1', 1),
 (324, '2021-01-01 16:32:49', '2021-01-01 16:32:49', 'Krzysztof Krawczyk', 35, 47, '2021-01-01', NULL, './../data/invoices/sale/Gantt.pdf', 'PLN', 0.23);
 
 -- --------------------------------------------------------
@@ -331,7 +348,7 @@ ALTER TABLE `users_purchaseinvoices`
 -- AUTO_INCREMENT dla tabeli `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `gear`
@@ -343,7 +360,7 @@ ALTER TABLE `gear`
 -- AUTO_INCREMENT dla tabeli `purchaseinvoices`
 --
 ALTER TABLE `purchaseinvoices`
-  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4326;
+  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4330;
 
 --
 -- AUTO_INCREMENT dla tabeli `reports`
