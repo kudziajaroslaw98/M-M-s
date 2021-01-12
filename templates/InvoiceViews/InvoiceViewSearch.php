@@ -114,7 +114,7 @@ class InvoiceViewSearch
                     // render results
                     $i = 1;
                     foreach ($invoices as $invoice) {
-                        InvoiceController::renderRow($invoice,   $i);
+                        InvoiceViewShow::renderRow($invoice,   $i);
                         $i++;
                     }
                 }
