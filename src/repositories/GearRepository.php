@@ -119,7 +119,6 @@ class GearRepository
         try {
             $sql = "SELECT * FROM gear WHERE gearID LIKE :GearID";
             $stmt = $this->connect->prepare($sql);
-
             $result = $stmt->execute(array(
                 'GearID' => Validation::sanitizeInt($gearNumber) . '%'
             ));

@@ -50,7 +50,7 @@ class Validation
     /**
      * Check if variable is file type, then check if file is ok and check extention of file.
      * @param file $file
-     * @param string $extention default value = 'pdf' 
+     * @param string $extention default value = 'pdf'
      * @return bool
      */
     public static function checkFile($file, $extention = 'pdf')
@@ -161,7 +161,7 @@ class Validation
 
     public static function validateLicense($license, $separatorCharacters = "/-")
     {
-        // license cannot have spaces 
+        // license cannot have spaces
         if (strpos($license, " ") !== false) {
             return false;
         }

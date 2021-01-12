@@ -28,17 +28,22 @@ require_once __DIR__ . './templates/LicenseViews/LicenseViewShow.php';
 require_once __DIR__ . './templates/DocViews/DocViewAdd.php';
 require_once __DIR__ . './templates/DocViews/DocViewShow.php';
 
+//Notification View
+require_once __DIR__ . './templates/NotificationView/NotificationView.php';
+
 // Controllers
 require_once __DIR__ . './src/controllers/HardwareController.php';
 require_once __DIR__ . './src/controllers/InvoiceController.php';
 require_once __DIR__ . './src/controllers/LicenseController.php';
 require_once __DIR__ . './src/controllers/DocController.php';
+require_once __DIR__ . './src/controllers/NotificationController.php';
 
 // Handlers
 require_once __DIR__ . './src/handlers/HardwareHandler.php';
 require_once __DIR__ . './src/handlers/InvoiceHandler.php';
 require_once __DIR__ . './src/handlers/LicenseHandler.php';
 require_once __DIR__ . './src/handlers/DocHandler.php';
+require_once __DIR__ . './src/handlers/NotificationHandler.php';
 
 // Entities
 require_once __DIR__ . './src/classes/entities/Gear.php';
@@ -47,6 +52,7 @@ require_once __DIR__ . './src/classes/entities/Invoice.php';
 require_once __DIR__ . './src/classes/entities/PurchaseInvoice.php';
 require_once __DIR__ . './src/classes/entities/SaleInvoice.php';
 require_once __DIR__ . './src/classes/entities/Software.php';
+require_once __DIR__ . './src/classes/entities/Document.php';
 
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';

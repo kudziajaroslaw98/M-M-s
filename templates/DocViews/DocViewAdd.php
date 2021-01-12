@@ -14,17 +14,17 @@ class DocViewAdd
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Upload Document Form</h1>
                     </div>
-                    <form class="UploadDoc">
+                    <form class="UploadDoc" method="POST" ENCTYPE="multipart/form-data">
                         <div class="form-group">
                             <label for="UploadDoc">Pick file to Upload and click <strong>Upload</strong></label>
-                            <input type="file" class="form-control-file" id="UploadDoc">
+                            <input type="file" class="form-control-file" id="UploadDoc" name='docName'>
                         </div>
                         <div class="form-group">
-                            <label for="HardwareNotes">Hardware notes</label>
-                            <input type="text" class="form-control" id="HardwareNotes">
+                            <label for="DocumentNotes">Document notes</label>
+                            <input type="text" class="form-control" id="DocumentNotes" name='docDescription'>
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-user btn-block form-control-input" id="UploadSubmit">
+                            <input type="submit" class="btn btn-primary btn-user btn-block form-control-input" id="UploadSubmit" name='docSubmit'>
                         </div>
                     </form>
                 </div>

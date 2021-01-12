@@ -12,7 +12,7 @@ class PurchaseInvoiceRepository
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -31,41 +31,20 @@ class PurchaseInvoiceRepository
                 $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
                 array_push($purchaseInvoices, $purchaseInvoice);
             }
-
+            self::pagination();
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
-    public function findById(int $id)
+    public function findById($id)
     {
         try {
-            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID=:id";
-            $stmt = $this->connect->prepare($sql);
-
-            $result = $stmt->execute(array(
-                'id' => Validation::sanitizeInt($id)
-            ));
-
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$row) {
-                return null;
+            if(! ctype_digit(strval($id))){
+                throw new InvalidInputExcetion('Given data are invalid!');
             }
-
-            $purchaseInvoice = new PurchaseInvoice();
-            $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
-
-            return $purchaseInvoice;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public function searchById(int $id)
-    {
-        try {
-            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID LIKE :id";
+            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -81,7 +60,62 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
+        }
+    }
+
+    public function findByIdOrder($id, $like)
+    {
+        try {
+            if(! ctype_digit(strval($id))){
+                throw new InvalidInputExcetion('Given data are invalid!');
+            }
+            if($like['year'] != null && $like['month'] != null){
+                $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
+                $stmt = $this->connect->prepare($sql);
+                $result = $stmt->execute(array(
+                    'id' => Validation::sanitizeInt($id) . '%',
+                    'uploadTime' => "".Validation::sanitizeInt($like['year'])."-".Validation::sanitizeInt($year['month'])."-"."%"
+                ));
+            }
+            elseif($like['year'] != null){
+                $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
+                $stmt = $this->connect->prepare($sql);
+                $result = $stmt->execute(array(
+                    'id' => Validation::sanitizeInt($id) . '%',
+                    'uploadTime' => "".Validation::sanitizeInt($like['year'])."-"."%"
+                ));
+            }
+            elseif($like['month'] != null){
+                $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
+                $stmt = $this->connect->prepare($sql);
+                $now = new DateTime();
+                $result = $stmt->execute(array(
+                    'id' => Validation::sanitizeInt($id) . '%',
+                    'uploadTime' => $now->format("Y")."-".Validation::sanitizeInt($like['month'])."-"."%"
+                ));
+            }
+            else{
+                $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
+                $stmt = $this->connect->prepare($sql);
+                $result = $stmt->execute(array(
+                    'id' => Validation::sanitizeInt($id) . '%'
+                ));
+            }
+
+
+
+            $purchaseInvoices = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $purchaseInvoice = new PurchaseInvoice();
+
+                $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+                array_push($purchaseInvoices, $purchaseInvoice);
+            }
+
+            return $purchaseInvoices;
+        } catch (PDOException $e) {
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -107,7 +141,7 @@ class PurchaseInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -133,7 +167,19 @@ class PurchaseInvoiceRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
+    }
+    public function pagination(){
+        $_SESSION['purchaseInvoicePage'] = (isset($_GET['purchasepage']) && is_numeric($_GET['purchasepage']) ) ? $_GET['purchasepage'] : 1;
+        $_SESSION['purchasePaginationStart'] = ( $_SESSION['purchaseInvoicePage'] - 1) * $_SESSION['records-limit'];
+        $sql = "SELECT count(purchaseInvoiceID) FROM purchaseinvoices";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $allRecords = $row[0];
+        $_SESSION['purchaseInvoiceTotalPages'] = ceil($allRecords / $_SESSION['records-limit']);
+        $_SESSION['purchasePrevPage'] = $_SESSION['purchaseInvoicePage'] - 1;
+        $_SESSION['purchaseNextPage'] = $_SESSION['purchaseInvoicePage'] + 1;
     }
 }
