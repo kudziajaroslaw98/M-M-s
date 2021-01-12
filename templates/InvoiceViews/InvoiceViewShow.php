@@ -119,39 +119,42 @@ class InvoiceViewShow
     }
     public static function invoiceModalJS()
     {
-        echo 
-        "<script>
+        ob_start();?> 
+        <script>
             function getModalData(id,upTime,lModTime,contData,trData,amNet,curr,notes,path) {
-                document.getElementById(\"pdfField\").remove();
-                let newPdfField= document.createElement(\"object\");
-                newPdfField.setAttribute(\"type\",\"application/pdf\");
+                document.getElementById("pdfField").remove();
+                let newPdfField= document.createElement("object");
+                newPdfField.setAttribute("type","application/pdf");
 
-                newPdfField.setAttribute(\"id\",\"pdfField\");
-                newPdfField.setAttribute(\"data\",path);
-                newPdfField.setAttribute(\"style\",\"height: 85vh; width: 100%\");
-                document.getElementById(\"pdfContainer\").appendChild(newPdfField);
+                newPdfField.setAttribute("id","pdfField");
+                newPdfField.setAttribute("data",path);
+                newPdfField.setAttribute("style","height: 85vh; width: 100%");
+                document.getElementById("pdfContainer").appendChild(newPdfField);
                 console.log(id);
-            };
-        </script>";
+            }
+        </script>
+      <?php return ob_get_clean();
     }
     public static function renderInvoiceModal()
     {
-        echo "<div class=\"modal \" id=\"invoiceModal\" tabindex=\"-1\" role=\"dialog\"  aria-hidden=\"true\">
-        <div class=\"modal-dialog\" role=\"document\">
-          <div class=\"modal-content\">
-            <div class=\"modal-header\">
+        ob_start();?> "<div class="modal" id="invoiceModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
               
-              <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
-                <span aria-hidden=\"true\">&times;</span>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class=\"modal-body\">
-                <div id=\"pdfContainer\">
-                    <object id=\"pdfField\" type=\"application/pdf\" data=\"\"  style=\"height: 85vh;\">No Support</object>
+            <div class="modal-body">
+                <div id="pdfContainer">
+                    <object id="pdfField" type="application/pdf" data="\"  style="height: 85vh;">No Support</object>
                 </div>
             </div>
           </div>
         </div>
-      </div>";
+      </div>;
+      <?php return ob_get_clean();
     }
 }
+?>
