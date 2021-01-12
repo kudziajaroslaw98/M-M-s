@@ -38,13 +38,34 @@ class PurchaseInvoiceRepository
         }
     }
 
-    public function findById($id)
+    public function findById(int $id)
     {
         try {
-            if(! ctype_digit(strval($id))){
-                throw new InvalidInputExcetion('Given data are invalid!');
+            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID=:id";
+            $stmt = $this->connect->prepare($sql);
+
+            $result = $stmt->execute(array(
+                'id' => Validation::sanitizeInt($id)
+            ));
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return null;
             }
-            $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
+
+            $purchaseInvoice = new PurchaseInvoice();
+            $purchaseInvoice->setID($row['purchaseInvoiceID'])->setUploadTime($row['uploadTime'])->setLastModificationTime($row['lastModificationTime'])->setContractorData($row['contractorData'])->setAmountNetto($row['amountNetto'])->setAmountBrutto($row['amountBrutto'])->setTransactionDate($row['transactionDate'])->setNotes($row['notes'])->setFilePath($row['filePath'])->setCurrency($row['currency'])->setVat($row['vat']);
+
+            return $purchaseInvoice;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function searchById(int $id)
+    {
+        try {
+            $sql = "SELECT * FROM purchaseinvoices WHERE purchaseInvoiceID LIKE :id";
             $stmt = $this->connect->prepare($sql);
 
             $result = $stmt->execute(array(
@@ -60,7 +81,7 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo NotificationHandler::handle("notification-danger", $e->getMessage());
+            echo $e->getMessage();
         }
     }
 
