@@ -28,8 +28,11 @@ require_once __DIR__ . './templates/LicenseViews/LicenseViewShow.php';
 require_once __DIR__ . './templates/DocViews/DocViewAdd.php';
 require_once __DIR__ . './templates/DocViews/DocViewShow.php';
 
-//Notification View
+// Notification Views
 require_once __DIR__ . './templates/NotificationView/NotificationView.php';
+
+// Login Views
+require_once __DIR__ . './templates/LoginViews/LoginView.php';
 
 // Controllers
 require_once __DIR__ . './src/controllers/HardwareController.php';
@@ -37,6 +40,7 @@ require_once __DIR__ . './src/controllers/InvoiceController.php';
 require_once __DIR__ . './src/controllers/LicenseController.php';
 require_once __DIR__ . './src/controllers/DocController.php';
 require_once __DIR__ . './src/controllers/NotificationController.php';
+require_once __DIR__ . './src/controllers/LoginController.php';
 
 // Handlers
 require_once __DIR__ . './src/handlers/HardwareHandler.php';
