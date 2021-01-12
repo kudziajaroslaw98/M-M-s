@@ -74,10 +74,10 @@ class InvoiceViewShow
         $i = 0;
         foreach ($invoices as &$invoice) {
             if($type == 'sale' && $i >= $_SESSION['salePaginationStart'] && $i < $_SESSION['salePaginationStart']+$_SESSION['records-limit']){
-                InvoiceController::renderRow($invoice, $i+1);
+                self::renderRow($invoice, $i+1);
             }
             if($type == 'purchase' && $i >= $_SESSION['purchasePaginationStart'] && $i < $_SESSION['purchasePaginationStart']+$_SESSION['records-limit']){
-                InvoiceController::renderRow($invoice, $i+1);
+                self::renderRow($invoice, $i+1);
             }
             $i++;
         }
