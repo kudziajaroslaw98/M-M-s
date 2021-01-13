@@ -159,7 +159,7 @@ class Layout
                                                 </div>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link collapsed" href="index.php?action=logout-all">
+                                                <a class="nav-link collapsed" href="index.php?action=logout">
                                                     <i class="fas fa-fw fa-cog"></i>
                                                     <?php if (AuthHelper::canAccessLogout()) : ?><span>Logout</span><?php endif; ?>
                                                 </a>

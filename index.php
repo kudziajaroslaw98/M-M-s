@@ -7,12 +7,6 @@ $_SESSION['records-limit'] = 4;
 $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
-if (!LoginController::check()) {
-    $action = null;
-} else if (is_null($action)) {
-    $action = 'hardware-show';
-}
-
 $actionPartOne = explode('-', $action)[0];
 
 switch ($actionPartOne) {
@@ -31,6 +25,6 @@ switch ($actionPartOne) {
     case 'logout':
         LoginController::logout();
     default:
-        LoginController::render();
+        LoginController::redirectioning();
         break;
 }

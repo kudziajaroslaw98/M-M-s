@@ -4,6 +4,10 @@ class NotificationHandler
 {
     public static function handle(string $action, string $msg)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'notification-info':
                 NotificationController::renderViewInfo($msg);
@@ -18,7 +22,7 @@ class NotificationHandler
                 NotificationController::renderViewWarning($msg);
                 break;
             default:
-                header('Location: home.php?action=hardware-add');
+                header("Location: index.php");
                 break;
         }
     }

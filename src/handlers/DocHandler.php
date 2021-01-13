@@ -4,6 +4,10 @@ class DocHandler
 {
     public static function handle($action)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'doc-add':
                 DocController::renderViewAdd();
@@ -12,7 +16,7 @@ class DocHandler
                 DocController::renderViewShow();
                 break;
             default:
-                header('Location: home.php?action=hardware-add');
+                header("Location: index.php");
                 break;
         }
     }

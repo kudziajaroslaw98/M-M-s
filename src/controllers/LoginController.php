@@ -9,6 +9,15 @@ class LoginController
         ));
     }
 
+    public static function redirectioning()
+    {
+        if (self::isLogged()) {
+            header('Location: index.php?action=hardware-show');
+        } else {
+            self::render();
+        }
+    }
+
     public static function set()
     {
         $_SESSION['uid'] = 42;
@@ -20,7 +29,7 @@ class LoginController
         session_destroy();
     }
 
-    public static function check()
+    public static function isLogged()
     {
         if (!isset($_SESSION['uid'])) {
             return false;

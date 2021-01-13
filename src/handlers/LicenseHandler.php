@@ -4,6 +4,10 @@ class LicenseHandler
 {
     public static function handle($action)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'license-add':
                 LicenseController::renderViewAdd();
@@ -12,7 +16,7 @@ class LicenseHandler
                 LicenseController::renderViewShow();
                 break;
             default:
-                header('Location: home.php?action=invoice-add');
+                header("Location: index.php");
                 break;
         }
     }

@@ -4,6 +4,10 @@ class HardwareHandler
 {
     public static function handle(string $action)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'hardware-add':
                 HardwareController::renderViewAdd();
@@ -15,7 +19,7 @@ class HardwareHandler
                 HardwareController::renderViewSearch();
                 break;
             default:
-                header('Location: home.php?action=hardware-add');
+                header("Location: index.php");
                 break;
         }
     }
