@@ -18,7 +18,7 @@ class AuthHelper
 
     public static function canAccessInvoiveShow()
     {
-        if (in_array('rola', self::getCurrentUser()->getRoles())) {
+        if (in_array('rolas', self::getCurrentUser()->getRoles())) {
             return true;
         }
 
@@ -27,7 +27,7 @@ class AuthHelper
 
     public static function canAccessInvoiceSearch()
     {
-        if (in_array('rola', self::getCurrentUser()->getRoles())) {
+        if (in_array('rolas', self::getCurrentUser()->getRoles())) {
             return true;
         }
 
@@ -45,7 +45,7 @@ class AuthHelper
 
     public static function canAccessHardwareShow()
     {
-        if (in_array('rola', self::getCurrentUser()->getRoles())) {
+        if (in_array('rolas', self::getCurrentUser()->getRoles())) {
             return true;
         }
 
@@ -106,7 +106,7 @@ class AuthHelper
         return false;
     }
 
-    public static function canAccessLogout()
+    public static function canAccessNotificationExamples()
     {
         if (in_array('rola', self::getCurrentUser()->getRoles())) {
             return true;

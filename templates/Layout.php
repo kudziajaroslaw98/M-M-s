@@ -154,14 +154,14 @@ class Layout
                                                 <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessLogout()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessNotificationExamples()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link collapsed" href="index.php?action=logout">
                                                     <i class="fas fa-fw fa-cog"></i>
-                                                    <?php if (AuthHelper::canAccessLogout()) : ?><span>Logout</span><?php endif; ?>
+                                                    <span>Logout</span>
                                                 </a>
                                             </li>
 

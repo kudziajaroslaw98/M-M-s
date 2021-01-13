@@ -10,14 +10,20 @@ class HardwareHandler
 
         switch ($action) {
             case 'hardware-add':
-                HardwareController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessHardwareAdd()) {
+                    HardwareController::renderViewAdd();
+                    break;
+                }
             case 'hardware-show':
-                HardwareController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessHardwareShow()) {
+                    HardwareController::renderViewShow();
+                    break;
+                }
             case 'hardware-search':
-                HardwareController::renderViewSearch();
-                break;
+                if (AuthHelper::canAccessHardwareSearch()) {
+                    HardwareController::renderViewSearch();
+                    break;
+                }
             default:
                 header("Location: index.php");
                 break;

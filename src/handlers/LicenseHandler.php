@@ -10,11 +10,15 @@ class LicenseHandler
 
         switch ($action) {
             case 'license-add':
-                LicenseController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessLicenseAdd()) {
+                    LicenseController::renderViewAdd();
+                    break;
+                }
             case 'license-show':
-                LicenseController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessLicenseShow()) {
+                    LicenseController::renderViewShow();
+                    break;
+                }
             default:
                 header("Location: index.php");
                 break;

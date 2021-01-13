@@ -10,14 +10,20 @@ class InvoiceHandler
 
         switch ($action) {
             case 'invoice-add':
-                InvoiceController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessInvoiceAdd()) {
+                    InvoiceController::renderViewAdd();
+                    break;
+                }
             case 'invoice-show':
-                InvoiceController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessInvoiveShow()) {
+                    InvoiceController::renderViewShow();
+                    break;
+                }
             case 'invoice-search':
-                InvoiceController::renderViewSearch();
-                break;
+                if (AuthHelper::canAccessInvoiceSearch()) {
+                    InvoiceController::renderViewSearch();
+                    break;
+                }
             default:
                 header("Location: index.php");
                 break;
