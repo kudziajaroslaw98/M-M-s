@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
+require_once __DIR__ . './src/classes/AuthHelper.php';
 
 // Classes
 require_once __DIR__ . './src/classes/Validation.php';
@@ -16,7 +17,6 @@ require_once __DIR__ . './templates/HardwareViews/HardwareViewSearch.php';
 
 // Invoie Views
 require_once __DIR__ . './templates/InvoiceViews/InvoiceViewShow.php';
-require_once __DIR__ . './templates/InvoiceViews/InvoiceViewShowList.php';
 require_once __DIR__ . './templates/InvoiceViews/InvoiceViewAdd.php';
 require_once __DIR__ . './templates/InvoiceViews/InvoiceViewSearch.php';
 

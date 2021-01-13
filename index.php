@@ -2,7 +2,6 @@
 
 require_once __DIR__ . './autoload.php';
 
-session_start();
 $_SESSION['records-limit'] = 4;
 
 $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;

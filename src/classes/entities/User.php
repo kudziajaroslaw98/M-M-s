@@ -107,4 +107,9 @@ class User
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        return array('rola');
+    }
 }

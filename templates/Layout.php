@@ -100,10 +100,9 @@ class Layout
                                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=invoice-add">Add Invoice</a>
-                                                        <a class="collapse-item" href="index.php?action=invoice-show">Show Invoices</a>
-                                                        <a class="collapse-item" href="index.php?action=invoice-show-list">Show Invoices As List</a>
-                                                        <a class="collapse-item" href="index.php?action=invoice-search">Search For Invoices</a>
+                                                        <?php if (AuthHelper::canAccessInvoiceAdd()) : ?><a class="collapse-item" href="index.php?action=invoice-add">Add Invoice</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessInvoiveShow()) : ?><a class="collapse-item" href="index.php?action=invoice-show">Show Invoices</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessInvoiceSearch()) : ?><a class="collapse-item" href="index.php?action=invoice-search">Search For Invoices</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -115,9 +114,9 @@ class Layout
                                                 <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=hardware-show">Show Hardware</a>
-                                                        <a class="collapse-item" href="index.php?action=hardware-add">Add Hardware</a>
-                                                        <a class="collapse-item" href="index.php?action=hardware-search">Search For Hardware</a>
+                                                        <?php if (AuthHelper::canAccessHardwareShow()) : ?><a class="collapse-item" href="index.php?action=hardware-show">Show Hardware</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessHardwareAdd()) : ?><a class="collapse-item" href="index.php?action=hardware-add">Add Hardware</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessHardwareSearch()) : ?><a class="collapse-item" href="index.php?action=hardware-search">Search For Hardware</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -129,8 +128,8 @@ class Layout
                                                 <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=license-show">Show Licences</a>
-                                                        <a class="collapse-item" href="index.php?action=license-add">Add Licence</a>
+                                                        <?php if (AuthHelper::canAccessLicenseShow()) : ?><a class="collapse-item" href="index.php?action=license-show">Show Licences</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessLicenseAdd()) : ?><a class="collapse-item" href="index.php?action=license-add">Add Licence</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -142,8 +141,8 @@ class Layout
                                                 <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=doc-show">Show Documents</a>
-                                                        <a class="collapse-item" href="index.php?action=doc-add">Add Documents</a>
+                                                        <?php if (AuthHelper::canAccessDocShow()) : ?><a class="collapse-item" href="index.php?action=doc-show">Show Documents</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessDocAdd()) : ?><a class="collapse-item" href="index.php?action=doc-add">Add Documents</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -155,14 +154,14 @@ class Layout
                                                 <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="Notification.php">Examples</a>
+                                                        <?php if (AuthHelper::canAccessLogout()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link collapsed" href="index.php?action=logout-all">
                                                     <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Logout</span>
+                                                    <?php if (AuthHelper::canAccessLogout()) : ?><span>Logout</span><?php endif; ?>
                                                 </a>
                                             </li>
 
