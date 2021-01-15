@@ -18,15 +18,17 @@ class LoginController
         }
     }
 
-    public static function set()
+    public static function set(int $uid)
     {
-        $_SESSION['uid'] = 42;
+        $_SESSION['uid'] = $uid;
     }
 
     public static function logout()
     {
         session_unset();
         session_destroy();
+
+        header('Location: index.php');
     }
 
     public static function isLogged()

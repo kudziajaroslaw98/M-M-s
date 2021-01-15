@@ -32,7 +32,7 @@ class LoginView
                                             </div>
                                             <form class="user" method="post">
                                                 <div class="form-group">
-                                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="login">
+                                                    <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="login">
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password">
@@ -69,11 +69,27 @@ class LoginView
     {
         try {
             if (!empty($_POST)) {
+                // security
                 $dataForm = new DataForm($_POST);
                 $dataForm->sanitizeData();
                 $dataForm->checkIfExistsData();
 
-                LoginController::set();
+                // repository and user
+                $userRepository = new UserRepository();
+                $user = $userRepository->findByLogin($dataForm->data['login']);
+
+                // not found user with given login
+                if (!$user) {
+                    throw new InvalidInputExcetion('Invalid credentials!');
+                }
+
+                // password is invalid
+                if (!password_verify($dataForm->data['password'], $user->getPassword())) {
+                    throw new InvalidInputExcetion('Invalid credentials!');
+                }
+
+                // all OK, logging..
+                LoginController::set($user->getUserID());
                 header('Location: index.php?action=hardware-show');
             }
         } catch (Exception $e) {

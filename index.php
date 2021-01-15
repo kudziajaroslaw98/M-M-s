@@ -22,6 +22,12 @@ switch ($actionPartOne) {
     case 'doc':
         DocHandler::handle($action);
         break;
+    case 'user':
+        UserHandler::handle($action);
+        break;
+    case 'role':
+        RoleHandler::handle($action);
+        break;
     case 'logout':
         LoginController::logout();
     default:

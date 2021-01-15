@@ -2,11 +2,15 @@
 
 class User
 {
-    private int $userID;
+    private $userID;
     private string $firstName;
     private string $lastName;
     private string $jobtitle;
     private int $phoneNumber;
+    private string $login;
+    private string $password;
+
+    private array $roleNames;
 
     /**
      * Get the value of userID
@@ -21,7 +25,7 @@ class User
      *
      * @return  self
      */
-    public function setUserID(int $userID)
+    public function setUserID($userID)
     {
         $this->userID = $userID;
 
@@ -108,8 +112,63 @@ class User
         return $this;
     }
 
-    public function getRoles()
+    /**
+     * Get the value of login
+     */
+    public function getLogin()
     {
-        return array('rola');
+        return $this->login;
+    }
+
+    /**
+     * Set the value of login
+     *
+     * @return  self
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of roleNames
+     */
+    public function getRoleNames()
+    {
+        return $this->roleNames;
+    }
+
+    /**
+     * Set the value of roleNames
+     *
+     * @return  self
+     */
+    public function setRoleNames($roleNames)
+    {
+        $this->roleNames = $roleNames;
+
+        return $this;
     }
 }

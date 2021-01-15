@@ -34,6 +34,13 @@ require_once __DIR__ . './templates/NotificationView/NotificationView.php';
 // Login Views
 require_once __DIR__ . './templates/LoginViews/LoginView.php';
 
+// User Views
+require_once __DIR__ . './templates/UserViews/UserViewAdd.php';
+require_once __DIR__ . './templates/UserViews/UserViewShow.php';
+
+// Role Views
+require_once __DIR__ . './templates/RoleViews/RoleViewShow.php';
+
 // Controllers
 require_once __DIR__ . './src/controllers/HardwareController.php';
 require_once __DIR__ . './src/controllers/InvoiceController.php';
@@ -41,6 +48,8 @@ require_once __DIR__ . './src/controllers/LicenseController.php';
 require_once __DIR__ . './src/controllers/DocController.php';
 require_once __DIR__ . './src/controllers/NotificationController.php';
 require_once __DIR__ . './src/controllers/LoginController.php';
+require_once __DIR__ . './src/controllers/UserController.php';
+require_once __DIR__ . './src/controllers/RoleController.php';
 
 // Handlers
 require_once __DIR__ . './src/handlers/HardwareHandler.php';
@@ -48,6 +57,8 @@ require_once __DIR__ . './src/handlers/InvoiceHandler.php';
 require_once __DIR__ . './src/handlers/LicenseHandler.php';
 require_once __DIR__ . './src/handlers/DocHandler.php';
 require_once __DIR__ . './src/handlers/NotificationHandler.php';
+require_once __DIR__ . './src/handlers/UserHandler.php';
+require_once __DIR__ . './src/handlers/RoleHandler.php';
 
 // Entities
 require_once __DIR__ . './src/classes/entities/Gear.php';
@@ -57,6 +68,8 @@ require_once __DIR__ . './src/classes/entities/PurchaseInvoice.php';
 require_once __DIR__ . './src/classes/entities/SaleInvoice.php';
 require_once __DIR__ . './src/classes/entities/Software.php';
 require_once __DIR__ . './src/classes/entities/Document.php';
+require_once __DIR__ . './src/classes/entities/Role.php';
+require_once __DIR__ . './src/classes/entities/RolesUsers.php';
 
 // Repositories
 require_once __DIR__ . './src/repositories/GearRepository.php';
@@ -64,6 +77,8 @@ require_once __DIR__ . './src/repositories/PurchaseInvoiceRepository.php';
 require_once __DIR__ . './src/repositories/SaleInvoiceRepository.php';
 require_once __DIR__ . './src/repositories/UserRepository.php';
 require_once __DIR__ . './src/repositories/SoftwareRepository.php';
+require_once __DIR__ . './src/repositories/RoleRepository.php';
+require_once __DIR__ . './src/repositories/RolesUsersRepository.php';
 
 require_once __DIR__ . './dbconfig.php';
 

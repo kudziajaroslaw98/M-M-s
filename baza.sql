@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 12 Sty 2021, 14:23
+-- Czas generowania: 15 Sty 2021, 21:13
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -68,15 +68,15 @@ CREATE TABLE `gear` (
 --
 
 INSERT INTO `gear` (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumber`, `notes`, `netValue`, `warrantyDate`) VALUES
-(1, 1, 1, 'Myszka komputerowa', '543TFD-34GFB', 'Elegancka', 89, '2020-12-26'),
-(2, 1, 1, 'Klawiatura', '54436', NULL, 49, NULL),
-(3, 1, 1, 'Podkladka', '5436', 'normalna', 19, '2021-01-02'),
-(4, 1, 1, 'Kulka', '65434', 'notka', 39, '2021-01-02'),
-(5, 1, 1, 'Klawiatura', '76534', NULL, 5, NULL),
-(6, 1, 1, 'Klawiatura', '54346', NULL, 34, NULL),
-(20, 1, 1, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
-(21, 1, 1, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
-(22, 1, 1, 'Głośniki', '231', NULL, 16, NULL);
+(1, 1, 3, 'Myszka komputerowa', '543TFD-34GFB', 'Elegancka', 89, '2020-12-26'),
+(2, 1, 3, 'Klawiatura', '54436', NULL, 49, NULL),
+(3, 1, 3, 'Podkladka', '5436', 'normalna', 19, '2021-01-02'),
+(4, 1, 3, 'Kulka', '65434', 'notka', 39, '2021-01-02'),
+(5, 1, 3, 'Klawiatura', '76534', NULL, 5, NULL),
+(6, 1, 3, 'Klawiatura', '54346', NULL, 34, NULL),
+(20, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
+(21, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
+(22, 1, 3, 'Głośniki', '231', NULL, 16, NULL);
 
 -- --------------------------------------------------------
 
@@ -132,6 +132,16 @@ CREATE TABLE `roles` (
   `roleName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `roles`
+--
+
+INSERT INTO `roles` (`roleID`, `roleName`) VALUES
+(4, 'admin'),
+(3, 'auditor'),
+(1, 'employee'),
+(2, 'owner');
+
 -- --------------------------------------------------------
 
 --
@@ -139,9 +149,18 @@ CREATE TABLE `roles` (
 --
 
 CREATE TABLE `roles_users` (
-  `roleID` int(10) NOT NULL,
-  `userID` int(10) NOT NULL
+  `id` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `roles_users`
+--
+
+INSERT INTO `roles_users` (`id`, `roleID`, `userID`) VALUES
+(2, 1, 3),
+(3, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -206,8 +225,8 @@ CREATE TABLE `software` (
 --
 
 INSERT INTO `software` (`softwareID`, `userID`, `purchaseInvoiceID`, `name`, `licenceKey`, `notes`, `expirationDate`, `techSupportDate`) VALUES
-(1, 1, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
-(2, 1, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
+(1, 3, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
+(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
 
 -- --------------------------------------------------------
 
@@ -220,15 +239,18 @@ CREATE TABLE `users` (
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `jobtitle` varchar(255) NOT NULL,
-  `phoneNumber` varchar(255) NOT NULL
+  `phoneNumber` varchar(255) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`) VALUES
-(1, 'Janek', 'Kowalski', 'Pracownik', '543234125');
+INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`, `login`, `password`) VALUES
+(3, 'Malwark', 'Ulisty', 'Pracownik', '111333222', 'mUlisty', '$2y$10$lIBBe/MWQ2eOuoaQKy8qmO..JdeZW7vkfKoFQ7AZfBvi5nxgBtzIW'),
+(4, 'Janek', 'Kowalski', 'Pracownik', '555444666', 'jKowalski', '$2y$10$52OuXTSUIvVHsT9d0xZ6EOYb8JjBt.z22ag3NBFNa8UXiy8.Ycaz2');
 
 -- --------------------------------------------------------
 
@@ -295,8 +317,9 @@ ALTER TABLE `roles`
 -- Indeksy dla tabeli `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD PRIMARY KEY (`roleID`,`userID`),
-  ADD KEY `FKRoles_User780791` (`userID`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `roleID` (`roleID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indeksy dla tabeli `saleinvoices`
@@ -324,7 +347,8 @@ ALTER TABLE `software`
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `login` (`login`);
 
 --
 -- Indeksy dla tabeli `users_documents`
@@ -372,7 +396,13 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT dla tabeli `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `roles_users`
+--
+ALTER TABLE `roles_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `saleinvoices`
@@ -390,7 +420,7 @@ ALTER TABLE `software`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -407,8 +437,8 @@ ALTER TABLE `gear`
 -- Ograniczenia dla tabeli `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD CONSTRAINT `FKRoles_User126221` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
-  ADD CONSTRAINT `FKRoles_User780791` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
+  ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
+  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
 -- Ograniczenia dla tabeli `saleinvoices_users`

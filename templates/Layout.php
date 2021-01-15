@@ -164,6 +164,31 @@ class Layout
                                                     <span>Logout</span>
                                                 </a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Users</span>
+                                                </a>
+                                                <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                    <div class="bg-white py-2 collapse-inner rounded">
+                                                        <h6 class="collapse-header">Options:</h6>
+                                                        <a class="collapse-item" href="index.php?action=user-add">Add users</a>
+                                                        <a class="collapse-item" href="index.php?action=user-show">Show users</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Roles</span>
+                                                </a>
+                                                <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                    <div class="bg-white py-2 collapse-inner rounded">
+                                                        <h6 class="collapse-header">Options:</h6>
+                                                        <a class="collapse-item" href="index.php?action=role-show">Show roles</a>
+                                                    </div>
+                                                </div>
+                                            </li>
 
                                             <!-- Sidebar Toggler (Sidebar) -->
                                             <div class="text-center d-none d-md-inline">
