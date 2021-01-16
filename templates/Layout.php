@@ -147,6 +147,12 @@ class Layout
                                                 </div>
                                             </li>
                                             <li class="nav-item">
+                                                <a class="nav-link collapsed" href="index.php?action=logout">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Logout</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
                                                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
                                                     <i class="fas fa-fw fa-cog"></i>
                                                     <span>Notification</span>
@@ -159,12 +165,6 @@ class Layout
                                                 </div>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link collapsed" href="index.php?action=logout">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Logout</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
                                                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
                                                     <i class="fas fa-fw fa-cog"></i>
                                                     <span>Users</span>
@@ -172,8 +172,8 @@ class Layout
                                                 <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=user-add">Add users</a>
-                                                        <a class="collapse-item" href="index.php?action=user-show">Show users</a>
+                                                        <?php if (AuthHelper::canAccessUsersAdd()) : ?><a class="collapse-item" href="index.php?action=user-add">Add users</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessUsersShow()) : ?><a class="collapse-item" href="index.php?action=user-show">Show users</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -185,7 +185,7 @@ class Layout
                                                 <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="index.php?action=role-show">Show roles</a>
+                                                        <?php if (AuthHelper::canAccessRolesShow()) : ?><a class="collapse-item" href="index.php?action=role-show">Show roles</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>

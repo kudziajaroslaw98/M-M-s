@@ -27,12 +27,20 @@ class AuthHelper
             return true;
         }
 
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
         return false;
     }
 
     public static function canAccessInvoiceSearch()
     {
         if (in_array(self::$owner, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
             return true;
         }
 
@@ -54,6 +62,10 @@ class AuthHelper
             return true;
         }
 
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
         if (in_array(self::$employee, self::getCurrentUser()->getRoleNames())) {
             return true;
         }
@@ -64,6 +76,10 @@ class AuthHelper
     public static function canAccessHardwareSearch()
     {
         if (in_array(self::$owner, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
             return true;
         }
 
@@ -93,6 +109,10 @@ class AuthHelper
             return true;
         }
 
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
         if (in_array(self::$employee, self::getCurrentUser()->getRoleNames())) {
             return true;
         }
@@ -119,6 +139,10 @@ class AuthHelper
             return true;
         }
 
+        if (in_array(self::$auditor, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
         return false;
     }
 
@@ -133,7 +157,34 @@ class AuthHelper
 
     public static function canAccessNotificationExamples()
     {
-        if (in_array(self::$owner, self::getCurrentUser()->getRoleNames())) {
+        if (in_array(self::$admin, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canAccessUsersAdd()
+    {
+        if (in_array(self::$admin, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canAccessUsersShow()
+    {
+        if (in_array(self::$admin, self::getCurrentUser()->getRoleNames())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canAccessRolesShow()
+    {
+        if (in_array(self::$admin, self::getCurrentUser()->getRoleNames())) {
             return true;
         }
 

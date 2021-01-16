@@ -10,11 +10,15 @@ class UserHandler
 
         switch ($action) {
             case 'user-add':
-                UserController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessUsersAdd()) {
+                    UserController::renderViewAdd();
+                    break;
+                }
             case 'user-show':
-                UserController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessUsersShow()) {
+                    UserController::renderViewShow();
+                    break;
+                }
             default:
                 header("Location: index.php");
                 break;

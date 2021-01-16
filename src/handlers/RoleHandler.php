@@ -10,8 +10,10 @@ class RoleHandler
 
         switch ($action) {
             case 'role-show':
-                RoleController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessRolesShow()) {
+                    RoleController::renderViewShow();
+                    break;
+                }
             default:
                 header("Location: index.php");
                 break;
