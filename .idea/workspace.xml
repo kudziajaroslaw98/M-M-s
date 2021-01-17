@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa459979-7fda-44f8-8638-d4db8eea489f" name="Default Changelist" comment="" />
+    <list default="true" id="aa459979-7fda-44f8-8638-d4db8eea489f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/DataForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/DataForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/DocController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/DocController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/sb-admin-2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/DocViews/DocViewAdd.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/DocViews/DocViewAdd.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/DocViews/DocViewShow.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/DocViews/DocViewShow.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,10 +26,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../M-M-s v2" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -62,6 +70,8 @@
       <option name="presentableId" value="Default" />
       <updated>1608567935013</updated>
       <workItem from="1608567936713" duration="14598000" />
+      <workItem from="1610871857751" duration="11457000" />
+      <workItem from="1610883531339" duration="20000" />
     </task>
     <servers />
   </component>

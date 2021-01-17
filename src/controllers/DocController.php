@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '\..\..\autoload.php';
+
 class DocController
 {
     public static function renderViewAdd()
@@ -55,63 +57,66 @@ class DocController
     public static function insertDoc($array){
         try{
 
-                global $config;
-                $dataForm = new DataForm($array, array('Notes'), true, array('docName'));
-                $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
-                if (!$dataForm->checkIfExistsData()) {
-                    throw new InvalidInputExcetion('Given data are invalid!');
-                }
-                if (!$dataForm->checkAllFiles('pdf')) {
-                    throw new InvalidInputExcetion('Only files in PDF format!');
-                }
+            global $config;
+            $dataForm = new DataForm($array, array('Notes'), true, array('docName'));
+            $dataForm->sanitizeData();  // must be before checking, because this replace ignoring values to null if they are empty
+            if (!$dataForm->checkIfExistsData()) {
+                throw new InvalidInputExcetion('Given data are invalid!');
+            }
+            if (!$dataForm->checkAllFiles('pdf')) {
+                throw new InvalidInputExcetion('Only files in PDF format!');
+            }
 
-                // helping local variables
-                $filename = $dataForm->dataFiles['docName']['name'];
-                $dictonaryPath = './../data/documents';
+            // helping local variables
+            $filename = $dataForm->dataFiles['docName']['name'];
+            $dictonaryPath = '/../../data/documents';
 
 
-                // check if directory path is existing
-                if (!Validation::checkExistsDir($dictonaryPath)) {
-                    throw new InvalidArgumentException('Existing directory path does not exists!');
-                }
+            // check if directory path is existing
+            //if (!Validation::checkExistsDir($dictonaryPath)) {
+            //    throw new InvalidArgumentException('Existing directory path does not exists!');
+            //}
 
-                $document = new Document();
+            $document = new Document();
 
-                // helping local variable
-                $filenameWithPath = $dictonaryPath . '/' . $filename;
+            // helping local variable
+            $filenameWithPath = __DIR__ . '/../../data/documents/' . $filename;
 
-                // set invoice object
+            // name without __DIR__ to store in database
+            $fileNameToDb = '/../../data/documents/' . $filename;
 
-                $document->setUploadTime(null)->setLastModificationTime(null)->setNotes($dataForm->data['docDescription'])->setFilePath($filenameWithPath);
+            // set invoice object
 
-                // check existing chosen file
-                if (Validation::checkExistsFile($filenameWithPath)) {
-                    throw new InvalidInputExcetion('document with the same name is already exists!');
-                }
+            $document->setUploadTime(null)->setLastModificationTime(null)->setNotes($dataForm->data['docDescription'])->setFilePath($fileNameToDb);
 
-                // check inserting to db
-                $connect = new PDO($config['dsn'], $config['username'], $config['password']);
-                $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                $sql = "INSERT INTO documents VALUES (:documentID, :uploadTime, :lastModificationTime, :notes, :filePath)";
-                $stmt = $connect->prepare($sql);
+            // check existing chosen file
+            if (Validation::checkExistsFile($filenameWithPath)) {
+                throw new InvalidInputExcetion('document with the same name already exists!');
+            }
 
-                $result = $stmt->execute(array(
-                    'documentID' => "",
-                    'uploadTime' => $document->getUploadTime(),
-                    'lastModificationTime' => $document->getLastModificationTime(),
-                    'notes' => $document->getNotes(),
-                    'filePath' => $document->getFilePath(),
-                ));
-                if (!$result) {
-                    throw new PDOException('Request processing error.');
-                }
+            // check inserting to db
+            $connect = new PDO($config['dsn'], $config['username'], $config['password']);
+            $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $sql = "INSERT INTO documents VALUES (:documentID, :uploadTime, :lastModificationTime, :notes, :filePath)";
+            $stmt = $connect->prepare($sql);
 
-                // upload file on server
-                // $dataForm->uploadFile($dataForm->dataFiles['docName'], $dictonaryPath);
+            $result = $stmt->execute(array(
+                'documentID' => "",
+                'uploadTime' => $document->getUploadTime(),
+                'lastModificationTime' => $document->getLastModificationTime(),
+                'notes' => $document->getNotes(),
+                'filePath' => $document->getFilePath(),
+            ));
+            if (!$result) {
+                throw new PDOException('Request processing error.');
+            }
 
-                // all OK
-                echo 'document has been added.';
+            // upload file on server
+            $dataForm->uploadDoc($dataForm->dataFiles['docName'], $dictonaryPath);
+
+            // all OK
+            echo 'document has been added.';
 
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -133,10 +138,10 @@ class DocController
                 $document = new Document();
 
                 $document->setDocumentID($row['documentID'])
-                        ->setUploadTime($row['uploadTime'])
-                        ->setLastModificationTime($row['lastModificationTime'])
-                        ->setNotes($row['notes'])
-                        ->setFilePath($row['filePath']);
+                    ->setUploadTime($row['uploadTime'])
+                    ->setLastModificationTime($row['lastModificationTime'])
+                    ->setNotes($row['notes'])
+                    ->setFilePath($row['filePath']);
                 array_push($documents, $document);
             }
             return $documents;
@@ -158,17 +163,17 @@ class DocController
                 $sql = "SELECT * FROM documents WHERE filePath LIKE :filePath ORDER BY uploadTime DESC";
             }
             $stmt = $connect->prepare($sql);
-            $result = $stmt->execute(array(
-                'filePath' => "./../data/documents/".$name . '%'
-            ));
+            $stmt->bindValue(":filePath", '%'.$name.'%');
+            $stmt->execute();
+            //$stmt->debugDumpParams();
             $documents = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $document = new Document();
                 $document->setDocumentID($row['documentID'])
-                        ->setUploadTime($row['uploadTime'])
-                        ->setLastModificationTime($row['lastModificationTime'])
-                        ->setNotes($row['notes'])
-                        ->setFilePath($row['filePath']);
+                    ->setUploadTime($row['uploadTime'])
+                    ->setLastModificationTime($row['lastModificationTime'])
+                    ->setNotes($row['notes'])
+                    ->setFilePath($row['filePath']);
                 array_push($documents, $document);
             }
 
@@ -176,6 +181,21 @@ class DocController
 
         }catch(Exception $e){
             echo NotificationHandler::handle("notification-danger", $e->getMessage());
+        }
+    }
+
+    // funkcja do usuwania obiektów nie jest użyta
+    public static function deleteDocs($id){
+        try{
+            global $config;
+            $connect = new PDO($config['dsn'], $config['username'], $config['password']);
+            $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $sql = "DELETE FROM documents WHERE documentID = $id";
+            $stmt = $connect->prepare($sql);
+            $result = $stmt->execute();
+        }catch(Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }

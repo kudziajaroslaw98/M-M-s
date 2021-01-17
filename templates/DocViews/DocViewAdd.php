@@ -1,11 +1,13 @@
 <?php
 
+require __DIR__ . '\..\..\autoload.php';
+
 class DocViewAdd
 {
     public static function render(array $params = array())
     {
         ob_start();
-?>
+        ?>
         <?= Layout::header($params); ?>
 
         <div class="row d-flex justify-content-center">
@@ -32,8 +34,15 @@ class DocViewAdd
         </div>
 
         <?= Layout::footer() ?>
-<?php
+        <?php
+
         $html = ob_get_clean();
         return $html;
     }
 }
+?>
+
+<?php
+$doc = new DocController();
+$doc->insertDoc($_POST);
+?>
