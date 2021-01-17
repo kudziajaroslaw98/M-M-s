@@ -7,6 +7,7 @@ class Document
     private $lastModificationTime;
     private $notes;
     private string $filePath;
+    private string $editor;
 
     /**
      * Get the value of documentID
@@ -106,6 +107,22 @@ class Document
         $this->notes = $notes;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditor(): string
+    {
+        return $this->editor;
+    }
+
+    /**
+     * @param string $editor
+     */
+    public function setEditor(string $editor): void
+    {
+        $this->editor = $editor;
     }
 
 }

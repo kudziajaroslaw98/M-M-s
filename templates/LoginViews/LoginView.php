@@ -90,6 +90,8 @@ class LoginView
 
                 // all OK, logging..
                 LoginController::set($user->getUserID());
+                $userName = $user->getFirstName() . " " . $user->getLastName();
+                setcookie("username", $userName);
                 header('Location: index.php?action=hardware-show');
             }
         } catch (Exception $e) {

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Sty 2021, 21:13
--- Wersja serwera: 10.4.14-MariaDB
--- Wersja PHP: 7.4.10
+-- Generation Time: Jan 17, 2021 at 06:42 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,53 +18,50 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `baza`
+-- Database: `baza`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `documents`
+-- Table structure for table `documents`
 --
 
 CREATE TABLE `documents` (
-  `documentID` int(10) NOT NULL,
-  `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `notes` varchar(255) DEFAULT NULL,
-  `filePath` varchar(255) NOT NULL
+                             `documentID` int(10) NOT NULL,
+                             `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                             `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                             `notes` varchar(255) DEFAULT NULL,
+                             `filePath` varchar(255) NOT NULL,
+                             `editor` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `documents`
+-- Dumping data for table `documents`
 --
 
-INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`) VALUES
-(1, '2021-01-11 02:47:50', '2021-01-11 02:47:50', 'x', './../data/documents/List_Motywacyjny.pdf'),
-(2, '2021-01-11 03:24:00', '2021-01-11 03:24:00', 'x', './../data/documents/z.pdf'),
-(3, '2021-01-01 03:24:00', '2021-01-11 03:24:00', NULL, './../data/documents/x.pdf'),
-(6, '2021-01-11 04:23:06', '2021-01-11 04:23:06', NULL, './../data/documents/xx'),
-(7, '2021-01-08 04:22:40', '2021-01-11 04:23:06', NULL, './../data/documents/xxx');
+INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`, `editor`) VALUES
+(98, '2021-01-17 17:32:41', '2021-01-17 17:38:03', 'Dowolny opis', '/../../data/documents/Sieci%-%Biblia.pdf', 'Janek Kowalski');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `gear`
+-- Table structure for table `gear`
 --
 
 CREATE TABLE `gear` (
-  `gearID` int(10) NOT NULL,
-  `purchaseInvoiceID` int(10) NOT NULL,
-  `userID` int(10) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `serialNumber` varchar(255) NOT NULL,
-  `notes` varchar(255) DEFAULT NULL,
-  `netValue` float NOT NULL,
-  `warrantyDate` date DEFAULT NULL
+                        `gearID` int(10) NOT NULL,
+                        `purchaseInvoiceID` int(10) NOT NULL,
+                        `userID` int(10) NOT NULL,
+                        `name` varchar(255) NOT NULL,
+                        `serialNumber` varchar(255) NOT NULL,
+                        `notes` varchar(255) DEFAULT NULL,
+                        `netValue` float NOT NULL,
+                        `warrantyDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `gear`
+-- Dumping data for table `gear`
 --
 
 INSERT INTO `gear` (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumber`, `notes`, `netValue`, `warrantyDate`) VALUES
@@ -81,25 +78,25 @@ INSERT INTO `gear` (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumb
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `purchaseinvoices`
+-- Table structure for table `purchaseinvoices`
 --
 
 CREATE TABLE `purchaseinvoices` (
-  `purchaseInvoiceID` int(10) NOT NULL,
-  `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `contractorData` varchar(255) NOT NULL,
-  `amountNetto` float NOT NULL,
-  `amountBrutto` float NOT NULL,
-  `transactionDate` date NOT NULL,
-  `notes` varchar(255) DEFAULT NULL,
-  `filePath` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `vat` float NOT NULL
+                                    `purchaseInvoiceID` int(10) NOT NULL,
+                                    `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                                    `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                                    `contractorData` varchar(255) NOT NULL,
+                                    `amountNetto` float NOT NULL,
+                                    `amountBrutto` float NOT NULL,
+                                    `transactionDate` date NOT NULL,
+                                    `notes` varchar(255) DEFAULT NULL,
+                                    `filePath` varchar(255) NOT NULL,
+                                    `currency` varchar(255) NOT NULL,
+                                    `vat` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `purchaseinvoices`
+-- Dumping data for table `purchaseinvoices`
 --
 
 INSERT INTO `purchaseinvoices` (`purchaseInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
@@ -113,27 +110,27 @@ INSERT INTO `purchaseinvoices` (`purchaseInvoiceID`, `uploadTime`, `lastModifica
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `reports`
+-- Table structure for table `reports`
 --
 
 CREATE TABLE `reports` (
-  `reportID` int(10) NOT NULL,
-  `reportDate` date NOT NULL
+                           `reportID` int(10) NOT NULL,
+                           `reportDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
-  `roleID` int(10) NOT NULL,
-  `roleName` varchar(255) NOT NULL
+                         `roleID` int(10) NOT NULL,
+                         `roleName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`roleID`, `roleName`) VALUES
@@ -145,17 +142,17 @@ INSERT INTO `roles` (`roleID`, `roleName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `roles_users`
+-- Table structure for table `roles_users`
 --
 
 CREATE TABLE `roles_users` (
-  `id` int(11) NOT NULL,
-  `roleID` int(11) NOT NULL,
-  `userID` int(11) NOT NULL
+                               `id` int(11) NOT NULL,
+                               `roleID` int(11) NOT NULL,
+                               `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `roles_users`
+-- Dumping data for table `roles_users`
 --
 
 INSERT INTO `roles_users` (`id`, `roleID`, `userID`) VALUES
@@ -165,25 +162,25 @@ INSERT INTO `roles_users` (`id`, `roleID`, `userID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `saleinvoices`
+-- Table structure for table `saleinvoices`
 --
 
 CREATE TABLE `saleinvoices` (
-  `saleInvoiceID` int(10) NOT NULL,
-  `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `contractorData` varchar(255) NOT NULL,
-  `amountNetto` float NOT NULL,
-  `amountBrutto` float NOT NULL,
-  `transactionDate` date NOT NULL,
-  `notes` varchar(255) DEFAULT NULL,
-  `filePath` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `vat` float NOT NULL
+                                `saleInvoiceID` int(10) NOT NULL,
+                                `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                                `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                                `contractorData` varchar(255) NOT NULL,
+                                `amountNetto` float NOT NULL,
+                                `amountBrutto` float NOT NULL,
+                                `transactionDate` date NOT NULL,
+                                `notes` varchar(255) DEFAULT NULL,
+                                `filePath` varchar(255) NOT NULL,
+                                `currency` varchar(255) NOT NULL,
+                                `vat` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `saleinvoices`
+-- Dumping data for table `saleinvoices`
 --
 
 INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
@@ -195,57 +192,58 @@ INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `saleinvoices_users`
+-- Table structure for table `saleinvoices_users`
 --
 
 CREATE TABLE `saleinvoices_users` (
-  `saleInvoiceID` int(10) NOT NULL,
-  `userID` int(10) NOT NULL
+                                      `saleInvoiceID` int(10) NOT NULL,
+                                      `userID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `software`
+-- Table structure for table `software`
 --
 
 CREATE TABLE `software` (
-  `softwareID` int(10) NOT NULL,
-  `userID` int(10) NOT NULL,
-  `purchaseInvoiceID` int(10) DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `licenceKey` varchar(255) DEFAULT NULL,
-  `notes` varchar(255) DEFAULT NULL,
-  `expirationDate` date DEFAULT NULL,
-  `techSupportDate` date DEFAULT NULL
+                            `softwareID` int(10) NOT NULL,
+                            `userID` int(10) NOT NULL,
+                            `purchaseInvoiceID` int(10) DEFAULT NULL,
+                            `name` varchar(255) NOT NULL,
+                            `licenceKey` varchar(255) DEFAULT NULL,
+                            `notes` varchar(255) DEFAULT NULL,
+                            `expirationDate` date DEFAULT NULL,
+                            `techSupportDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `software`
+-- Dumping data for table `software`
 --
 
 INSERT INTO `software` (`softwareID`, `userID`, `purchaseInvoiceID`, `name`, `licenceKey`, `notes`, `expirationDate`, `techSupportDate`) VALUES
 (1, 3, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
-(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
+(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29'),
+(3, 4, 4325, 'ASdasd', '6544-7543-2476-5415', 'ads', '2021-01-14', '2021-01-23');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `userID` int(10) NOT NULL,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `jobtitle` varchar(255) NOT NULL,
-  `phoneNumber` varchar(255) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+                         `userID` int(10) NOT NULL,
+                         `firstName` varchar(255) NOT NULL,
+                         `lastName` varchar(255) NOT NULL,
+                         `jobtitle` varchar(255) NOT NULL,
+                         `phoneNumber` varchar(255) NOT NULL,
+                         `login` varchar(50) NOT NULL,
+                         `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`, `login`, `password`) VALUES
@@ -255,113 +253,113 @@ INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users_documents`
+-- Table structure for table `users_documents`
 --
 
 CREATE TABLE `users_documents` (
-  `userID` int(10) NOT NULL,
-  `documentID` int(10) NOT NULL
+                                   `userID` int(10) NOT NULL,
+                                   `documentID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users_purchaseinvoices`
+-- Table structure for table `users_purchaseinvoices`
 --
 
 CREATE TABLE `users_purchaseinvoices` (
-  `userID` int(10) NOT NULL,
-  `purchaseInvoiceID` int(10) NOT NULL
+                                          `userID` int(10) NOT NULL,
+                                          `purchaseInvoiceID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indeksy dla zrzutów tabel
+-- Indexes for dumped tables
 --
 
 --
--- Indeksy dla tabeli `documents`
+-- Indexes for table `documents`
 --
 ALTER TABLE `documents`
-  ADD PRIMARY KEY (`documentID`),
+    ADD PRIMARY KEY (`documentID`),
   ADD UNIQUE KEY `filePath` (`filePath`);
 
 --
--- Indeksy dla tabeli `gear`
+-- Indexes for table `gear`
 --
 ALTER TABLE `gear`
-  ADD PRIMARY KEY (`gearID`),
+    ADD PRIMARY KEY (`gearID`),
   ADD KEY `FKGear822160` (`userID`),
   ADD KEY `FKGear532083` (`purchaseInvoiceID`);
 
 --
--- Indeksy dla tabeli `purchaseinvoices`
+-- Indexes for table `purchaseinvoices`
 --
 ALTER TABLE `purchaseinvoices`
-  ADD PRIMARY KEY (`purchaseInvoiceID`),
+    ADD PRIMARY KEY (`purchaseInvoiceID`),
   ADD UNIQUE KEY `filePath` (`filePath`);
 
 --
--- Indeksy dla tabeli `reports`
+-- Indexes for table `reports`
 --
 ALTER TABLE `reports`
-  ADD PRIMARY KEY (`reportID`);
+    ADD PRIMARY KEY (`reportID`);
 
 --
--- Indeksy dla tabeli `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`roleID`),
+    ADD PRIMARY KEY (`roleID`),
   ADD UNIQUE KEY `roleName` (`roleName`);
 
 --
--- Indeksy dla tabeli `roles_users`
+-- Indexes for table `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `roleID` (`roleID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indeksy dla tabeli `saleinvoices`
+-- Indexes for table `saleinvoices`
 --
 ALTER TABLE `saleinvoices`
-  ADD PRIMARY KEY (`saleInvoiceID`),
+    ADD PRIMARY KEY (`saleInvoiceID`),
   ADD UNIQUE KEY `filePath` (`filePath`);
 
 --
--- Indeksy dla tabeli `saleinvoices_users`
+-- Indexes for table `saleinvoices_users`
 --
 ALTER TABLE `saleinvoices_users`
-  ADD PRIMARY KEY (`saleInvoiceID`,`userID`),
+    ADD PRIMARY KEY (`saleInvoiceID`,`userID`),
   ADD KEY `FKSaleInvoic516270` (`userID`);
 
 --
--- Indeksy dla tabeli `software`
+-- Indexes for table `software`
 --
 ALTER TABLE `software`
-  ADD PRIMARY KEY (`softwareID`),
+    ADD PRIMARY KEY (`softwareID`),
   ADD KEY `FKSoftware61779` (`userID`),
   ADD KEY `FKSoftware292465` (`purchaseInvoiceID`);
 
 --
--- Indeksy dla tabeli `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`),
+    ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `login` (`login`);
 
 --
--- Indeksy dla tabeli `users_documents`
+-- Indexes for table `users_documents`
 --
 ALTER TABLE `users_documents`
-  ADD PRIMARY KEY (`userID`,`documentID`),
+    ADD PRIMARY KEY (`userID`,`documentID`),
   ADD KEY `FKUsers_Docu66244` (`documentID`);
 
 --
--- Indeksy dla tabeli `users_purchaseinvoices`
+-- Indexes for table `users_purchaseinvoices`
 --
 ALTER TABLE `users_purchaseinvoices`
-  ADD PRIMARY KEY (`userID`,`purchaseInvoiceID`),
+    ADD PRIMARY KEY (`userID`,`purchaseInvoiceID`),
   ADD KEY `FKUsers_Purc649896` (`purchaseInvoiceID`);
 
 --
@@ -369,103 +367,103 @@ ALTER TABLE `users_purchaseinvoices`
 --
 
 --
--- AUTO_INCREMENT dla tabeli `documents`
+-- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+    MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
--- AUTO_INCREMENT dla tabeli `gear`
+-- AUTO_INCREMENT for table `gear`
 --
 ALTER TABLE `gear`
-  MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+    MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT dla tabeli `purchaseinvoices`
+-- AUTO_INCREMENT for table `purchaseinvoices`
 --
 ALTER TABLE `purchaseinvoices`
-  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4330;
+    MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4330;
 
 --
--- AUTO_INCREMENT dla tabeli `reports`
+-- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `reportID` int(10) NOT NULL AUTO_INCREMENT;
+    MODIFY `reportID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT dla tabeli `roles_users`
+-- AUTO_INCREMENT for table `roles_users`
 --
 ALTER TABLE `roles_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT dla tabeli `saleinvoices`
+-- AUTO_INCREMENT for table `saleinvoices`
 --
 ALTER TABLE `saleinvoices`
-  MODIFY `saleInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+    MODIFY `saleInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
--- AUTO_INCREMENT dla tabeli `software`
+-- AUTO_INCREMENT for table `software`
 --
 ALTER TABLE `software`
-  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT dla tabeli `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Ograniczenia dla zrzutów tabel
+-- Constraints for dumped tables
 --
 
 --
--- Ograniczenia dla tabeli `gear`
+-- Constraints for table `gear`
 --
 ALTER TABLE `gear`
-  ADD CONSTRAINT `FKGear532083` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
+    ADD CONSTRAINT `FKGear532083` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
   ADD CONSTRAINT `FKGear822160` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Ograniczenia dla tabeli `roles_users`
+-- Constraints for table `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
+    ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
   ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Ograniczenia dla tabeli `saleinvoices_users`
+-- Constraints for table `saleinvoices_users`
 --
 ALTER TABLE `saleinvoices_users`
-  ADD CONSTRAINT `FKSaleInvoic516270` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+    ADD CONSTRAINT `FKSaleInvoic516270` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
   ADD CONSTRAINT `FKSaleInvoic884712` FOREIGN KEY (`saleInvoiceID`) REFERENCES `saleinvoices` (`saleInvoiceID`);
 
 --
--- Ograniczenia dla tabeli `software`
+-- Constraints for table `software`
 --
 ALTER TABLE `software`
-  ADD CONSTRAINT `FKSoftware292465` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
+    ADD CONSTRAINT `FKSoftware292465` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
   ADD CONSTRAINT `FKSoftware61779` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Ograniczenia dla tabeli `users_documents`
+-- Constraints for table `users_documents`
 --
 ALTER TABLE `users_documents`
-  ADD CONSTRAINT `FKUsers_Docu602919` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+    ADD CONSTRAINT `FKUsers_Docu602919` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
   ADD CONSTRAINT `FKUsers_Docu66244` FOREIGN KEY (`documentID`) REFERENCES `documents` (`documentID`);
 
 --
--- Ograniczenia dla tabeli `users_purchaseinvoices`
+-- Constraints for table `users_purchaseinvoices`
 --
 ALTER TABLE `users_purchaseinvoices`
-  ADD CONSTRAINT `FKUsers_Purc649896` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
+    ADD CONSTRAINT `FKUsers_Purc649896` FOREIGN KEY (`purchaseInvoiceID`) REFERENCES `purchaseinvoices` (`purchaseInvoiceID`),
   ADD CONSTRAINT `FKUsers_Purc967449` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 COMMIT;
 

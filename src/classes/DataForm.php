@@ -183,4 +183,36 @@ class DataForm
 
         return true;
     }
+
+    public function uploadDoc($file, string $dirPath = './../data/documents', bool $overwriteExistsFile = false, bool $createIfDirNotExists = false)
+    {
+        // check if file with the same name already exists
+        if (Validation::checkExistsFile($dirPath . '/' . $file['name'])) {
+            if (!$overwriteExistsFile) {
+                throw new Exception('Not saved file with the name ' . $file['name'] . '. File with the same name is already exists!');
+                return false;
+            }
+        }
+
+        // check if directory from given path does exists
+        /*if (!Validation::checkExistsDir($dirPath)) {
+            // directory does not exists and do not create new directory
+            if (!$createIfDirNotExists) {
+                throw new InvalidArgumentException('The specified directory does not exists!');
+                return false;
+            }*/
+
+        // upload file
+        if (is_uploaded_file($file['tmp_name'])) {
+            if (!move_uploaded_file($file['tmp_name'], __DIR__ . '/../../data/documents/' . $file['name'])) {
+                throw new Exception('Failed to copy the file on server.');
+                return false;
+            }
+        } else {
+            throw new Exception('Request error! File has not been saved.');
+            return false;
+        }
+
+        return true;
+    }
 }
