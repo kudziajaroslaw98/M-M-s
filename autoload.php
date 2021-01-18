@@ -79,6 +79,7 @@ require_once __DIR__ . './src/repositories/UserRepository.php';
 require_once __DIR__ . './src/repositories/SoftwareRepository.php';
 require_once __DIR__ . './src/repositories/RoleRepository.php';
 require_once __DIR__ . './src/repositories/RolesUsersRepository.php';
+require_once __DIR__ . './src/repositories/DocumentsRepository.php';
 
 require_once __DIR__ . './dbconfig.php';
 
