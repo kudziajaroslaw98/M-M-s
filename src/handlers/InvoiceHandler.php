@@ -4,21 +4,28 @@ class InvoiceHandler
 {
     public static function handle(string $action)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'invoice-add':
-                InvoiceController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessInvoiceAdd()) {
+                    InvoiceController::renderViewAdd();
+                    break;
+                }
             case 'invoice-show':
-                InvoiceController::renderViewShow();
-                break;
-            case 'invoice-show-list':
-                InvoiceController::renderViewShowList();
-                break;
+                if (AuthHelper::canAccessInvoiveShow()) {
+                    InvoiceController::renderViewShow();
+                    break;
+                }
             case 'invoice-search':
-                InvoiceController::renderViewSearch();
-                break;
+                if (AuthHelper::canAccessInvoiceSearch()) {
+                    InvoiceController::renderViewSearch();
+                    break;
+                }
             default:
-                header('Location: home.php?action=invoice-add');
+                header("Location: index.php");
                 break;
         }
     }

@@ -26,4 +26,25 @@ class HardwareController
             'subtitle' => 'Search Hardware'
         ));
     }
+
+    public static function renderRow(Gear &$gear, int $lp, UserRepository &$userRepository, PurchaseInvoiceRepository &$purchaseInvoiceRepository)
+    {
+
+        $user = $userRepository->findById($gear->getUserID());
+        $purchaseInvoice = $purchaseInvoiceRepository->findById($gear->getPurchaseInvoiceID());
+
+        echo "
+    <tr>
+        <th scope='row'>$lp</th>
+        <td>" . $gear->getID() . "</td>
+        <td>" . $gear->getName() . "</td>
+        <td>" . $gear->getSerialNumber() . "</td>
+        <td>" . $gear->getPurchaseInvoiceID() . "</td>
+        <td>" . $gear->getWarrantyDate() . "</td>
+        <td>" . $gear->getNetValue() . " "  . $purchaseInvoice[0]->getCurrency() . "</td>
+        <td>" . $user->getFirstName() . " " . $user->getLastName() . "</td>
+        <td>" . $gear->getNotes() . "</td>
+    </tr>
+    ";
+    }
 }

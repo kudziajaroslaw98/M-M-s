@@ -2,26 +2,36 @@
 
 class Layout
 {
-    public static function header(array $params = array())
+    public static function requires(string $title)
     {
         ob_start();
 ?>
+        <title>M&M's Karczma - <?= $title ?></title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./dev_dependency/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./styles/style.min.css" />
+        <link rel="stylesheet" href="./styles/styles.css" />
+        <link href="./fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <script src="./scripts/jquery-3.5.1.min.js"></script>
+        <script src="./dev_dependency/js/popper.min.js"></script>
+        <script src="./dev_dependency/js/bootstrap.min.js"></script>
+        <link href="./styles/sb-admin-2.min.css" rel="stylesheet">
+    <?php
+        $html = ob_get_clean();
+        return $html;
+    }
+
+    public static function header(array $params = array())
+    {
+        ob_start();
+    ?>
 
         <html lang="en">
 
         <head>
-            <title>M&M's Karczma - <?= $params['title'] ?></title>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <link rel="stylesheet" href="./../dev_dependency/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="./../styles/style.min.css" />
-            <link rel="stylesheet" href="./../styles/styles.css" />
-            <link href="./../fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-            <script src="./../scripts/jquery-3.5.1.min.js"></script>
-            <script src="./../dev_dependency/js/popper.min.js"></script>
-            <script src="./../dev_dependency/js/bootstrap.min.js"></script>
-            <link href="./../styles/sb-admin-2.min.css" rel="stylesheet">
+            <?= self::requires($params['title']) ?>
         </head>
 
         <body id="page-top">
@@ -59,7 +69,7 @@ class Layout
                                         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                                             <!-- Sidebar - Brand -->
-                                            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
+                                            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                                                 <div class="sidebar-brand-text mx-3">M&M's<sup>Karczma</sup></div>
                                             </a>
 
@@ -68,7 +78,7 @@ class Layout
 
                                             <!-- Nav Item - Dashboard -->
                                             <li class="nav-item active">
-                                                <a class="nav-link" href="home.php">
+                                                <a class="nav-link" href="index.php">
                                                     <i class="fas fa-fw fa-tachometer-alt"></i>
                                                     <span>HOME</span></a>
                                             </li>
@@ -90,10 +100,9 @@ class Layout
                                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="home.php?action=invoice-add">Add Invoice</a>
-                                                        <a class="collapse-item" href="home.php?action=invoice-show">Show Invoices</a>
-                                                        <a class="collapse-item" href="home.php?action=invoice-show-list">Show Invoices As List</a>
-                                                        <a class="collapse-item" href="home.php?action=invoice-search">Search For Invoices</a>
+                                                        <?php if (AuthHelper::canAccessInvoiceAdd()) : ?><a class="collapse-item" href="index.php?action=invoice-add">Add Invoice</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessInvoiveShow()) : ?><a class="collapse-item" href="index.php?action=invoice-show">Show Invoices</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessInvoiceSearch()) : ?><a class="collapse-item" href="index.php?action=invoice-search">Search For Invoices</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -105,9 +114,9 @@ class Layout
                                                 <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="home.php?action=hardware-show">Show Hardware</a>
-                                                        <a class="collapse-item" href="home.php?action=hardware-add">Add Hardware</a>
-                                                        <a class="collapse-item" href="home.php?action=hardware-search">Search For Hardware</a>
+                                                        <?php if (AuthHelper::canAccessHardwareShow()) : ?><a class="collapse-item" href="index.php?action=hardware-show">Show Hardware</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessHardwareAdd()) : ?><a class="collapse-item" href="index.php?action=hardware-add">Add Hardware</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessHardwareSearch()) : ?><a class="collapse-item" href="index.php?action=hardware-search">Search For Hardware</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -119,8 +128,8 @@ class Layout
                                                 <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="home.php?action=license-show">Show Licences</a>
-                                                        <a class="collapse-item" href="home.php?action=license-add">Add Licence</a>
+                                                        <?php if (AuthHelper::canAccessLicenseShow()) : ?><a class="collapse-item" href="index.php?action=license-show">Show Licences</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessLicenseAdd()) : ?><a class="collapse-item" href="index.php?action=license-add">Add Licence</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -132,10 +141,16 @@ class Layout
                                                 <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="home.php?action=doc-show">Show Documents</a>
-                                                        <a class="collapse-item" href="home.php?action=doc-add">Add Documents</a>
+                                                        <?php if (AuthHelper::canAccessDocShow()) : ?><a class="collapse-item" href="index.php?action=doc-show">Show Documents</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessDocAdd()) : ?><a class="collapse-item" href="index.php?action=doc-add">Add Documents</a><?php endif; ?>
                                                     </div>
                                                 </div>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link collapsed" href="index.php?action=logout">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Logout</span>
+                                                </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
@@ -145,11 +160,35 @@ class Layout
                                                 <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                                     <div class="bg-white py-2 collapse-inner rounded">
                                                         <h6 class="collapse-header">Options:</h6>
-                                                        <a class="collapse-item" href="Notification.php">Examples</a>
+                                                        <?php if (AuthHelper::canAccessNotificationExamples()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
                                                     </div>
                                                 </div>
                                             </li>
-
+                                            <li class="nav-item">
+                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Users</span>
+                                                </a>
+                                                <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                    <div class="bg-white py-2 collapse-inner rounded">
+                                                        <h6 class="collapse-header">Options:</h6>
+                                                        <?php if (AuthHelper::canAccessUsersAdd()) : ?><a class="collapse-item" href="index.php?action=user-add">Add users</a><?php endif; ?>
+                                                        <?php if (AuthHelper::canAccessUsersShow()) : ?><a class="collapse-item" href="index.php?action=user-show">Show users</a><?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                                                    <i class="fas fa-fw fa-cog"></i>
+                                                    <span>Roles</span>
+                                                </a>
+                                                <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                    <div class="bg-white py-2 collapse-inner rounded">
+                                                        <h6 class="collapse-header">Options:</h6>
+                                                        <?php if (AuthHelper::canAccessRolesShow()) : ?><a class="collapse-item" href="index.php?action=role-show">Show roles</a><?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </li>
 
                                             <!-- Sidebar Toggler (Sidebar) -->
                                             <div class="text-center d-none d-md-inline">

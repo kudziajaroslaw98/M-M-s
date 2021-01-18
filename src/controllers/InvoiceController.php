@@ -10,14 +10,6 @@ class InvoiceController
         ));
     }
 
-    public static function renderViewShowList()
-    {
-        echo InvoiceViewShowList::render(array(
-            'title' => 'Show Invoices List',
-            'subtitle' => 'Your Invoices'
-        ));
-    }
-
     public static function renderViewAdd()
     {
         echo InvoiceViewAdd::render(array(

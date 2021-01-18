@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 01 Sty 2021, 17:33
+-- Czas generowania: 19 Sty 2021, 00:04
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -30,10 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `documents` (
   `documentID` int(10) NOT NULL,
   `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lastModifactionTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `notes` varchar(255) DEFAULT NULL,
-  `filePath` varchar(255) NOT NULL
+  `filePath` varchar(255) NOT NULL,
+  `editor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `documents`
+--
+
+INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`, `editor`) VALUES
+(102, '2021-01-18 22:59:55', '2021-01-18 22:59:55', 'wzorce projektowe', '/../../data/documents/S1-13-wzorce-projektowe.pdf', 4);
 
 -- --------------------------------------------------------
 
@@ -57,15 +65,16 @@ CREATE TABLE `gear` (
 --
 
 INSERT INTO `gear` (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumber`, `notes`, `netValue`, `warrantyDate`) VALUES
-(1, 1, 1, 'Myszka komputerowa', '543TFD-34GFB', 'Elegancka', 89, '2020-12-26'),
-(2, 1, 1, 'Klawiatura', '54436', NULL, 49, NULL),
-(3, 1, 1, 'Podkladka', '5436', 'normalna', 19, '2021-01-02'),
-(4, 1, 1, 'Kulka', '65434', 'notka', 39, '2021-01-02'),
-(5, 1, 1, 'Klawiatura', '76534', NULL, 5, NULL),
-(6, 1, 1, 'Klawiatura', '54346', NULL, 34, NULL),
-(20, 1, 1, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
-(21, 1, 1, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
-(22, 1, 1, 'Głośniki', '231', NULL, 16, NULL);
+(1, 1, 3, 'Myszka komputerowa', '543TFD-34GFB', 'Elegancka', 89, '2020-12-26'),
+(2, 1, 3, 'Klawiatura', '54436', NULL, 49, NULL),
+(3, 1, 3, 'Podkladka', '5436', 'normalna', 19, '2021-01-02'),
+(4, 1, 3, 'Kulka', '65434', 'notka', 39, '2021-01-02'),
+(5, 1, 3, 'Klawiatura', '76534', NULL, 5, NULL),
+(6, 1, 3, 'Klawiatura', '54346', NULL, 34, NULL),
+(20, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
+(21, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
+(22, 1, 3, 'Głośniki', '231', NULL, 16, NULL),
+(24, 1, 3, 'sprzet', '6546456', NULL, 765, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -93,7 +102,11 @@ CREATE TABLE `purchaseinvoices` (
 
 INSERT INTO `purchaseinvoices` (`purchaseInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
 (1, '2020-12-21 21:44:57', '2020-12-21 21:44:57', 'Gospodarstwo domowe', 450, 390, '2020-12-07', 'fajnie', './../data/invoices/purchase/test.txt', 'PLN', 0.23),
-(4325, '2021-01-01 16:30:34', '2021-01-01 16:30:34', 'Krzysztof Ibisz', 2350, 3000, '2021-01-01', NULL, './../data/invoices/purchase/AI1-LAB10-SRS-Zespol_Karczma.pdf', 'PLN', 0.23);
+(11, '2021-03-10 04:46:39', '2021-01-11 04:46:39', 'a', 1, 1, '2021-01-05', NULL, '1111', '1', 1),
+(111, '2021-04-09 03:46:39', '2021-01-11 04:46:39', '1', 1, 1, '2021-01-16', NULL, '11111111', '1', 1),
+(4325, '2020-11-18 16:30:34', '2021-01-01 16:30:34', 'Krzysztof Ibisz', 2350, 3000, '2021-01-01', NULL, './../data/invoices/purchase/AI1-LAB10-SRS-Zespol_Karczma.pdf', 'PLN', 0.23),
+(4328, '2021-01-13 00:59:28', '2021-01-14 00:59:28', '1', 1, 1, '2021-01-06', '1', '1', '1', 1),
+(4329, '2021-01-14 00:59:28', '2021-01-27 00:59:28', '1', 1, 1, '2021-01-14', '1', '3', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -117,6 +130,16 @@ CREATE TABLE `roles` (
   `roleName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `roles`
+--
+
+INSERT INTO `roles` (`roleID`, `roleName`) VALUES
+(4, 'admin'),
+(3, 'auditor'),
+(1, 'employee'),
+(2, 'owner');
+
 -- --------------------------------------------------------
 
 --
@@ -124,9 +147,18 @@ CREATE TABLE `roles` (
 --
 
 CREATE TABLE `roles_users` (
-  `roleID` int(10) NOT NULL,
-  `userID` int(10) NOT NULL
+  `id` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `roles_users`
+--
+
+INSERT INTO `roles_users` (`id`, `roleID`, `userID`) VALUES
+(2, 1, 3),
+(3, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -154,6 +186,8 @@ CREATE TABLE `saleinvoices` (
 
 INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
 (1, '2021-01-01 00:13:24', '2021-01-01 00:13:24', 'Przemysław Różewski', 780, 890, '2021-01-27', NULL, './../data/invoices/sale/lab_11_instr_cyfrowe znaki wodne.pdf', 'PLN', 0.23),
+(11, '2020-07-22 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '2021-01-06', '1', '11', '1', 1),
+(111, '2021-04-16 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '2021-01-17', '1', '1111', '1', 1),
 (324, '2021-01-01 16:32:49', '2021-01-01 16:32:49', 'Krzysztof Krawczyk', 35, 47, '2021-01-01', NULL, './../data/invoices/sale/Gantt.pdf', 'PLN', 0.23);
 
 -- --------------------------------------------------------
@@ -189,8 +223,9 @@ CREATE TABLE `software` (
 --
 
 INSERT INTO `software` (`softwareID`, `userID`, `purchaseInvoiceID`, `name`, `licenceKey`, `notes`, `expirationDate`, `techSupportDate`) VALUES
-(1, 1, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
-(2, 1, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
+(1, 3, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
+(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29'),
+(3, 4, 4325, 'ASdasd', '6544-7543-2476-5415', 'ads', '2021-01-14', '2021-01-23');
 
 -- --------------------------------------------------------
 
@@ -203,15 +238,18 @@ CREATE TABLE `users` (
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `jobtitle` varchar(255) NOT NULL,
-  `phoneNumber` varchar(255) NOT NULL
+  `phoneNumber` varchar(255) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`) VALUES
-(1, 'Janek', 'Kowalski', 'Pracownik', '543234125');
+INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`, `login`, `password`) VALUES
+(3, 'Malwark', 'Ulisty', 'Pracownik', '111333222', 'mUlisty', '$2y$10$lIBBe/MWQ2eOuoaQKy8qmO..JdeZW7vkfKoFQ7AZfBvi5nxgBtzIW'),
+(4, 'Janek', 'Kowalski', 'Pracownik', '555444666', 'jKowalski', '$2y$10$52OuXTSUIvVHsT9d0xZ6EOYb8JjBt.z22ag3NBFNa8UXiy8.Ycaz2');
 
 -- --------------------------------------------------------
 
@@ -244,7 +282,8 @@ CREATE TABLE `users_purchaseinvoices` (
 --
 ALTER TABLE `documents`
   ADD PRIMARY KEY (`documentID`),
-  ADD UNIQUE KEY `filePath` (`filePath`);
+  ADD UNIQUE KEY `filePath` (`filePath`),
+  ADD KEY `editor` (`editor`);
 
 --
 -- Indeksy dla tabeli `gear`
@@ -278,8 +317,9 @@ ALTER TABLE `roles`
 -- Indeksy dla tabeli `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD PRIMARY KEY (`roleID`,`userID`),
-  ADD KEY `FKRoles_User780791` (`userID`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `roleID` (`roleID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indeksy dla tabeli `saleinvoices`
@@ -307,7 +347,8 @@ ALTER TABLE `software`
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `login` (`login`);
 
 --
 -- Indeksy dla tabeli `users_documents`
@@ -331,19 +372,19 @@ ALTER TABLE `users_purchaseinvoices`
 -- AUTO_INCREMENT dla tabeli `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT dla tabeli `gear`
 --
 ALTER TABLE `gear`
-  MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT dla tabeli `purchaseinvoices`
 --
 ALTER TABLE `purchaseinvoices`
-  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4326;
+  MODIFY `purchaseInvoiceID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4330;
 
 --
 -- AUTO_INCREMENT dla tabeli `reports`
@@ -355,7 +396,13 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT dla tabeli `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `roleID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `roles_users`
+--
+ALTER TABLE `roles_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `saleinvoices`
@@ -367,17 +414,23 @@ ALTER TABLE `saleinvoices`
 -- AUTO_INCREMENT dla tabeli `software`
 --
 ALTER TABLE `software`
-  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ograniczenia dla zrzutów tabel
 --
+
+--
+-- Ograniczenia dla tabeli `documents`
+--
+ALTER TABLE `documents`
+  ADD CONSTRAINT `documents_ibfk_1` FOREIGN KEY (`editor`) REFERENCES `users` (`userID`);
 
 --
 -- Ograniczenia dla tabeli `gear`
@@ -390,8 +443,8 @@ ALTER TABLE `gear`
 -- Ograniczenia dla tabeli `roles_users`
 --
 ALTER TABLE `roles_users`
-  ADD CONSTRAINT `FKRoles_User126221` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
-  ADD CONSTRAINT `FKRoles_User780791` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
+  ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`),
+  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
 -- Ograniczenia dla tabeli `saleinvoices_users`

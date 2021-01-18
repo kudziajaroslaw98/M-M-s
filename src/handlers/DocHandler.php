@@ -4,15 +4,23 @@ class DocHandler
 {
     public static function handle($action)
     {
+        if (!LoginController::isLogged()) {
+            $action = null;
+        }
+
         switch ($action) {
             case 'doc-add':
-                DocController::renderViewAdd();
-                break;
+                if (AuthHelper::canAccessDocAdd()) {
+                    DocController::renderViewAdd();
+                    break;
+                }
             case 'doc-show':
-                DocController::renderViewShow();
-                break;
+                if (AuthHelper::canAccessDocshow()) {
+                    DocController::renderViewShow();
+                    break;
+                }
             default:
-                header('Location: home.php?action=hardware-add');
+                header("Location: index.php");
                 break;
         }
     }

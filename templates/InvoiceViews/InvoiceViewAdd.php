@@ -127,13 +127,17 @@ class InvoiceViewAdd
                     throw new InvalidInputExcetion('Only files in PDF format!');
                 }
 
+                if (!Validation::validateDateAndConvert($dataForm->data['TransactionDate'])) {
+                    throw new InvalidInputExcetion('Given date is invalid!');
+                }
+
                 // repository and invoice
                 $invoiceRepository = null;
                 $invoice = null;
 
                 // helping local variables
                 $filename = $dataForm->dataFiles['UploadInvoice']['name'];
-                $dictonaryPath = './../data/invoices';
+                $dictonaryPath = './data/invoices';
                 $kindOfInvoice = ucfirst($dataForm->data['InvoiceKind']);
 
                 // check if directory path is existing
@@ -146,10 +150,12 @@ class InvoiceViewAdd
                     $invoiceRepository = new SaleInvoiceRepository();
                     $invoice = new SaleInvoice();
                     $dictonaryPath .= '/sale';
-                } else {
+                } else if ($dataForm->data['InvoiceKind'] == 'sale') {
                     $invoiceRepository = new PurchaseInvoiceRepository();
                     $invoice = new PurchaseInvoice();
                     $dictonaryPath .= '/purchase';
+                } else {
+                    throw new InvalidInputExcetion($dataForm->data['InvoiceKind'] . ' does not exists!');
                 }
 
                 // helping local variable
@@ -175,7 +181,7 @@ class InvoiceViewAdd
                 echo $kindOfInvoice . ' invoice has been added.';
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 }
