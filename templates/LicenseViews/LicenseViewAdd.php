@@ -105,6 +105,20 @@ class LicenseViewAdd
                     throw new InvalidInputExcetion('Given serial key is invalid!');
                 }
 
+                // check if isset selected user
+                $userRepository = new UserRepository();
+                $user = $userRepository->findById($dataForm->data['HardwareUser']);
+                if (!$user) {
+                    throw new InvalidInputExcetion('Selected user does not exists!');
+                }
+
+                // check if isset selected invoice
+                $invoiceRepository = new PurchaseInvoiceRepository();
+                $invoice = $invoiceRepository->findById($dataForm->data['InvoiceNumber']);
+                if (!$invoice) {
+                    throw new InvalidInputExcetion('Selected invoice does not exists!');
+                }
+
                 // check date fields
                 $dateName = array('TechSupportDate', 'ExpirationDate');
                 foreach ($dateName as $key => $value) {
@@ -127,7 +141,7 @@ class LicenseViewAdd
                 echo 'License has been added.';
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 }

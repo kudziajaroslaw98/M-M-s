@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Sty 2021, 21:13
+-- Czas generowania: 19 Sty 2021, 00:04
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -32,19 +32,16 @@ CREATE TABLE `documents` (
   `uploadTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `lastModificationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `notes` varchar(255) DEFAULT NULL,
-  `filePath` varchar(255) NOT NULL
+  `filePath` varchar(255) NOT NULL,
+  `editor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `documents`
 --
 
-INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`) VALUES
-(1, '2021-01-11 02:47:50', '2021-01-11 02:47:50', 'x', './../data/documents/List_Motywacyjny.pdf'),
-(2, '2021-01-11 03:24:00', '2021-01-11 03:24:00', 'x', './../data/documents/z.pdf'),
-(3, '2021-01-01 03:24:00', '2021-01-11 03:24:00', NULL, './../data/documents/x.pdf'),
-(6, '2021-01-11 04:23:06', '2021-01-11 04:23:06', NULL, './../data/documents/xx'),
-(7, '2021-01-08 04:22:40', '2021-01-11 04:23:06', NULL, './../data/documents/xxx');
+INSERT INTO `documents` (`documentID`, `uploadTime`, `lastModificationTime`, `notes`, `filePath`, `editor`) VALUES
+(102, '2021-01-18 22:59:55', '2021-01-18 22:59:55', 'wzorce projektowe', '/../../data/documents/S1-13-wzorce-projektowe.pdf', 4);
 
 -- --------------------------------------------------------
 
@@ -76,7 +73,8 @@ INSERT INTO `gear` (`gearID`, `purchaseInvoiceID`, `userID`, `name`, `serialNumb
 (6, 1, 3, 'Klawiatura', '54346', NULL, 34, NULL),
 (20, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
 (21, 1, 3, 'Głośniki', '76534', NULL, 45, '2020-12-29'),
-(22, 1, 3, 'Głośniki', '231', NULL, 16, NULL);
+(22, 1, 3, 'Głośniki', '231', NULL, 16, NULL),
+(24, 1, 3, 'sprzet', '6546456', NULL, 765, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -189,7 +187,7 @@ CREATE TABLE `saleinvoices` (
 INSERT INTO `saleinvoices` (`saleInvoiceID`, `uploadTime`, `lastModificationTime`, `contractorData`, `amountNetto`, `amountBrutto`, `transactionDate`, `notes`, `filePath`, `currency`, `vat`) VALUES
 (1, '2021-01-01 00:13:24', '2021-01-01 00:13:24', 'Przemysław Różewski', 780, 890, '2021-01-27', NULL, './../data/invoices/sale/lab_11_instr_cyfrowe znaki wodne.pdf', 'PLN', 0.23),
 (11, '2020-07-22 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '2021-01-06', '1', '11', '1', 1),
-(111, '2021-04-16 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '0000-00-00', '1', '1111', '1', 1),
+(111, '2021-04-16 04:34:24', '2021-01-11 05:35:04', '1', 1, 1, '2021-01-17', '1', '1111', '1', 1),
 (324, '2021-01-01 16:32:49', '2021-01-01 16:32:49', 'Krzysztof Krawczyk', 35, 47, '2021-01-01', NULL, './../data/invoices/sale/Gantt.pdf', 'PLN', 0.23);
 
 -- --------------------------------------------------------
@@ -226,7 +224,8 @@ CREATE TABLE `software` (
 
 INSERT INTO `software` (`softwareID`, `userID`, `purchaseInvoiceID`, `name`, `licenceKey`, `notes`, `expirationDate`, `techSupportDate`) VALUES
 (1, 3, 1, 'Licencja na artykuły użytku domowego', '6544-7543-2476-5434', NULL, NULL, NULL),
-(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29');
+(2, 3, 1, 'Licencja testowa', '5432-6542-6765-2367', NULL, '2020-12-30', '2024-11-29'),
+(3, 4, 4325, 'ASdasd', '6544-7543-2476-5415', 'ads', '2021-01-14', '2021-01-23');
 
 -- --------------------------------------------------------
 
@@ -283,7 +282,8 @@ CREATE TABLE `users_purchaseinvoices` (
 --
 ALTER TABLE `documents`
   ADD PRIMARY KEY (`documentID`),
-  ADD UNIQUE KEY `filePath` (`filePath`);
+  ADD UNIQUE KEY `filePath` (`filePath`),
+  ADD KEY `editor` (`editor`);
 
 --
 -- Indeksy dla tabeli `gear`
@@ -372,13 +372,13 @@ ALTER TABLE `users_purchaseinvoices`
 -- AUTO_INCREMENT dla tabeli `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `documentID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT dla tabeli `gear`
 --
 ALTER TABLE `gear`
-  MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `gearID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT dla tabeli `purchaseinvoices`
@@ -414,7 +414,7 @@ ALTER TABLE `saleinvoices`
 -- AUTO_INCREMENT dla tabeli `software`
 --
 ALTER TABLE `software`
-  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `softwareID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
@@ -425,6 +425,12 @@ ALTER TABLE `users`
 --
 -- Ograniczenia dla zrzutów tabel
 --
+
+--
+-- Ograniczenia dla tabeli `documents`
+--
+ALTER TABLE `documents`
+  ADD CONSTRAINT `documents_ibfk_1` FOREIGN KEY (`editor`) REFERENCES `users` (`userID`);
 
 --
 -- Ograniczenia dla tabeli `gear`

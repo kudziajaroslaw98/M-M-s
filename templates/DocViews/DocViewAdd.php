@@ -1,11 +1,13 @@
 <?php
 
+require __DIR__ . '\..\..\autoload.php';
+
 class DocViewAdd
 {
     public static function render(array $params = array())
     {
         ob_start();
-?>
+        ?>
         <?= Layout::header($params); ?>
 
         <div class="row d-flex justify-content-center">
@@ -14,7 +16,7 @@ class DocViewAdd
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Upload Document Form</h1>
                     </div>
-                    <form class="UploadDoc" method="POST" ENCTYPE="multipart/form-data">
+                    <form class="UploadDoc" method="POST" ENCTYPE="multipart/form-data" action="./templates/DocViews/insert.php">
                         <div class="form-group">
                             <label for="UploadDoc">Pick file to Upload and click <strong>Upload</strong></label>
                             <input type="file" class="form-control-file" id="UploadDoc" name='docName'>
@@ -32,8 +34,10 @@ class DocViewAdd
         </div>
 
         <?= Layout::footer() ?>
-<?php
+        <?php
+
         $html = ob_get_clean();
         return $html;
     }
 }
+?>

@@ -116,7 +116,7 @@ class HardwareViewSearch
                 }
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 }

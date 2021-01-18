@@ -60,7 +60,7 @@ class RoleRepository
 
             return $role;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 

@@ -201,11 +201,6 @@ class Validation
             return $date;
         }
 
-        // if date is default date
-        if ($date == self::$defaultDate) {
-            return $date;
-        }
-
         // change taken string date to date object
         $localDate = strtotime($date);
         if (!$localDate) {

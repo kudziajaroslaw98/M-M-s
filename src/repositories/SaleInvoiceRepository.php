@@ -61,7 +61,7 @@ class SaleInvoiceRepository
 
             return $saleInvoice;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 

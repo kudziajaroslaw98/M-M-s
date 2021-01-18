@@ -101,6 +101,20 @@ class HardwareViewAdd
                     throw new InvalidInputExcetion('Data is invalid!');
                 }
 
+                // check if isset selected user
+                $userRepository = new UserRepository();
+                $user = $userRepository->findById($dataForm->data['HardwareUser']);
+                if (!$user) {
+                    throw new InvalidInputExcetion('Selected user does not exists!');
+                }
+
+                // check if isset selected invoice
+                $invoiceRepository = new PurchaseInvoiceRepository();
+                $invoice = $invoiceRepository->findById($dataForm->data['InvoiceNumber']);
+                if (!$invoice) {
+                    throw new InvalidInputExcetion('Selected invoice does not exists!');
+                }
+
                 // repository and entity
                 $gearRepository = new GearRepository();
                 $gear = new Gear();
@@ -115,7 +129,7 @@ class HardwareViewAdd
                 echo 'Hardware has been added.';
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 }

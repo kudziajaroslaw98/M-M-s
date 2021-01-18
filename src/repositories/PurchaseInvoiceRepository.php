@@ -58,7 +58,7 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoice;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -81,42 +81,39 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
     public function findByIdOrder($id, $like)
     {
         try {
-            if(! ctype_digit(strval($id))){
+            if (!ctype_digit(strval($id))) {
                 throw new InvalidInputExcetion('Given data are invalid!');
             }
-            if($like['year'] != null && $like['month'] != null){
+            if ($like['year'] != null && $like['month'] != null) {
                 $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
                 $stmt = $this->connect->prepare($sql);
                 $result = $stmt->execute(array(
                     'id' => Validation::sanitizeInt($id) . '%',
-                    'uploadTime' => "".Validation::sanitizeInt($like['year'])."-".Validation::sanitizeInt($year['month'])."-"."%"
+                    'uploadTime' => "" . Validation::sanitizeInt($like['year']) . "-" . Validation::sanitizeInt($like['month']) . "-" . "%"
                 ));
-            }
-            elseif($like['year'] != null){
+            } elseif ($like['year'] != null) {
                 $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
                 $stmt = $this->connect->prepare($sql);
                 $result = $stmt->execute(array(
                     'id' => Validation::sanitizeInt($id) . '%',
-                    'uploadTime' => "".Validation::sanitizeInt($like['year'])."-"."%"
+                    'uploadTime' => "" . Validation::sanitizeInt($like['year']) . "-" . "%"
                 ));
-            }
-            elseif($like['month'] != null){
+            } elseif ($like['month'] != null) {
                 $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id AND uploadTime LIKE :uploadTime";
                 $stmt = $this->connect->prepare($sql);
                 $now = new DateTime();
                 $result = $stmt->execute(array(
                     'id' => Validation::sanitizeInt($id) . '%',
-                    'uploadTime' => $now->format("Y")."-".Validation::sanitizeInt($like['month'])."-"."%"
+                    'uploadTime' => $now->format("Y") . "-" . Validation::sanitizeInt($like['month']) . "-" . "%"
                 ));
-            }
-            else{
+            } else {
                 $sql = "SELECT * FROM purchaseInvoices WHERE purchaseInvoiceID LIKE :id";
                 $stmt = $this->connect->prepare($sql);
                 $result = $stmt->execute(array(
@@ -191,9 +188,10 @@ class PurchaseInvoiceRepository
             echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
-    public function pagination(){
-        $_SESSION['purchaseInvoicePage'] = (isset($_GET['purchasepage']) && is_numeric($_GET['purchasepage']) ) ? $_GET['purchasepage'] : 1;
-        $_SESSION['purchasePaginationStart'] = ( $_SESSION['purchaseInvoicePage'] - 1) * $_SESSION['records-limit'];
+    public function pagination()
+    {
+        $_SESSION['purchaseInvoicePage'] = (isset($_GET['purchasepage']) && is_numeric($_GET['purchasepage'])) ? $_GET['purchasepage'] : 1;
+        $_SESSION['purchasePaginationStart'] = ($_SESSION['purchaseInvoicePage'] - 1) * $_SESSION['records-limit'];
         $sql = "SELECT count(purchaseInvoiceID) FROM purchaseinvoices";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute();
