@@ -58,7 +58,7 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoice;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ class PurchaseInvoiceRepository
 
             return $purchaseInvoices;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 

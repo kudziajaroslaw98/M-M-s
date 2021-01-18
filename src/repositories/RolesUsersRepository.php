@@ -12,7 +12,7 @@ class RolesUsersRepository
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ class RolesUsersRepository
 
             return $roles_users_array;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ class RolesUsersRepository
 
             return $roles_users_array;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -82,7 +82,7 @@ class RolesUsersRepository
 
             return $roles_users_array;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ class RolesUsersRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -116,7 +116,7 @@ class RolesUsersRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -133,7 +133,7 @@ class RolesUsersRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 }

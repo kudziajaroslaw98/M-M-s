@@ -12,7 +12,7 @@ class UserRepository
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ class UserRepository
 
             return $users;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ class UserRepository
 
             return $user;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -121,7 +121,7 @@ class UserRepository
 
             return $user;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -143,7 +143,7 @@ class UserRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 
@@ -165,7 +165,7 @@ class UserRepository
 
             return $result;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 }

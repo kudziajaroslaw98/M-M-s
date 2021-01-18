@@ -120,7 +120,7 @@ class InvoiceViewSearch
                 }
             }
         } catch (Exception $e) {
-            echo NotificationHandler::handle("notification-danger", $e->getMessage());
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 

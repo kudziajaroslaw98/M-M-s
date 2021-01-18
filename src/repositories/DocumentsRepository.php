@@ -13,7 +13,7 @@ class DocumentsRepository{
             $stmt = $connect->prepare($sql);
             $result = $stmt->execute();
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception(NotificationHandler::handle("notification-danger", $e->getMessage()));
         }
     }
 
@@ -28,7 +28,7 @@ class DocumentsRepository{
             $stmt = $connect->prepare($sql);
             $result = $stmt->execute();
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception(NotificationHandler::handle("notification-danger", $e->getMessage()));
         }
         echo $file_to_delete;
         unlink($file_to_delete);
@@ -101,7 +101,7 @@ class DocumentsRepository{
             echo 'document has been added.';
 
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-danger", $e->getMessage());
         }
     }
 

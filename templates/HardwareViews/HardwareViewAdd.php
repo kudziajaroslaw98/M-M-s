@@ -115,7 +115,7 @@ class HardwareViewAdd
                 echo 'Hardware has been added.';
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo NotificationHandler::handle("notification-warning", $e->getMessage());
         }
     }
 }
