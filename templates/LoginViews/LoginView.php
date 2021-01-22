@@ -89,7 +89,7 @@ class LoginView
                 }
 
                 // all OK, logging..
-                LoginController::set($user->getUserID());
+                LoginController::set($user);
                 header('Location: index.php?action=hardware-show');
             }
         } catch (Exception $e) {

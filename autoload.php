@@ -3,6 +3,9 @@
 require_once __DIR__ . './exceptions/autoloadExceptions.php';
 require_once __DIR__ . './src/classes/AuthHelper.php';
 
+// Loaders
+require_once __DIR__ . './src/lazyLoaders/UserLazyLoader.php';
+
 // Classes
 require_once __DIR__ . './src/classes/Validation.php';
 require_once __DIR__ . './src/classes/DataForm.php';

@@ -18,9 +18,10 @@ class LoginController
         }
     }
 
-    public static function set(int $uid)
+    public static function set(User &$user)
     {
-        $_SESSION['uid'] = $uid;
+        $_SESSION['uid'] = $user->getUserID();
+        UserLazyLoader::setUser($user);
     }
 
     public static function logout()
