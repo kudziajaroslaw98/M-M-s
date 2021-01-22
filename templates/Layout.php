@@ -92,103 +92,117 @@ class Layout
                                             </div>
 
                                             <!-- Nav Item - Pages Collapse Menu -->
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Invoice</span>
-                                                </a>
-                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessInvoiceAdd()) : ?><a class="collapse-item" href="index.php?action=invoice-add">Add Invoice</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessInvoiveShow()) : ?><a class="collapse-item" href="index.php?action=invoice-show">Show Invoices</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessInvoiceSearch()) : ?><a class="collapse-item" href="index.php?action=invoice-search">Search For Invoices</a><?php endif; ?>
+                                            <?php if (AuthHelper::canAccessInvoice()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Invoice</span>
+                                                    </a>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessInvoiceAdd()) : ?><a class="collapse-item" href="index.php?action=invoice-add">Add Invoice</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessInvoiveShow()) : ?><a class="collapse-item" href="index.php?action=invoice-show">Show Invoices</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessInvoiceSearch()) : ?><a class="collapse-item" href="index.php?action=invoice-search">Search For Invoices</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Hardware</span>
-                                                </a>
-                                                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessHardwareShow()) : ?><a class="collapse-item" href="index.php?action=hardware-show">Show Hardware</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessHardwareAdd()) : ?><a class="collapse-item" href="index.php?action=hardware-add">Add Hardware</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessHardwareSearch()) : ?><a class="collapse-item" href="index.php?action=hardware-search">Search For Hardware</a><?php endif; ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if (AuthHelper::canAccessHardware()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Hardware</span>
+                                                    </a>
+                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessHardwareShow()) : ?><a class="collapse-item" href="index.php?action=hardware-show">Show Hardware</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessHardwareAdd()) : ?><a class="collapse-item" href="index.php?action=hardware-add">Add Hardware</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessHardwareSearch()) : ?><a class="collapse-item" href="index.php?action=hardware-search">Search For Hardware</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Licences</span>
-                                                </a>
-                                                <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessLicenseShow()) : ?><a class="collapse-item" href="index.php?action=license-show">Show Licences</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessLicenseAdd()) : ?><a class="collapse-item" href="index.php?action=license-add">Add Licence</a><?php endif; ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if (AuthHelper::canAccessLicense()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Licences</span>
+                                                    </a>
+                                                    <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessLicenseShow()) : ?><a class="collapse-item" href="index.php?action=license-show">Show Licences</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessLicenseAdd()) : ?><a class="collapse-item" href="index.php?action=license-add">Add Licence</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Documents</span>
-                                                </a>
-                                                <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessDocShow()) : ?><a class="collapse-item" href="index.php?action=doc-show">Show Documents</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessDocAdd()) : ?><a class="collapse-item" href="index.php?action=doc-add">Add Documents</a><?php endif; ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if (AuthHelper::canAccessDoc()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Documents</span>
+                                                    </a>
+                                                    <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessDocShow()) : ?><a class="collapse-item" href="index.php?action=doc-show">Show Documents</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessDocAdd()) : ?><a class="collapse-item" href="index.php?action=doc-add">Add Documents</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            <?php endif; ?>
                                             <li class="nav-item">
                                                 <a class="nav-link collapsed" href="index.php?action=logout">
                                                     <i class="fas fa-fw fa-cog"></i>
                                                     <span>Logout</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Notification</span>
-                                                </a>
-                                                <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessNotificationExamples()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
+                                            <?php if (AuthHelper::canAccessNotification()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Notification</span>
+                                                    </a>
+                                                    <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessNotificationExamples()) : ?><a class="collapse-item" href="Notification.php">Examples</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Users</span>
-                                                </a>
-                                                <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessUsersAdd()) : ?><a class="collapse-item" href="index.php?action=user-add">Add users</a><?php endif; ?>
-                                                        <?php if (AuthHelper::canAccessUsersShow()) : ?><a class="collapse-item" href="index.php?action=user-show">Show users</a><?php endif; ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if (AuthHelper::canAccessUsers()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Users</span>
+                                                    </a>
+                                                    <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessUsersAdd()) : ?><a class="collapse-item" href="index.php?action=user-add">Add users</a><?php endif; ?>
+                                                            <?php if (AuthHelper::canAccessUsersShow()) : ?><a class="collapse-item" href="index.php?action=user-show">Show users</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
-                                                    <i class="fas fa-fw fa-cog"></i>
-                                                    <span>Roles</span>
-                                                </a>
-                                                <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                                    <div class="bg-white py-2 collapse-inner rounded">
-                                                        <h6 class="collapse-header">Options:</h6>
-                                                        <?php if (AuthHelper::canAccessRolesShow()) : ?><a class="collapse-item" href="index.php?action=role-show">Show roles</a><?php endif; ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if (AuthHelper::canAccessRoles()) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                                                        <i class="fas fa-fw fa-cog"></i>
+                                                        <span>Roles</span>
+                                                    </a>
+                                                    <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            <h6 class="collapse-header">Options:</h6>
+                                                            <?php if (AuthHelper::canAccessRolesShow()) : ?><a class="collapse-item" href="index.php?action=role-show">Show roles</a><?php endif; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            <?php endif; ?>
 
                                             <!-- Sidebar Toggler (Sidebar) -->
                                             <div class="text-center d-none d-md-inline">

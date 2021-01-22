@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Sty 2021, 00:04
+-- Czas generowania: 22 Sty 2021, 12:06
 -- Wersja serwera: 10.4.14-MariaDB
 -- Wersja PHP: 7.4.10
 
@@ -158,7 +158,8 @@ CREATE TABLE `roles_users` (
 
 INSERT INTO `roles_users` (`id`, `roleID`, `userID`) VALUES
 (2, 1, 3),
-(3, 2, 4);
+(3, 2, 4),
+(4, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -249,7 +250,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userID`, `firstName`, `lastName`, `jobtitle`, `phoneNumber`, `login`, `password`) VALUES
 (3, 'Malwark', 'Ulisty', 'Pracownik', '111333222', 'mUlisty', '$2y$10$lIBBe/MWQ2eOuoaQKy8qmO..JdeZW7vkfKoFQ7AZfBvi5nxgBtzIW'),
-(4, 'Janek', 'Kowalski', 'Pracownik', '555444666', 'jKowalski', '$2y$10$52OuXTSUIvVHsT9d0xZ6EOYb8JjBt.z22ag3NBFNa8UXiy8.Ycaz2');
+(4, 'Janek', 'Kowalski', 'Właściciel', '555444666', 'jKowalski', '$2y$10$52OuXTSUIvVHsT9d0xZ6EOYb8JjBt.z22ag3NBFNa8UXiy8.Ycaz2'),
+(5, 'Michał', 'Czarnota', 'Administrator', '867944326', 'mCzarnota', '$2y$10$9TsbDfT.hjprq0QcyZcXbeN8Dy08dkEiy884YkuECeaIG5vlxJlBK');
 
 -- --------------------------------------------------------
 
@@ -402,7 +404,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT dla tabeli `roles_users`
 --
 ALTER TABLE `roles_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `saleinvoices`
@@ -420,7 +422,7 @@ ALTER TABLE `software`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ograniczenia dla zrzutów tabel
